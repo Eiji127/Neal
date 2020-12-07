@@ -9,21 +9,25 @@
 /* Begin PBXBuildFile section */
 		98C680FE257E45BD00288FD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C680FD257E45BD00288FD4 /* AppDelegate.swift */; };
 		98C68100257E45BD00288FD4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C680FF257E45BD00288FD4 /* SceneDelegate.swift */; };
-		98C68102257E45BD00288FD4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C68101257E45BD00288FD4 /* ViewController.swift */; };
 		98C68105257E45BD00288FD4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98C68103257E45BD00288FD4 /* Main.storyboard */; };
 		98C68107257E45C100288FD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98C68106257E45C100288FD4 /* Assets.xcassets */; };
 		98C6810A257E45C100288FD4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98C68108257E45C100288FD4 /* LaunchScreen.storyboard */; };
+		98C68116257E485200288FD4 /* FeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C68115257E485200288FD4 /* FeedController.swift */; };
+		98C6811A257E4A9D00288FD4 /* ShopInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C68119257E4A9D00288FD4 /* ShopInfoCell.swift */; };
+		98C6811E257E4CAC00288FD4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C6811D257E4CAC00288FD4 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		98C680FA257E45BD00288FD4 /* GurunaviAPI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GurunaviAPI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98C680FD257E45BD00288FD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98C680FF257E45BD00288FD4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		98C68101257E45BD00288FD4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		98C68104257E45BD00288FD4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		98C68106257E45C100288FD4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		98C68109257E45C100288FD4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		98C6810B257E45C100288FD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		98C68115257E485200288FD4 /* FeedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedController.swift; sourceTree = "<group>"; };
+		98C68119257E4A9D00288FD4 /* ShopInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopInfoCell.swift; sourceTree = "<group>"; };
+		98C6811D257E4CAC00288FD4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +60,49 @@
 		98C680FC257E45BD00288FD4 /* GurunaviAPI */ = {
 			isa = PBXGroup;
 			children = (
+				98C68112257E45D000288FD4 /* Model */,
+				98C68113257E45FA00288FD4 /* View */,
+				98C68114257E460900288FD4 /* Controller */,
+				98C6811C257E4C9200288FD4 /* Utils */,
+				98C68103257E45BD00288FD4 /* Main.storyboard */,
 				98C680FD257E45BD00288FD4 /* AppDelegate.swift */,
 				98C680FF257E45BD00288FD4 /* SceneDelegate.swift */,
-				98C68101257E45BD00288FD4 /* ViewController.swift */,
-				98C68103257E45BD00288FD4 /* Main.storyboard */,
 				98C68106257E45C100288FD4 /* Assets.xcassets */,
 				98C68108257E45C100288FD4 /* LaunchScreen.storyboard */,
 				98C6810B257E45C100288FD4 /* Info.plist */,
 			);
 			path = GurunaviAPI;
+			sourceTree = "<group>";
+		};
+		98C68112257E45D000288FD4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		98C68113257E45FA00288FD4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				98C68119257E4A9D00288FD4 /* ShopInfoCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		98C68114257E460900288FD4 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				98C68115257E485200288FD4 /* FeedController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		98C6811C257E4C9200288FD4 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				98C6811D257E4CAC00288FD4 /* Extensions.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,9 +175,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				98C68102257E45BD00288FD4 /* ViewController.swift in Sources */,
+				98C6811E257E4CAC00288FD4 /* Extensions.swift in Sources */,
 				98C680FE257E45BD00288FD4 /* AppDelegate.swift in Sources */,
+				98C68116257E485200288FD4 /* FeedController.swift in Sources */,
 				98C68100257E45BD00288FD4 /* SceneDelegate.swift in Sources */,
+				98C6811A257E4A9D00288FD4 /* ShopInfoCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
