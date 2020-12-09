@@ -18,13 +18,28 @@ class ShopInfoCell: UICollectionViewCell {
         return label
     }()
     
+    private let underlineView: UIView = {
+        let line = UIView()
+        line.backgroundColor = .red
+        return line
+    }()
+    
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = .blue
+        backgroundColor = .white
         
+        let stack = UIStackView(arrangedSubviews: [nameLabel])
+        stack.axis = .ho
+        stack.distribution = .fillProportionally
+        stack.spacing = 4
         
+        addSubview(stack)
+        stack.anchor(top: topAnchor, left: leftAnchor, paddingTop: 5, paddingLeft: 5)
+        
+        addSubview(underlineView)
+        underlineView.anchor(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, height: 1)
     }
     
     required init?(coder: NSCoder) {

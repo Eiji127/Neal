@@ -10,7 +10,7 @@ import UIKit
 
 private let reuseIdentifier = "ShopInfoCell"
 
-class FetchController: UICollectionViewController {
+class FeedController: UICollectionViewController {
     
     // MARK: - Properties
     
@@ -20,7 +20,7 @@ class FetchController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        configureUI()
     }
     
     // MARK: - API
@@ -31,6 +31,8 @@ class FetchController: UICollectionViewController {
     func configureUI() {
         view.backgroundColor = .red
         
+        collectionView.register(ShopInfoCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.backgroundColor = .white
         
     }
 
@@ -38,24 +40,28 @@ class FetchController: UICollectionViewController {
 
 // MARK: - UICollectionViewDelegate/DataSource
 
-extension FetchController {
+extension FeedController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return 3
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ShopInfoCell
+        return cell
     }
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        <#code#>
-    }
+//    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        <#code#>
+//    }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
-extension FetchController: UICollectionViewDelegateFlowLayout {
+extension FeedController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        <#code#>
+        
+        return CGSize(width: view.frame.width, height: 100)
+        
     }
 }
