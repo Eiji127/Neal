@@ -14,6 +14,7 @@ class FeedController: UICollectionViewController {
     
     // MARK: - Properties
     
+    private var actionSheetLauncher: ActionSheetLauncher!
     
     
     // MARK: - Lifecycle
@@ -34,6 +35,16 @@ class FeedController: UICollectionViewController {
         collectionView.register(ShopInfoCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.backgroundColor = .white
         
+        navigationController?.title = "Shop"
+        navigationController?.navigationBar.backgroundColor = .red
+        
+        navigationItem.title = "Grunavi API"
+    }
+    
+    fileprivate func utilizeActionSheetLauncher() {
+        actionSheetLauncher = ActionSheetLauncher()
+//        actionSheetLauncher.delegate = self
+        actionSheetLauncher.show()
     }
 
 }
@@ -42,12 +53,13 @@ class FeedController: UICollectionViewController {
 
 extension FeedController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return 10
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ShopInfoCell
+        cell.delegate = self
         return cell
     }
     
@@ -61,7 +73,13 @@ extension FeedController {
 extension FeedController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return CGSize(width: view.frame.width, height: 100)
+        return CGSize(width: view.frame.width, height: 300)
         
+    }
+}
+
+extension FeedController: ShopInfoCellDelegate {
+    func showActionSheet() {
+        utilizeActionSheetLauncher()
     }
 }
