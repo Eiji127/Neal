@@ -36,8 +36,6 @@ class FeedController: UICollectionViewController {
         collectionView.backgroundColor = .white
         
         navigationController?.title = "Shop"
-        navigationController?.navigationBar.backgroundColor = .red
-        
         navigationItem.title = "Grunavi API"
     }
     

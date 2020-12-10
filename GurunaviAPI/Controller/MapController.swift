@@ -95,46 +95,5 @@ class MapController: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
         mapView.userTrackingMode = MKUserTrackingMode.follow
         mapView.userTrackingMode = MKUserTrackingMode.followWithHeading
     }
-    
-//    func getData() {
-//        var text = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=9694fae31f9af044&lat=34.67&lng=135.52&range=5&order=4"
-//        //addingPercentEncodingでtext中の日本語をAlamofireに対応させる。(そのままだと怒られる)
-//        let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-//        print("DEBUG: \(url)")
-//        //Requestを送る
-//        AF.request(url as! URLConvertible, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { (response) in
-//        //JSON解析
-//        //40個値が返ってくるので、for文をすべて配列に入れる
-//            print("DEBUG: \(response)")
-//
-//            switch response.result {
-//            case .success:
-//                for i in 0...5 {
-//                    let json: JSON = JSON(response.data as Any)
-//                    //i番目のitems中のidに含まれるvideoIdを取得
-//                    guard let shopId = json["shop"][i]["id"].string else { return }
-////                    guard let publishedAt = json["items"][i]["snippet"]["publishedAt"].string else { return }
-////                    guard let title = json["items"][i]["snippet"]["title"].string else { return }
-////                    guard let imageURLString = json["items"][i]["snippet"]["thumbnails"]["default"]["url"].string else { return }
-////                    let youtubeURL = "https://www.youtube.com/watch?v=\(videoID)"
-////                    guard let channelTitle = json["items"][i]["snippet"]["channelTitle"].string else { return }
-////
-//                    self.shopIdArray.append(shopId)
-//////                    self.publishedAtArray.append(publishedAt)
-////                    self.titleArray.append(title)
-////                    self.imageURLArray.append(imageURLString)
-////                    self.channelTitleArray.append(channelTitle)
-////                    self.youtubeURLArray.append(youtubeURL)
-//                    print(shopId)
-//                }
-//                break
-//            case .failure(let error):
-//                print(error)
-//                break
-//            }
-//
-//        }
-//    }
-    
 }
 

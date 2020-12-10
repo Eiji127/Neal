@@ -82,7 +82,7 @@ class ActionSheetLauncher: NSObject {
         blackView.frame = window.frame
         
         window.addSubview(tableView)
-        let height = 200 + 100
+        let height = 300
         self.tableViewHeight = CGFloat(height)
         tableView.frame = CGRect(x: 0, y: window.frame.height, width: window.frame.width, height: CGFloat(height))
         
@@ -123,7 +123,7 @@ extension ActionSheetLauncher: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 60
+        return 80
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

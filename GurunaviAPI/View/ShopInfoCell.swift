@@ -12,7 +12,6 @@ protocol ShopInfoCellDelegate: class {
 }
 
 class ShopInfoCell: UICollectionViewCell {
-    
     // MARK: - Properties
     
     weak var delegate: ShopInfoCellDelegate?
@@ -47,36 +46,17 @@ class ShopInfoCell: UICollectionViewCell {
         return line
     }()
     
-    private let imageScrollView = UIScrollView()
+    private lazy var imageScrollView = UIScrollView()
     
-    private var images = [UIImageView]()
-    
-    private let imageViewBlue : UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.setDimensions(width: 200, height: 250)
-        imageView.backgroundColor = .blue
-        return imageView
-    }()
-    
-    private let imageViewRed : UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.setDimensions(width: 200, height: 250)
-        imageView.backgroundColor = .red
-        return imageView
-    }()
-    
-    private let imageViewYellow : UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.setDimensions(width: 200, height: 250)
-        imageView.backgroundColor = .yellow
-        return imageView
-    }()
+//    private let imageView : UIImageView = {
+//        let imageView = UIImageView()
+//        imageView.contentMode = .scaleAspectFill
+//        imageView.clipsToBounds = true
+//        imageView.setDimensions(width: 300, height: 200)
+//        imageView.image = #imageLiteral(resourceName: "854F4A80-24D7-4532-B1CE-0846B097E07E")
+//        imageView.backgroundColor = .blue
+//        return imageView
+//    }()
     
     private lazy var optionButton: UIButton = {
         let button = UIButton(type: .system)
@@ -87,6 +67,7 @@ class ShopInfoCell: UICollectionViewCell {
     }()
     
     // MARK: - Lifecycle
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -105,13 +86,17 @@ class ShopInfoCell: UICollectionViewCell {
         addSubview(stack)
         stack.anchor(top: topAnchor, left: leftAnchor, paddingTop: 5, paddingLeft: 5)
         
-        imageScrollView.addSubview(imageViewBlue)
-        imageScrollView.addSubview(imageViewRed)
-        imageScrollView.addSubview(imageViewYellow)
-        
         imageScrollView.backgroundColor = .red
+        
+        let customImageView = createSomeImageView()
+        
+        imageScrollView.addSubview(customImageView)
+        imageScrollView.contentSize = customImageView.frame.size
+        imageScrollView.isScrollEnabled = true
+        imageScrollView.contentOffset = CGPoint(x: 0, y: 0)
+        
         addSubview(imageScrollView)
-        imageScrollView.anchor(top: stack.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 4, paddingLeft: 4, paddingRight: 4, width: 250, height: 200)
+        imageScrollView.anchor(top: stack.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 4, paddingLeft: 4, paddingRight: 4, height: 230)
         
         addSubview(underlineView)
         underlineView.anchor(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, height: 1)
@@ -127,10 +112,27 @@ class ShopInfoCell: UICollectionViewCell {
     
     // MARK: - Selectors
     @objc func showActionSheet() {
-        print("DEBUG: Show actionsheet..")
         delegate?.showActionSheet()
     }
     
     // MARK: - Helpers
     
+    func createSomeImageView() -> UIImageView {
+        let imageView = UIImageView()
+        let pageWidth = 250
+        let pageHeight = 230
+        let pageViewRect = CGRect(x:0,y:0,width:pageWidth,height:pageHeight)
+        
+        for i in 0...4 {
+            let iv = UIImageView(frame: pageViewRect)
+            let left = pageViewRect.width * CGFloat(i)
+            let xy = CGPoint(x:left,y:0)
+            
+            iv.image = #imageLiteral(resourceName: "Image")
+            iv.frame = CGRect(origin: xy, size: pageViewRect.size)
+            imageView.addSubview(iv)
+        }
+        
+        return imageView
+    }
 }
