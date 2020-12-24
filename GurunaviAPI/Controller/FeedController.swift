@@ -40,6 +40,10 @@ class FeedController: UICollectionViewController {
         collectionView.collectionViewLayout = layout()
         
         navigationController?.title = "Shop"
+        navigationController?.navigationBar.barTintColor = .red
+        navigationController?.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor.white
+        ]
         navigationItem.title = "Gurunavi API"
     }
     
@@ -52,8 +56,7 @@ class FeedController: UICollectionViewController {
             
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             
-            let containerGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-            
+            let containerGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(1.0))
             
             let containerGroup = NSCollectionLayoutGroup.horizontal(layoutSize: containerGroupSize, subitem: item, count: 1)
             containerGroup.interItemSpacing = NSCollectionLayoutSpacing.fixed(10)
@@ -71,7 +74,10 @@ class FeedController: UICollectionViewController {
             return section
         }
         
-        let layout = UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
+        let config = UICollectionViewCompositionalLayoutConfiguration()
+        config.interSectionSpacing = 10
+        
+        let layout = UICollectionViewCompositionalLayout(sectionProvider: sectionProvider, configuration: config)
         
         return layout
     }

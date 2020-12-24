@@ -23,16 +23,20 @@ class MapController: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
         self.view.backgroundColor = UIColor(red:0.7,green:0.7,blue:0.7,alpha:1.0)
         
         navigationController?.title = "Map"
+
 //        getData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        navigationController?.title = "Map"
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
-        navigationController?.title = "Map"
+        navigationController?.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor.white
+        ]
+        navigationItem.title = "Gurunavi API"
+        navigationController?.navigationBar.barTintColor = .red
         navigationController?.navigationBar.isHidden = false
         
         var topPadding: CGFloat = 0
