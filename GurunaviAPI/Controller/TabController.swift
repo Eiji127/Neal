@@ -23,7 +23,6 @@ class TabController: UITabBarController {
     func configureTabBar() {
         let feed = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
         let navFeed = templateNavigationController(image: .actions, rootViewController: feed)
-        
         let map = MapController()
         let navMap = templateNavigationController(image: .actions, rootViewController: map)
         

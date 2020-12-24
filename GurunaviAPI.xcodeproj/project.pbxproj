@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9820E883259458AE00215A74 /* ShopInfoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9820E882259458AE00215A74 /* ShopInfoHeader.swift */; };
 		98C680FE257E45BD00288FD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C680FD257E45BD00288FD4 /* AppDelegate.swift */; };
 		98C68100257E45BD00288FD4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C680FF257E45BD00288FD4 /* SceneDelegate.swift */; };
 		98C68105257E45BD00288FD4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98C68103257E45BD00288FD4 /* Main.storyboard */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9820E882259458AE00215A74 /* ShopInfoHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopInfoHeader.swift; sourceTree = "<group>"; };
 		98C680FA257E45BD00288FD4 /* GurunaviAPI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GurunaviAPI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98C680FD257E45BD00288FD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98C680FF257E45BD00288FD4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				98C68119257E4A9D00288FD4 /* ShopInfoCell.swift */,
+				9820E882259458AE00215A74 /* ShopInfoHeader.swift */,
 				98C681292581FE5200288FD4 /* ActionSheetCell.swift */,
 			);
 			path = View;
@@ -202,6 +205,7 @@
 				98C6811E257E4CAC00288FD4 /* Extensions.swift in Sources */,
 				98C68127257E58E000288FD4 /* MapController.swift in Sources */,
 				98C6812D2581FEED00288FD4 /* ActionSheetLauncher.swift in Sources */,
+				9820E883259458AE00215A74 /* ShopInfoHeader.swift in Sources */,
 				98C68124257E575500288FD4 /* TabController.swift in Sources */,
 				98C680FE257E45BD00288FD4 /* AppDelegate.swift in Sources */,
 				98C68116257E485200288FD4 /* FeedController.swift in Sources */,

@@ -27,12 +27,13 @@ class MapController: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        navigationController?.navigationBar.isHidden = false
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         
-        navigationController?.navigationBar.isHidden = true
+        navigationController?.title = "Map"
+        navigationController?.navigationBar.isHidden = false
         
         var topPadding: CGFloat = 0
         var bottomPadding: CGFloat = 0
