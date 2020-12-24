@@ -28,7 +28,7 @@ class ShopInfoCell: UICollectionViewCell {
         let label = UILabel()
         label.textColor = .gray
         label.font = UIFont.boldSystemFont(ofSize: 12)
-        label.text = "category"
+        label.text = "Category"
         return label
     }()
     
@@ -36,7 +36,7 @@ class ShopInfoCell: UICollectionViewCell {
         let label = UILabel()
         label.textColor = .gray
         label.font = UIFont.boldSystemFont(ofSize: 12)
-        label.text = "opentime: 10:00 ~ 21:00"
+        label.text = "Opentime: 10:00 ~ 21:00"
         return label
     }()
     
@@ -91,9 +91,10 @@ class ShopInfoCell: UICollectionViewCell {
         let customImageView = createSomeImageView()
         
         imageScrollView.addSubview(customImageView)
-        imageScrollView.contentSize = customImageView.frame.size
-        imageScrollView.isScrollEnabled = true
-        imageScrollView.contentOffset = CGPoint(x: 0, y: 0)
+        customImageView.anchor(top: imageScrollView.topAnchor, left: imageScrollView.leftAnchor, bottom: imageScrollView.bottomAnchor, right: imageScrollView.rightAnchor, paddingLeft: 20, paddingRight: 20)
+//        imageScrollView.contentSize = customImageView.frame.size
+//        imageScrollView.isScrollEnabled = true
+//        imageScrollView.contentOffset = CGPoint(x: 0, y: 0)
         
         addSubview(imageScrollView)
         imageScrollView.anchor(top: stack.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 4, paddingLeft: 4, paddingRight: 4, height: 230)

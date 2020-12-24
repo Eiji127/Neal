@@ -36,7 +36,7 @@ class FeedController: UICollectionViewController {
         collectionView.backgroundColor = .white
         
         navigationController?.title = "Shop"
-        navigationItem.title = "Grunavi API"
+        navigationItem.title = "Gurunavi API"
     }
     
     fileprivate func utilizeActionSheetLauncher() {
