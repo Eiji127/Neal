@@ -11,7 +11,7 @@ import UIKit
 private let reuseIdentifier = "ShopInfoCell"
 private let reuseHeaderIdentifier = "ShopInfoHeader"
 
-class FeedController: UICollectionViewController {
+final class FeedController: UICollectionViewController {
     
     // MARK: - Properties
     
@@ -23,6 +23,10 @@ class FeedController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        GurunaviService.shared.fetchData { shopInfo in
+            print(shopInfo)
+        }
+        
     }
     
     // MARK: - API
@@ -115,19 +119,12 @@ extension FeedController {
     
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("DEBUG: Push item..")
+        let webController = WebController()
+        navigationController?.pushViewController(webController, animated: true)
     }
 }
 
-// MARK: - UICollectionViewDelegateFlowLayout
-
-//extension FeedController: UICollectionViewDelegateFlowLayout {
-////    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-////
-////        return CGSize(width: view.frame.width, height: 300)
-////
-////    }
-//}
+// MARK: - ShopInfoCellDelegate
 
 extension FeedController: ShopInfoCellDelegate {
     func showActionSheet() {

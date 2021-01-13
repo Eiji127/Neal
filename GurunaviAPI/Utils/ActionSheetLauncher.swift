@@ -70,8 +70,8 @@ class ActionSheetLauncher: NSObject {
     func showTableView(_ shouldShow: Bool) {
         guard let window = window else { return }
         guard let height = tableViewHeight else { return }
-        let y = shouldShow ? window.frame.height - height : window.frame.height
-        tableView.frame.origin.y = y
+        let tableViewHeight = shouldShow ? window.frame.height - height : window.frame.height
+        tableView.frame.origin.y = tableViewHeight
     }
     
     func show() {
@@ -111,7 +111,7 @@ extension ActionSheetLauncher: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! ActionSheetCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
         return cell
     }
 }
