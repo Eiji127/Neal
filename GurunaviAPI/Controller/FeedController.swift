@@ -25,6 +25,24 @@ final class FeedController: UICollectionViewController {
         }
     }
     
+    var categoryArray = [String]() {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+    
+    var opentimeArray = [String]() {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+    
+    var mobileUrlArray = [String]() {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+    
     
     // MARK: - Lifecycle
 
@@ -67,9 +85,9 @@ final class FeedController: UICollectionViewController {
                     guard let shopOpentime = json["rest"][order]["opentime"].string else { return }
                     guard let mobileUrl = json["rest"][order]["url_mobile"].string else { return }
                     self.nameArray.append(shopName)
-//                    categoryArray.append(shopCategory)
-//                    opentimeArray.append(shopOpentime)
-//                    mobileUrlArray.append(mobileUrl)
+                    self.categoryArray.append(shopCategory)
+                    self.opentimeArray.append(shopOpentime)
+                    self.mobileUrlArray.append(mobileUrl)
                     print(self.nameArray)
                 }
             case .failure(let error):
@@ -165,12 +183,11 @@ extension FeedController {
         let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: reuseHeaderIdentifier, for: indexPath) as! ShopInfoHeader
         sectionHeader.delegate = self
         if nameArray != [] {
-            sectionHeader.setUpContents(name: self.nameArray[indexPath.section])
+            sectionHeader.setUpContents(name: self.nameArray[indexPath.section], category: self.categoryArray[indexPath.section], opentime: self.opentimeArray[indexPath.section])
         }
         
         return sectionHeader
     }
-    
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let webController = WebController()

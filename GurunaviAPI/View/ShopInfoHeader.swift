@@ -87,8 +87,10 @@ class ShopInfoHeader: UICollectionReusableView {
     
     // MARK: - Helpers
     
-    func setUpContents(name: String){
+    func setUpContents(name: String, category: String, opentime: String){
         nameLabel.text = name
+        categoryLabel.text = category
+        opentimeLabel.text = " / " + opentime
     }
     
     @objc func showActionSheet() {
