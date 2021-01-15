@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 
 private let reuseIdentifier = "ShopInfoCell"
@@ -17,19 +19,67 @@ final class FeedController: UICollectionViewController {
     
     private var actionSheetLauncher: ActionSheetLauncher!
     
+    var nameArray = [String]() {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+    
     
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchData()
+//        GurunaviService.shared.fetchData()
         configureUI()
-        GurunaviService.shared.fetchData { shopInfo in
-            print(shopInfo)
-        }
-        
+        collectionView.reloadData()
+        print("DEBUG: \(self.nameArray)")
     }
     
     // MARK: - API
+    
+    func fetchData() {
+        
+        let apiKey = "fe1a8ac3175a337ab4abe8bf940837fa"
+        var text = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=\(apiKey)&name="
+        let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        print("DEBUG: Into method fetching data..")
+        
+        AF.request(url as! URLConvertible, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { response in
+            let fetchingDataMax = 10
+            
+            print("DEBUG: requesting .GET...")
+            
+            switch response.result {
+            case .success:
+                for order in 0...fetchingDataMax {
+                    
+//                    var nameArray = [String]()
+//                    var categoryArray = [String]()
+//                    var opentimeArray = [String]()
+//                    var mobileUrlArray = [String]()
+                    
+                    let json: JSON = JSON(response.data as Any)
+                    
+                    guard let shopName = json["rest"][order]["name"].string else { return }
+                    guard let shopCategory = json["rest"][order]["category"].string else { return }
+                    guard let shopOpentime = json["rest"][order]["opentime"].string else { return }
+                    guard let mobileUrl = json["rest"][order]["url_mobile"].string else { return }
+                    self.nameArray.append(shopName)
+//                    categoryArray.append(shopCategory)
+//                    opentimeArray.append(shopOpentime)
+//                    mobileUrlArray.append(mobileUrl)
+                    print(self.nameArray)
+                }
+            case .failure(let error):
+                print(error)
+                break
+            }
+            
+        }
+        
+    }
     
     
     // MARK: - Helper
@@ -114,6 +164,10 @@ extension FeedController {
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: reuseHeaderIdentifier, for: indexPath) as! ShopInfoHeader
         sectionHeader.delegate = self
+        if nameArray != [] {
+            sectionHeader.setUpContents(name: self.nameArray[indexPath.section])
+        }
+        
         return sectionHeader
     }
     

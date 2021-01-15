@@ -41,8 +41,6 @@ class ShopInfoCell: UICollectionViewCell {
         addSubview(underlineView)
         underlineView.anchor(top: imageView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor,paddingTop: 10, paddingLeft: 5, paddingRight: 5, height: 3)
         
-        
-        
     }
     
     required init?(coder: NSCoder) {

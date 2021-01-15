@@ -14,9 +14,10 @@ import SDWebImage
 struct GurunaviService {
     static var shared = GurunaviService()
     
-    private let apiKey = APIKeyManager().getValue(key: "apiKey") as? String 
+//    private let apiKey = APIKeyManager().getValue(key: "apiKey") as? String
+    let apiKey = "fe1a8ac3175a337ab4abe8bf940837fa"
     
-    func fetchData(completion: @escaping([ShopInfo]) -> Void) {
+    func fetchData() {
         
         var text = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=\(apiKey)&name="
         let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
@@ -24,10 +25,6 @@ struct GurunaviService {
         AF.request(url as! URLConvertible, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { response in
             
             var nameArray = [String]()
-            var categoryArray = [String]()
-            var opentimeArray = [String]()
-            var mobileUrlArray = [String]()
-            
             
             let fetchingDataMax = 5
             
@@ -41,15 +38,15 @@ struct GurunaviService {
                     guard let shopOpentime = json["rest"][order]["opentime"].string else { return }
                     guard let mobileUrl = json["rest"][order]["url_mobile"].string else { return }
                     nameArray.append(shopName)
-                    categoryArray.append(shopCategory)
-                    opentimeArray.append(shopOpentime)
-                    mobileUrlArray.append(mobileUrl)
+                    
                 }
             case .failure(let error):
                 print(error)
                 break
             }
-            
+            print("DEBUG: fetching some data...")
+            print("DEBUG: \(nameArray)")
+
         }
         
     }
