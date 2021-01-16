@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ShopInfoCell: UICollectionViewCell {
     // MARK: - Properties
@@ -50,5 +51,7 @@ class ShopInfoCell: UICollectionViewCell {
     // MARK: - Selectors
     
     // MARK: - Helpers
-    
+    func setUpImageView(imageUrl: URL) {
+        imageView.sd_setImage(with: imageUrl, completed: nil)
+    }
 }

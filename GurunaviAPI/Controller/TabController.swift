@@ -11,11 +11,21 @@ class TabController: UITabBarController {
     
     // MARK: - Properties
     
+    private let gurunaviImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "Image-2")
+        imageView.contentMode = .scaleToFill
+        imageView.clipsToBounds = true
+        imageView.alpha = 0.9
+        return imageView
+    }()
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTabBar()
+        configureLogoImage()
     }
     
     // MARK: - Helpers
@@ -28,6 +38,11 @@ class TabController: UITabBarController {
         
         viewControllers = [navFeed, navMap]
     }
+    
+    func configureLogoImage() {
+        view.addSubview(gurunaviImage)
+        gurunaviImage.anchor(left: view.leftAnchor, bottom: tabBar.topAnchor, right: view.rightAnchor, height: 80)
+    }
 
     func templateNavigationController(image: UIImage, rootViewController: UIViewController) -> UINavigationController {
         let nav = UINavigationController(rootViewController: rootViewController)
@@ -35,21 +50,5 @@ class TabController: UITabBarController {
         nav.navigationBar.barTintColor = .white
         
         return nav
-    }
-    
-    private func createLayout() -> UICollectionViewLayout {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                              heightDimension: .fractionalHeight(1.0))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .absolute(44))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
-                                                       subitems: [item])
-        
-        let section = NSCollectionLayoutSection(group: group)
-        
-        let layout = UICollectionViewCompositionalLayout(section: section)
-        return layout
     }
 }

@@ -43,6 +43,11 @@ final class FeedController: UICollectionViewController {
         }
     }
     
+    var shopsImageArray = [[String]]() {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     // MARK: - Lifecycle
 
@@ -59,12 +64,15 @@ final class FeedController: UICollectionViewController {
     
     func fetchData() {
         
+        var imageUrlArray = [String]()
+        
         let apiKey = "fe1a8ac3175a337ab4abe8bf940837fa"
         var text = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=\(apiKey)&name="
         let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         print("DEBUG: Into method fetching data..")
         
         AF.request(url as! URLConvertible, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { response in
+            
             let fetchingDataMax = 10
             
             print("DEBUG: requesting .GET...")
@@ -73,22 +81,23 @@ final class FeedController: UICollectionViewController {
             case .success:
                 for order in 0...fetchingDataMax {
                     
-//                    var nameArray = [String]()
-//                    var categoryArray = [String]()
-//                    var opentimeArray = [String]()
-//                    var mobileUrlArray = [String]()
-                    
                     let json: JSON = JSON(response.data as Any)
                     
                     guard let shopName = json["rest"][order]["name"].string else { return }
                     guard let shopCategory = json["rest"][order]["category"].string else { return }
                     guard let shopOpentime = json["rest"][order]["opentime"].string else { return }
-                    guard let mobileUrl = json["rest"][order]["url_mobile"].string else { return }
+                    guard let mobileUrl = json["rest"][order]["url"].string else { return }
+                    guard let imageUrl1 = json["rest"][order]["image_url"]["shop_image1"].string else { return }
+                    guard let imageUrl2 = json["rest"][order]["image_url"]["shop_image2"].string else { return }
                     self.nameArray.append(shopName)
                     self.categoryArray.append(shopCategory)
                     self.opentimeArray.append(shopOpentime)
                     self.mobileUrlArray.append(mobileUrl)
-                    print(self.nameArray)
+                    imageUrlArray.append(imageUrl1)
+                    imageUrlArray.append(imageUrl2)
+                    self.shopsImageArray.append(imageUrlArray)
+                    imageUrlArray.removeAll()
+                    print("\(self.mobileUrlArray)")
                 }
             case .failure(let error):
                 print(error)
@@ -171,11 +180,15 @@ final class FeedController: UICollectionViewController {
 extension FeedController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return 1
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ShopInfoCell
+        if shopsImageArray != [] {
+            let shopImage = URL(string: shopsImageArray[indexPath.section][indexPath.row])
+            cell.setUpImageView(imageUrl: shopImage!)
+        }
         return cell
     }
     
@@ -191,6 +204,7 @@ extension FeedController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let webController = WebController()
+        webController.mobileUrl = mobileUrlArray[indexPath.section]
         navigationController?.pushViewController(webController, animated: true)
     }
 }
