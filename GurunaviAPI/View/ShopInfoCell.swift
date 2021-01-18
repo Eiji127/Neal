@@ -6,13 +6,14 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ShopInfoCell: UICollectionViewCell {
     // MARK: - Properties
     
     private let underlineView: UIView = {
         let line = UIView()
-        line.backgroundColor = .systemGroupedBackground
+        line.backgroundColor = .systemRed
         return line
     }()
     
@@ -24,7 +25,7 @@ class ShopInfoCell: UICollectionViewCell {
         imageView.clipsToBounds = true
         imageView.setDimensions(width: 200, height: 200)
         imageView.image = #imageLiteral(resourceName: "Image")
-        imageView.backgroundColor = .blue
+        imageView.backgroundColor = .white
         return imageView
     }()
     
@@ -41,8 +42,6 @@ class ShopInfoCell: UICollectionViewCell {
         addSubview(underlineView)
         underlineView.anchor(top: imageView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor,paddingTop: 10, paddingLeft: 5, paddingRight: 5, height: 3)
         
-        
-        
     }
     
     required init?(coder: NSCoder) {
@@ -52,5 +51,7 @@ class ShopInfoCell: UICollectionViewCell {
     // MARK: - Selectors
     
     // MARK: - Helpers
-    
+    func setUpImageView(imageUrl: URL) {
+        imageView.sd_setImage(with: imageUrl, completed: nil)
+    }
 }

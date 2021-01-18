@@ -15,9 +15,9 @@ class ShopInfoHeader: UICollectionReusableView {
     
     // MARK: - Properties
     
-    var shopInfo: ShopInfo? {
+    fileprivate var shopInfo: [ShopInfo] = [] {
         didSet {
-            configure()
+//            configure()
         }
     }
 
@@ -56,6 +56,8 @@ class ShopInfoHeader: UICollectionReusableView {
         return button
     }()
     
+    // MARK: - Lifecycles
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -76,18 +78,19 @@ class ShopInfoHeader: UICollectionReusableView {
         optionButton.centerY(inView: stack)
         optionButton.anchor(right: rightAnchor, paddingRight: 10)
         
-        configure()
+        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure() {
-        GurunaviService.shared.fetchData { shopInfo in
-            print(shopInfo)
-        }
-        
+    // MARK: - Helpers
+    
+    func setUpContents(name: String, category: String, opentime: String){
+        nameLabel.text = name
+        categoryLabel.text = category
+        opentimeLabel.text = " / " + opentime
     }
     
     @objc func showActionSheet() {
