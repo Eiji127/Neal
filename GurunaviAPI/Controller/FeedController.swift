@@ -49,12 +49,13 @@ final class FeedController: UICollectionViewController {
         }
     }
     
+    var itemCount: Int = 2
+    
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchData()
-//        GurunaviService.shared.fetchData()
         configureUI()
         collectionView.reloadData()
         print("DEBUG: \(self.nameArray)")
@@ -66,20 +67,22 @@ final class FeedController: UICollectionViewController {
         
         var imageUrlArray = [String]()
         
-        let apiKey = "fe1a8ac3175a337ab4abe8bf940837fa"
-        var text = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=\(apiKey)&name="
+        guard let apiKey = APIKeyManager().getValue(key: "apiKey") else {
+            return
+        }
+        var text = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=\(apiKey)&name=&area=AREA120"
         let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         print("DEBUG: Into method fetching data..")
         
         AF.request(url as! URLConvertible, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { response in
             
-            let fetchingDataMax = 10
+            let fetchingDataMax = 0...9
             
             print("DEBUG: requesting .GET...")
             
             switch response.result {
             case .success:
-                for order in 0...fetchingDataMax {
+                for order in fetchingDataMax {
                     
                     let json: JSON = JSON(response.data as Any)
                     
@@ -94,7 +97,9 @@ final class FeedController: UICollectionViewController {
                     self.opentimeArray.append(shopOpentime)
                     self.mobileUrlArray.append(mobileUrl)
                     imageUrlArray.append(imageUrl1)
-                    imageUrlArray.append(imageUrl2)
+                    if imageUrl2 != "" {
+                        imageUrlArray.append(imageUrl2)
+                    }
                     self.shopsImageArray.append(imageUrlArray)
                     imageUrlArray.removeAll()
                     print("\(self.mobileUrlArray)")
@@ -143,7 +148,7 @@ final class FeedController: UICollectionViewController {
             containerGroup.interItemSpacing = NSCollectionLayoutSpacing.fixed(10)
             
             let section = NSCollectionLayoutSection(group: containerGroup)
-            section.orthogonalScrollingBehavior = .groupPaging
+            section.orthogonalScrollingBehavior = .continuous
             section.interGroupSpacing = 10
             
             let sectionHeaderSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),heightDimension: .estimated(60))
@@ -180,7 +185,7 @@ final class FeedController: UICollectionViewController {
 extension FeedController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return itemCount
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

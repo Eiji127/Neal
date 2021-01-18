@@ -13,7 +13,7 @@ class TabController: UITabBarController {
     
     private let gurunaviImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "Image-2")
+        imageView.image = UIImage(named: "Image-3")
         imageView.contentMode = .scaleToFill
         imageView.clipsToBounds = true
         imageView.alpha = 0.9
@@ -41,7 +41,7 @@ class TabController: UITabBarController {
     
     func configureLogoImage() {
         view.addSubview(gurunaviImage)
-        gurunaviImage.anchor(left: view.leftAnchor, bottom: tabBar.topAnchor, right: view.rightAnchor, height: 80)
+        gurunaviImage.anchor(bottom: tabBar.topAnchor, right: view.rightAnchor)
     }
 
     func templateNavigationController(image: UIImage, rootViewController: UIViewController) -> UINavigationController {

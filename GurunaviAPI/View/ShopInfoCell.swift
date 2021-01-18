@@ -13,7 +13,7 @@ class ShopInfoCell: UICollectionViewCell {
     
     private let underlineView: UIView = {
         let line = UIView()
-        line.backgroundColor = .systemGroupedBackground
+        line.backgroundColor = .systemRed
         return line
     }()
     
@@ -25,7 +25,7 @@ class ShopInfoCell: UICollectionViewCell {
         imageView.clipsToBounds = true
         imageView.setDimensions(width: 200, height: 200)
         imageView.image = #imageLiteral(resourceName: "Image")
-        imageView.backgroundColor = .blue
+        imageView.backgroundColor = .white
         return imageView
     }()
     

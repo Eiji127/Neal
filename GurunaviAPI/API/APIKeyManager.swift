@@ -9,7 +9,7 @@ import UIKit
 
 struct APIKeyManager {
 
-    private let keyFilePath = Bundle.main.path(forResource: "apiKey", ofType: "plist")
+    private let keyFilePath = Bundle.main.path(forResource: "GurunaviAPIKey", ofType: "plist")
 
     func getKeys() -> NSDictionary? {
         guard let keyFilePath = keyFilePath else {
