@@ -35,12 +35,29 @@ class ActionSheetLauncher: NSObject {
     
     private lazy var footerView: UIView = {
         let view = UIView()
-        view.addSubview(cancelButton)
-        cancelButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        cancelButton.anchor(left: view.leftAnchor, right: view.rightAnchor, paddingLeft: 12, paddingRight: 12)
-        cancelButton.centerY(inView: view)
-        cancelButton.layer.cornerRadius = 50 / 2
+        let stack = UIStackView(arrangedSubviews: [researchButton, cancelButton])
+        stack.axis = .vertical
+        view.addSubview(stack)
+//        stack.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        stack.anchor(left: view.leftAnchor, right: view.rightAnchor, paddingLeft: 12, paddingRight: 12)
+        stack.centerY(inView: view)
+        stack.spacing = 20
         return view
+    }()
+    
+//    private let pickerView: UIPickerView = {
+//        let picker = UIPickerView()
+//    }
+    
+    private lazy var researchButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Research", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
+        button.tintColor = .white
+        button.backgroundColor = .systemRed
+        button.addTarget(self, action: #selector(handleDismissal), for: .touchUpInside)
+        button.layer.cornerRadius = 30 / 2
+        return button
     }()
     
     private lazy var cancelButton: UIButton = {
@@ -49,6 +66,7 @@ class ActionSheetLauncher: NSObject {
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         button.backgroundColor = .systemGroupedBackground
         button.addTarget(self, action: #selector(handleDismissal), for: .touchUpInside)
+        button.layer.cornerRadius = 30 / 2
         return button
     }()
     
@@ -62,7 +80,7 @@ class ActionSheetLauncher: NSObject {
     @objc func handleDismissal() {
         UIView.animate(withDuration: 0.5) {
             self.blackView.alpha = 0
-            self.tableView.frame.origin.y += 300
+            self.tableView.frame.origin.y += 700
         }
     }
     
@@ -82,7 +100,7 @@ class ActionSheetLauncher: NSObject {
         blackView.frame = window.frame
         
         window.addSubview(tableView)
-        let height = 300
+        let height = window.frame.height * 7 / 10
         self.tableViewHeight = CGFloat(height)
         tableView.frame = CGRect(x: 0, y: window.frame.height, width: window.frame.width, height: CGFloat(height))
         

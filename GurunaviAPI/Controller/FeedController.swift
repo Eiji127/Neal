@@ -13,6 +13,7 @@ import SwiftyJSON
 private let reuseIdentifier = "ShopInfoCell"
 private let reuseHeaderIdentifier = "ShopInfoHeader"
 
+
 final class FeedController: UICollectionViewController {
     
     // MARK: - Properties
@@ -57,6 +58,7 @@ final class FeedController: UICollectionViewController {
         super.viewDidLoad()
         fetchData()
         configureUI()
+        configureRightBarButton()
         collectionView.reloadData()
         print("DEBUG: \(self.nameArray)")
     }
@@ -133,6 +135,24 @@ final class FeedController: UICollectionViewController {
         navigationItem.title = "Gurunavi API"
     }
     
+    func configureRightBarButton() {
+        let researchImageView = UIImageView()
+        researchImageView.image = UIImage(systemName: "magnifyingglass")
+        researchImageView.tintColor = .white
+        researchImageView.setDimensions(width: 27, height: 27)
+        researchImageView.layer.masksToBounds = true
+        researchImageView.isUserInteractionEnabled = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(researchImageTapped))
+        researchImageView.addGestureRecognizer(tap)
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: researchImageView)
+    }
+    
+    @objc func researchImageTapped() {
+        utilizeActionSheetLauncher()
+    }
+    
     func layout() -> UICollectionViewCompositionalLayout {
         
         let sectionProvider = { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
@@ -199,7 +219,6 @@ extension FeedController {
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: reuseHeaderIdentifier, for: indexPath) as! ShopInfoHeader
-        sectionHeader.delegate = self
         if nameArray != [] {
             sectionHeader.setUpContents(name: self.nameArray[indexPath.section], category: self.categoryArray[indexPath.section], opentime: self.opentimeArray[indexPath.section])
         }
@@ -214,10 +233,3 @@ extension FeedController {
     }
 }
 
-// MARK: - ShopInfoCellDelegate
-
-extension FeedController: ShopInfoCellDelegate {
-    func showActionSheet() {
-        utilizeActionSheetLauncher()
-    }
-}

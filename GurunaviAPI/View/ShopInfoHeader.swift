@@ -7,9 +7,7 @@
 
 import UIKit
 
-protocol ShopInfoCellDelegate: class {
-    func showActionSheet()
-}
+
 
 class ShopInfoHeader: UICollectionReusableView {
     
@@ -20,8 +18,6 @@ class ShopInfoHeader: UICollectionReusableView {
 //            configure()
         }
     }
-
-    weak var delegate: ShopInfoCellDelegate?
     
     private let nameLabel: UILabel = {
         let label = UILabel()
@@ -94,7 +90,7 @@ class ShopInfoHeader: UICollectionReusableView {
     }
     
     @objc func showActionSheet() {
-        delegate?.showActionSheet()
+        print("")
     }
     
 }
