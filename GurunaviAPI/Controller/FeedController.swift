@@ -8,6 +8,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import MapKit
 
 
 private let reuseIdentifier = "ShopInfoCell"
@@ -52,6 +53,10 @@ final class FeedController: UICollectionViewController {
     
     var itemCount: Int = 2
     
+    var locationManager: CLLocationManager? = nil
+    var longitude: CLLocationDegrees? = 0
+    var langitude: CLLocationDegrees? = 0
+    
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
@@ -59,6 +64,7 @@ final class FeedController: UICollectionViewController {
         fetchData()
         configureUI()
         configureRightBarButton()
+        locationManager?.startUpdatingLocation()
         collectionView.reloadData()
         print("DEBUG: \(self.nameArray)")
     }

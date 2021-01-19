@@ -21,8 +21,6 @@ class MapController: UIViewController, MKMapViewDelegate, CLLocationManagerDeleg
         
         locationManager.delegate = self
         self.view.backgroundColor = UIColor(red:0.7,green:0.7,blue:0.7,alpha:1.0)
-        
-        navigationController?.title = "Map"
 
 //        getData()
     }
