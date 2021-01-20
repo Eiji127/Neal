@@ -57,6 +57,13 @@ final class FeedController: UICollectionViewController {
     var longitude: CLLocationDegrees? = 0
     var langitude: CLLocationDegrees? = 0
     
+    private let searchBar: UISearchBar = {
+        let search = UISearchBar()
+        search.isFirstResponder
+        search.searchTextField.backgroundColor = .white
+        return search
+    }()
+    
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
@@ -78,7 +85,7 @@ final class FeedController: UICollectionViewController {
         guard let apiKey = APIKeyManager().getValue(key: "apiKey") else {
             return
         }
-        var text = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=\(apiKey)&name=&area=AREA120"
+        var text = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=\(apiKey)&area=AREA120&freeword=ハンバーグ"
         let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         print("DEBUG: Into method fetching data..")
         
@@ -156,8 +163,19 @@ final class FeedController: UICollectionViewController {
     }
     
     @objc func researchImageTapped() {
-        utilizeActionSheetLauncher()
+        if navigationItem.titleView != searchBar {
+            showResearchBar()
+        } else {
+           
+        }
+        
     }
+    
+    func showResearchBar() {
+        navigationItem.titleView = searchBar
+        searchBar.delegate = self
+    }
+    
     
     func layout() -> UICollectionViewCompositionalLayout {
         
@@ -236,6 +254,12 @@ extension FeedController {
         let webController = WebController()
         webController.mobileUrl = mobileUrlArray[indexPath.section]
         navigationController?.pushViewController(webController, animated: true)
+    }
+}
+
+extension FeedController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
 }
 
