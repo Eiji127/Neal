@@ -12,7 +12,12 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     
     static let shared = LocationManager()
     
-    let manager = CLLocationManager()
+    private var manager: CLLocationManager = {
+     var locationManager = CLLocationManager()
+     locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
+     locationManager.distanceFilter = 5
+     return locationManager
+    }()
     
     var completion: ((CLLocation) -> Void)?
     

@@ -12,18 +12,9 @@ class MapController: UIViewController {
     
     // MARK: - Properties
     
-    private let map: MKMapView = {
+    private let mapView: MKMapView = {
         let map = MKMapView()
         return map
-    }()
-    
-    private let currentLocationButton: UIButton = {
-       let button = UIButton()
-        button.setImage(UIImage(systemName: ""), for: .normal)
-        button.setDimensions(width: 60, height: 60)
-        button.layer.cornerRadius = 60 / 3
-        button.backgroundColor = .gray
-        return button
     }()
     
     var latitude: CLLocationDegrees?
@@ -34,12 +25,27 @@ class MapController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.title = "Map"
+        navigationController?.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor.white
+        ]
+        navigationItem.title = "Gurunavi API"
+        navigationController?.navigationBar.barTintColor = .red
+        navigationController?.navigationBar.isHidden = false
+        
+        view.addSubview(mapView)
+        fetchCurrentLocation()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        view.addSubview(map)
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        mapView.frame = view.bounds
+    }
+    
+    func fetchCurrentLocation() {
+        print("DEBUG: moving into fetchCurrentLocation Method...")
         LocationManager.shared.getUserLocation { [weak self] location in
+            print("DEBUG: moving into LM Closure...")
             DispatchQueue.main.async {
                 print("DEBUG: getUserLocation is Fired..")
                 guard let strongSelf = self else {
@@ -48,41 +54,50 @@ class MapController: UIViewController {
                 strongSelf.addMapPin(with: location)
             }
         }
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        navigationController?.title = "Map"
-        navigationController?.navigationBar.titleTextAttributes = [
-            .foregroundColor: UIColor.white
-        ]
-        navigationItem.title = "Gurunavi API"
-        navigationController?.navigationBar.barTintColor = .red
-        navigationController?.navigationBar.isHidden = false
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        map.frame = view.bounds
     }
     
     func addMapPin(with location: CLLocation) {
         let pin = MKPointAnnotation()
         pin.coordinate = location.coordinate
-        map.setRegion(MKCoordinateRegion(center: location.coordinate,
+        mapView.setRegion(MKCoordinateRegion(center: location.coordinate,
                                          span: MKCoordinateSpan(
-                                            latitudeDelta: 0.9,
-                                            longitudeDelta: 0.9
+                                            latitudeDelta: 0.005,
+                                            longitudeDelta: 0.005
                                          )
         ),
         animated: true)
-        map.addAnnotation(pin)
+        mapView.addAnnotation(pin)
     }
     
     func addAnnotation(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
         let annotation = MKPointAnnotation()
         annotation.coordinate = CLLocationCoordinate2DMake(latitude, longitude)
-        map.addAnnotation(annotation)
+        mapView.addAnnotation(annotation)
+    }
+}
+
+extension MapController: CLLocationManagerDelegate {
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        if CLLocationManager.locationServicesEnabled() {
+            let status = manager.authorizationStatus
+            
+            switch status {
+            case .authorizedAlways, .authorizedWhenInUse:
+                manager.startUpdatingLocation()
+                
+            case .notDetermined:
+                manager.requestWhenInUseAuthorization()
+                
+            case .denied:
+                break
+                
+            case .restricted:
+                break
+                
+            default:
+                break
+            }
+        }
     }
 }
 
