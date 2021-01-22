@@ -14,6 +14,8 @@ class MapController: UIViewController {
     
     private let mapView: MKMapView = {
         let map = MKMapView()
+        map.showsUserLocation = true
+        map.userTrackingMode = .followWithHeading
         return map
     }()
     
@@ -25,6 +27,14 @@ class MapController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let region = MKCoordinateRegion(center: mapView.centerCoordinate,
+                                        span: MKCoordinateSpan(
+                                           latitudeDelta: 0.005,
+                                           longitudeDelta: 0.005
+                                        )
+        )
+        mapView.setRegion(region,animated:true)
+        
         navigationController?.title = "Map"
         navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor.white
@@ -34,7 +44,7 @@ class MapController: UIViewController {
         navigationController?.navigationBar.isHidden = false
         
         view.addSubview(mapView)
-        fetchCurrentLocation()
+//        fetchCurrentLocation()
     }
     
     override func viewDidLayoutSubviews() {
@@ -45,7 +55,6 @@ class MapController: UIViewController {
     func fetchCurrentLocation() {
         print("DEBUG: Moved into fetchCurrentLocation Method...")
         LocationManager.shared.getUserLocation { [weak self] location in
-            print("DEBUG: Moved into LM Closure...")
             DispatchQueue.main.async {
                 print("DEBUG: getUserLocation is Fired..")
                 guard let strongSelf = self else {
@@ -59,6 +68,7 @@ class MapController: UIViewController {
     func addMapPin(with location: CLLocation) {
         let pin = MKPointAnnotation()
         pin.coordinate = location.coordinate
+        print(pin.coordinate)
         mapView.setRegion(MKCoordinateRegion(center: location.coordinate,
                                          span: MKCoordinateSpan(
                                             latitudeDelta: 0.005,
@@ -72,32 +82,14 @@ class MapController: UIViewController {
     func addAnnotation(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
         let annotation = MKPointAnnotation()
         annotation.coordinate = CLLocationCoordinate2DMake(latitude, longitude)
+        mapView.setRegion(MKCoordinateRegion(center: annotation.coordinate,
+                                         span: MKCoordinateSpan(
+                                            latitudeDelta: 0.005,
+                                            longitudeDelta: 0.005
+                                         )
+        ),
+        animated: true)
         mapView.addAnnotation(annotation)
-    }
-}
-
-extension MapController: CLLocationManagerDelegate {
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        if CLLocationManager.locationServicesEnabled() {
-            let status = manager.authorizationStatus
-            
-            switch status {
-            case .authorizedAlways, .authorizedWhenInUse:
-                manager.startUpdatingLocation()
-                
-            case .notDetermined:
-                manager.requestWhenInUseAuthorization()
-                
-            case .denied:
-                break
-                
-            case .restricted:
-                break
-                
-            default:
-                break
-            }
-        }
     }
 }
 

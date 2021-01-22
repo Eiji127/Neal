@@ -61,8 +61,12 @@ final class FeedController: UICollectionViewController {
     
     private let searchBar: UISearchBar = {
         let search = UISearchBar()
-        search.isFirstResponder
         search.searchTextField.backgroundColor = .white
+        search.textField?.layer.cornerRadius = (search.textField?.bounds.height)! / 2.0
+        search.textField?.layer.masksToBounds = true
+        search.placeholder = "Search"
+        search.textField?.attributedPlaceholder = NSAttributedString(string: search.placeholder ?? "", attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        
         return search
     }()
     
@@ -197,7 +201,7 @@ final class FeedController: UICollectionViewController {
     
     @objc func researchImageTapped() {
         if navigationItem.titleView != searchBar {
-            showResearchBar()
+            showSearchBar()
             
         } else {
            
@@ -205,7 +209,7 @@ final class FeedController: UICollectionViewController {
         
     }
     
-    func showResearchBar() {
+    func showSearchBar() {
         navigationItem.titleView = searchBar
         searchBar.delegate = self
     }
@@ -324,8 +328,7 @@ extension FeedController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         if !searchBar.showsCancelButton {
             researchImageView.isHidden = true
-            searchBar.showsCancelButton = true
-            
+            searchBar.setShowsCancelButton(true, animated: true)
         }
     }
     
@@ -334,5 +337,7 @@ extension FeedController: UISearchBarDelegate {
         researchImageView.isHidden = false
         searchBar.endEditing(true)
     }
+    
+    
 }
 

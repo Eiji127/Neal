@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 class TabController: UITabBarController {
     
     // MARK: - Properties
@@ -26,7 +27,8 @@ class TabController: UITabBarController {
         button.addTarget(self, action: #selector(fetchCurrentLocation), for: .touchUpInside)
         button.setDimensions(width: 50, height: 50)
         button.layer.cornerRadius = 50 / 3
-        button.backgroundColor = .white
+        button.backgroundColor = .red
+        button.alpha = 0.7
         return button
     }()
     
@@ -73,7 +75,9 @@ class TabController: UITabBarController {
     
     @objc func fetchCurrentLocation() {
         print("DEBUG: fetch your location...")
+        MapController().fetchCurrentLocation()
     }
+    
 }
 
 extension TabController: UITabBarControllerDelegate {
