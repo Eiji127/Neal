@@ -43,7 +43,7 @@ class MapController: UIViewController {
         navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor.white
         ]
-        navigationItem.title = "Gurunavi API"
+        navigationItem.title = "近辺のお店"
         navigationController?.navigationBar.barTintColor = .red
         navigationController?.navigationBar.isHidden = false
         

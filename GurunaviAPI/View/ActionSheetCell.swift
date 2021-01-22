@@ -17,11 +17,11 @@ class ActionSheetCell: UITableViewCell {
 //    }
     
     private let optionImageView: UIImageView = {
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFit
-        iv.clipsToBounds = true
-        iv.image = #imageLiteral(resourceName: "down_arrow_24pt")
-        return iv
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        imageView.image = #imageLiteral(resourceName: "down_arrow_24pt")
+        return imageView
     }()
     
     private let titleLabel: UILabel = {
