@@ -27,13 +27,15 @@ class MapController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let region = MKCoordinateRegion(center: mapView.centerCoordinate,
+        view.addSubview(mapView)
+        
+        let region = MKCoordinateRegion(center: mapView.userLocation.coordinate,
                                         span: MKCoordinateSpan(
                                            latitudeDelta: 0.005,
                                            longitudeDelta: 0.005
                                         )
         )
-        mapView.setRegion(region,animated:true)
+        mapView.setRegion(region, animated:true)
         
         navigationController?.title = "Map"
         navigationController?.navigationBar.titleTextAttributes = [
@@ -43,13 +45,32 @@ class MapController: UIViewController {
         navigationController?.navigationBar.barTintColor = .red
         navigationController?.navigationBar.isHidden = false
         
-        view.addSubview(mapView)
+        configureNavigationBarRightButton()
+        
 //        fetchCurrentLocation()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         mapView.frame = view.bounds
+    }
+    
+    func configureNavigationBarRightButton() {
+        let setCenterButton = UIImageView()
+        setCenterButton.image = UIImage(systemName: "location")
+        setCenterButton.tintColor = .white
+        setCenterButton.setDimensions(width: 27, height: 27)
+        setCenterButton.layer.masksToBounds = true
+        setCenterButton.isUserInteractionEnabled = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(setCenterButtonTapped))
+        setCenterButton.addGestureRecognizer(tap)
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: setCenterButton)
+    }
+    
+    @objc func setCenterButtonTapped() {
+        mapView.setCenter(mapView.userLocation.coordinate, animated: true)
     }
     
     func fetchCurrentLocation() {
@@ -90,6 +111,10 @@ class MapController: UIViewController {
         ),
         animated: true)
         mapView.addAnnotation(annotation)
+    }
+    
+    func setCenterUserLocation() {
+        mapView.setCenter(mapView.userLocation.coordinate, animated: true)
     }
 }
 

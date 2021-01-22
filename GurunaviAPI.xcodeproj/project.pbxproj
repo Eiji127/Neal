@@ -12,8 +12,8 @@
 		9820E88A2594F48500215A74 /* WebController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9820E8892594F48400215A74 /* WebController.swift */; };
 		9820E89225970D0300215A74 /* ShopInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9820E89125970D0300215A74 /* ShopInfo.swift */; };
 		984B147D25B8129D001E8A51 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984B147C25B8129D001E8A51 /* LocationManager.swift */; };
-		9869F97425AF3BB60013FA49 /* GurunaviAPIKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9869F97325AF3BB60013FA49 /* GurunaviAPIKey.plist */; };
 		9869F97725AF3C740013FA49 /* APIKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9869F97625AF3C740013FA49 /* APIKeyManager.swift */; };
+		986D227525BB20A100688B5F /* GurunaviAPIKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = 986D227425BB20A100688B5F /* GurunaviAPIKey.plist */; };
 		98C680FE257E45BD00288FD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C680FD257E45BD00288FD4 /* AppDelegate.swift */; };
 		98C68100257E45BD00288FD4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C680FF257E45BD00288FD4 /* SceneDelegate.swift */; };
 		98C68107257E45C100288FD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98C68106257E45C100288FD4 /* Assets.xcassets */; };
@@ -35,8 +35,8 @@
 		9820E8892594F48400215A74 /* WebController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebController.swift; sourceTree = "<group>"; };
 		9820E89125970D0300215A74 /* ShopInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopInfo.swift; sourceTree = "<group>"; };
 		984B147C25B8129D001E8A51 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-		9869F97325AF3BB60013FA49 /* GurunaviAPIKey.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = GurunaviAPIKey.plist; sourceTree = "<group>"; };
 		9869F97625AF3C740013FA49 /* APIKeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeyManager.swift; sourceTree = "<group>"; };
+		986D227425BB20A100688B5F /* GurunaviAPIKey.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = GurunaviAPIKey.plist; sourceTree = "<group>"; };
 		98C680FA257E45BD00288FD4 /* GurunaviAPI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GurunaviAPI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98C680FD257E45BD00288FD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98C680FF257E45BD00288FD4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,7 +105,7 @@
 				98C68106257E45C100288FD4 /* Assets.xcassets */,
 				98C68108257E45C100288FD4 /* LaunchScreen.storyboard */,
 				98C6810B257E45C100288FD4 /* Info.plist */,
-				9869F97325AF3BB60013FA49 /* GurunaviAPIKey.plist */,
+				986D227425BB20A100688B5F /* GurunaviAPIKey.plist */,
 			);
 			path = GurunaviAPI;
 			sourceTree = "<group>";
@@ -227,8 +227,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				98C6810A257E45C100288FD4 /* LaunchScreen.storyboard in Resources */,
+				986D227525BB20A100688B5F /* GurunaviAPIKey.plist in Resources */,
 				98C68107257E45C100288FD4 /* Assets.xcassets in Resources */,
-				9869F97425AF3BB60013FA49 /* GurunaviAPIKey.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

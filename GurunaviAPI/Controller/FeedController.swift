@@ -303,10 +303,9 @@ extension FeedController: shopInfoHeaderDelegate {
         let navigationController = rootVC?.children as? UINavigationController
         rootVC?.selectedIndex = 1
         navigationController?.pushViewController(map, animated: true)
-        addAnnotation()
     }
     
-    func addAnnotation() {
+    func addPinOnMap() {
         let map = MapController()
         map.addAnnotation(latitude: 35.6800494, longitude: 139.7609786)
     }

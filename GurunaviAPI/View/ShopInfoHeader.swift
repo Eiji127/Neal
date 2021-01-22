@@ -9,6 +9,7 @@ import UIKit
 
 protocol shopInfoHeaderDelegate: class {
     func showMapView()
+    func addPinOnMap()
 }
 
 
@@ -97,6 +98,7 @@ class ShopInfoHeader: UICollectionReusableView {
     
     @objc func showActionSheet() {
         delegate?.showMapView()
+        delegate?.addPinOnMap()
     }
     
 }

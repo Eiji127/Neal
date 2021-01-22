@@ -20,17 +20,7 @@ class TabController: UITabBarController {
         imageView.alpha = 0.9
         return imageView
     }()
-    
-    private let currentLocationButton: UIButton = {
-       let button = UIButton()
-        button.setImage(UIImage(systemName: "location"), for: .normal)
-        button.addTarget(self, action: #selector(fetchCurrentLocation), for: .touchUpInside)
-        button.setDimensions(width: 50, height: 50)
-        button.layer.cornerRadius = 50 / 3
-        button.backgroundColor = .red
-        button.alpha = 0.7
-        return button
-    }()
+
     
     // MARK: - Lifecycle
     
@@ -38,9 +28,6 @@ class TabController: UITabBarController {
         super.viewDidLoad()
         configureTabBar()
         configureLogoImage()
-        
-        view.addSubview(currentLocationButton)
-        currentLocationButton.anchor(bottom: view.bottomAnchor, right: view.rightAnchor, paddingBottom: 130, paddingRight: 25)
     }
     
     // MARK: - Helpers
@@ -73,16 +60,5 @@ class TabController: UITabBarController {
         return nav
     }
     
-    @objc func fetchCurrentLocation() {
-        print("DEBUG: fetch your location...")
-        MapController().fetchCurrentLocation()
-    }
-    
 }
 
-extension TabController: UITabBarControllerDelegate {
-    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        let index = viewControllers?.firstIndex(of: viewController)
-        self.currentLocationButton.isHidden = index == 0 ? true : false
-    }
-}
