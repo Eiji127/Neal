@@ -100,12 +100,14 @@ final class FeedController: UICollectionViewController {
     
     func fetchData() {
         
+        collectionView.refreshControl?.beginRefreshing()
+        
         var imageUrlArray = [String]()
         
         guard let apiKey = APIKeyManager().getValue(key: "apiKey") else {
             return
         }
-        var text = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=\(apiKey)" + range + latitude + longitude + freeword
+        var text = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=\(apiKey)&hit_per_page=15" + range + latitude + longitude + freeword
         let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         
         //        let params:Parameters = [
@@ -145,9 +147,10 @@ final class FeedController: UICollectionViewController {
                     self.mobileUrlArray.append(mobileUrl)
                     print("DEBUG: fetching...")
                     imageUrlArray.append(imageUrl1)
-                    if imageUrl2 != "" {
-                        imageUrlArray.append(imageUrl2)
-                    }
+                    imageUrlArray.append(imageUrl2)
+//                    if imageUrl2 != "" {
+//                        imageUrlArray.append(imageUrl2)
+//                    }
                     self.shopsImageArray.append(imageUrlArray)
                     imageUrlArray.removeAll()
                 }
@@ -158,7 +161,7 @@ final class FeedController: UICollectionViewController {
             print("DEBUG: Finished fetching data...")
             
         }
-        
+        collectionView.refreshControl?.endRefreshing()
     }
     
     
@@ -231,7 +234,15 @@ final class FeedController: UICollectionViewController {
         navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor.white
         ]
-        navigationItem.title = "Gurunavi API"
+        navigationItem.title = "お店リスト"
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        collectionView.refreshControl = refreshControl
+    }
+    
+    @objc func handleRefresh() {
+        fetchData()
     }
     
     func configureRightBarButton() {
@@ -314,6 +325,8 @@ extension FeedController {
         if shopsImageArray != [] {
             if let shopImage = URL(string: shopsImageArray[indexPath.section][indexPath.row]) {
                 cell.setUpImageView(imageUrl: shopImage)
+            } else if shopsImageArray[indexPath.section][indexPath.row] == "" {
+                cell.setUpImage()
             }
         } else {
             cell.setUpImage()
