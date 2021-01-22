@@ -13,7 +13,7 @@ class ShopInfoCell: UICollectionViewCell {
     
     private let underlineView: UIView = {
         let line = UIView()
-        line.backgroundColor = .systemRed
+        line.backgroundColor = .red
         return line
     }()
     
@@ -24,8 +24,9 @@ class ShopInfoCell: UICollectionViewCell {
         imageView.contentMode = .scaleToFill
         imageView.clipsToBounds = true
         imageView.setDimensions(width: 200, height: 200)
-        imageView.image = #imageLiteral(resourceName: "Image")
         imageView.backgroundColor = .white
+        imageView.image = UIImage(systemName: "exclamationmark.circle.fill")
+        imageView.tintColor = .red
         return imageView
     }()
     
@@ -53,5 +54,10 @@ class ShopInfoCell: UICollectionViewCell {
     // MARK: - Helpers
     func setUpImageView(imageUrl: URL) {
         imageView.sd_setImage(with: imageUrl, completed: nil)
+    }
+    
+    func setUpImage() {
+        imageView.image = UIImage(systemName: "exclamationmark.circle.fill")
+        imageView.tintColor = .red
     }
 }

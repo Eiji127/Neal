@@ -55,8 +55,8 @@ final class FeedController: UICollectionViewController {
     
     var locationManager: CLLocationManager? = nil
     var freeword: String = "&freeword="
-    var longitude: String = "&longitude=139.775018"
-    var latitude: String = "&latitude=35.695861"
+    var longitude: String = "&longitude="
+    var latitude: String = "&latitude="
     var range: String = "&range=1"
     
     private let searchBar: UISearchBar = {
@@ -85,17 +85,15 @@ final class FeedController: UICollectionViewController {
     }()
     
     // MARK: - Lifecycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchData()
+        
+        indicateShopInformation()
+        
         configureUI()
         configureRightBarButton()
-        locationManager?.startUpdatingLocation()
         collectionView.reloadData()
-        
-        hideCurrentLocationButton()
-        
     }
     
     // MARK: - API
@@ -110,15 +108,16 @@ final class FeedController: UICollectionViewController {
         var text = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=\(apiKey)" + latitude + longitude + freeword
         let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         
-//        let params:Parameters = [
-//            "keyid":apiKey,
-//            "format":"json",
-//            "freeword":freeword,
-//            "latitude":latitude,
-//            "longitude":longitude,
-//            "range":range,
-//            "hit_per_page":10
-//        ]
+        //        let params:Parameters = [
+        //            "keyid":apiKey,
+        //            "format":"json",
+        //            "freeword":freeword,
+        //            "latitude":latitude,
+        //            "longitude":longitude,
+        //            "range":range,
+        //            "hit_per_page":10
+        //        ]
+        fetchUserLocation()
         
         print("DEBUG: Into method fetching data..")
         
@@ -144,18 +143,19 @@ final class FeedController: UICollectionViewController {
                     self.categoryArray.append(shopCategory)
                     self.opentimeArray.append(shopOpentime)
                     self.mobileUrlArray.append(mobileUrl)
+                    print("DEBUG: fetching...")
                     imageUrlArray.append(imageUrl1)
                     if imageUrl2 != "" {
                         imageUrlArray.append(imageUrl2)
                     }
                     self.shopsImageArray.append(imageUrlArray)
                     imageUrlArray.removeAll()
-                    print("\(self.mobileUrlArray)")
                 }
             case .failure(let error):
                 print(error)
                 break
             }
+            print("DEBUG: Finished fetching data...")
             
         }
         
@@ -164,10 +164,49 @@ final class FeedController: UICollectionViewController {
     
     // MARK: - Helper
     
+    func indicateShopInformation(){
+        fetchUserLocation { latitude, longitude in
+            
+            self.latitude += latitude
+            self.longitude += longitude
+            
+            self.fetchData()
+            
+            self.freeword = "&freeword="
+            
+            print("DEBUG: \(self.latitude)")
+            print("DEBUG: \(self.longitude)")
+            print("DEBUG: \(self.freeword)")
+        }
+    }
     
-    func hideCurrentLocationButton() {
-        let tab = TabController()
+    func fetchUserLocation(copletion: @escaping (_ latitude: String, _ longitude: String) -> Void) {
+        LocationManager.shared.getUserLocation { location in
+            
+            let locationLatitude = String(CLLocationDegrees(location.coordinate.latitude))
+            let locationLongitude = String(CLLocationDegrees(location.coordinate.longitude))
+            
+            copletion(locationLatitude, locationLongitude)
+            
+        }
+    }
+    
+    
+    func fetchUserLocation(){
         
+        LocationManager.shared.getUserLocation { location in
+            
+            let locationLatitude = String(CLLocationDegrees(location.coordinate.latitude))
+            let locationLongitude = String(CLLocationDegrees(location.coordinate.longitude))
+            
+            self.latitude += locationLatitude
+            self.longitude += locationLongitude
+            
+            print("DEBUG: \(self.latitude)")
+            print("DEBUG: \(self.longitude)")
+            print("DEBUG: \(self.freeword)")
+            
+        }
     }
     
     func removeAllElementsInArray() {
@@ -204,7 +243,7 @@ final class FeedController: UICollectionViewController {
             showSearchBar()
             
         } else {
-           
+            
         }
         
     }
@@ -238,7 +277,7 @@ final class FeedController: UICollectionViewController {
             sectionHeader.pinToVisibleBounds = true
             
             section.boundarySupplementaryItems = [sectionHeader]
-        
+            
             return section
         }
         
@@ -252,14 +291,14 @@ final class FeedController: UICollectionViewController {
     
     fileprivate func utilizeActionSheetLauncher() {
         actionSheetLauncher = ActionSheetLauncher()
-//        actionSheetLauncher.delegate = self
+        //        actionSheetLauncher.delegate = self
         actionSheetLauncher.show()
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 10
+        return nameArray.count
     }
-
+    
 }
 
 // MARK: - UICollectionViewDelegate/DataSource
@@ -276,6 +315,8 @@ extension FeedController {
             if let shopImage = URL(string: shopsImageArray[indexPath.section][indexPath.row]) {
                 cell.setUpImageView(imageUrl: shopImage)
             }
+        } else {
+            cell.setUpImage()
         }
         return cell
     }
@@ -315,14 +356,23 @@ extension FeedController: shopInfoHeaderDelegate {
 extension FeedController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+        
         guard let searchText = searchBar.text else {
             return
         }
+        
+        longitude = "&longitude="
+        latitude = "&latitude="
+        
         freeword += searchText
+        print("DEBUG: \(freeword)")
+        
+        
         removeAllElementsInArray()
-        fetchData()
+        
+        indicateShopInformation()
         collectionView.reloadData()
-        freeword = "&freeword="
+        
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
