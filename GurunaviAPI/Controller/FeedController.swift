@@ -8,10 +8,12 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import MapKit
 
 
 private let reuseIdentifier = "ShopInfoCell"
 private let reuseHeaderIdentifier = "ShopInfoHeader"
+
 
 final class FeedController: UICollectionViewController {
     
@@ -51,14 +53,49 @@ final class FeedController: UICollectionViewController {
     
     var itemCount: Int = 2
     
+    var locationManager: CLLocationManager? = nil
+    var freeword: String = "&freeword="
+    var longitude: String = "&longitude=139.775018"
+    var latitude: String = "&latitude=35.695861"
+    var range: String = "&range=1"
+    
+    private let searchBar: UISearchBar = {
+        let search = UISearchBar()
+        search.searchTextField.backgroundColor = .white
+        search.textField?.layer.cornerRadius = (search.textField?.bounds.height)! / 2.0
+        search.textField?.layer.masksToBounds = true
+        search.placeholder = "Search"
+        search.textField?.attributedPlaceholder = NSAttributedString(string: search.placeholder ?? "", attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        
+        return search
+    }()
+    
+    private lazy var researchImageView: UIImageView = {
+        let research = UIImageView()
+        research.image = UIImage(systemName: "magnifyingglass")
+        research.tintColor = .white
+        research.setDimensions(width: 27, height: 27)
+        research.layer.masksToBounds = true
+        research.isUserInteractionEnabled = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(researchImageTapped))
+        research.addGestureRecognizer(tap)
+        
+        return research
+    }()
+    
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchData()
         configureUI()
+        configureRightBarButton()
+        locationManager?.startUpdatingLocation()
         collectionView.reloadData()
-        print("DEBUG: \(self.nameArray)")
+        
+        hideCurrentLocationButton()
+        
     }
     
     // MARK: - API
@@ -70,8 +107,19 @@ final class FeedController: UICollectionViewController {
         guard let apiKey = APIKeyManager().getValue(key: "apiKey") else {
             return
         }
-        var text = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=\(apiKey)&name=&area=AREA120"
+        var text = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=\(apiKey)" + latitude + longitude + freeword
         let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        
+//        let params:Parameters = [
+//            "keyid":apiKey,
+//            "format":"json",
+//            "freeword":freeword,
+//            "latitude":latitude,
+//            "longitude":longitude,
+//            "range":range,
+//            "hit_per_page":10
+//        ]
+        
         print("DEBUG: Into method fetching data..")
         
         AF.request(url as! URLConvertible, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { response in
@@ -116,6 +164,20 @@ final class FeedController: UICollectionViewController {
     
     // MARK: - Helper
     
+    
+    func hideCurrentLocationButton() {
+        let tab = TabController()
+        
+    }
+    
+    func removeAllElementsInArray() {
+        nameArray.removeAll()
+        categoryArray.removeAll()
+        opentimeArray.removeAll()
+        mobileUrlArray.removeAll()
+        shopsImageArray.removeAll()
+    }
+    
     func configureUI() {
         view.backgroundColor = .red
         
@@ -132,6 +194,26 @@ final class FeedController: UICollectionViewController {
         ]
         navigationItem.title = "Gurunavi API"
     }
+    
+    func configureRightBarButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: researchImageView)
+    }
+    
+    @objc func researchImageTapped() {
+        if navigationItem.titleView != searchBar {
+            showSearchBar()
+            
+        } else {
+           
+        }
+        
+    }
+    
+    func showSearchBar() {
+        navigationItem.titleView = searchBar
+        searchBar.delegate = self
+    }
+    
     
     func layout() -> UICollectionViewCompositionalLayout {
         
@@ -191,19 +273,19 @@ extension FeedController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ShopInfoCell
         if shopsImageArray != [] {
-            let shopImage = URL(string: shopsImageArray[indexPath.section][indexPath.row])
-            cell.setUpImageView(imageUrl: shopImage!)
+            if let shopImage = URL(string: shopsImageArray[indexPath.section][indexPath.row]) {
+                cell.setUpImageView(imageUrl: shopImage)
+            }
         }
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: reuseHeaderIdentifier, for: indexPath) as! ShopInfoHeader
-        sectionHeader.delegate = self
         if nameArray != [] {
             sectionHeader.setUpContents(name: self.nameArray[indexPath.section], category: self.categoryArray[indexPath.section], opentime: self.opentimeArray[indexPath.section])
         }
-        
+        sectionHeader.delegate = self
         return sectionHeader
     }
     
@@ -214,10 +296,48 @@ extension FeedController {
     }
 }
 
-// MARK: - ShopInfoCellDelegate
-
-extension FeedController: ShopInfoCellDelegate {
-    func showActionSheet() {
-        utilizeActionSheetLauncher()
+extension FeedController: shopInfoHeaderDelegate {
+    func showMapView() {
+        let map = MapController()
+        let rootVC = UIApplication.shared.windows.first?.rootViewController as? TabController
+        let navigationController = rootVC?.children as? UINavigationController
+        rootVC?.selectedIndex = 1
+        addPinOnMap()
+        navigationController?.pushViewController(map, animated: true)
+    }
+    
+    func addPinOnMap() {
+        let map = MapController()
+        map.addAnnotation(latitude: 35.6800494, longitude: 139.7609786)
     }
 }
+
+extension FeedController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        guard let searchText = searchBar.text else {
+            return
+        }
+        freeword += searchText
+        removeAllElementsInArray()
+        fetchData()
+        collectionView.reloadData()
+        freeword = "&freeword="
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        if !searchBar.showsCancelButton {
+            researchImageView.isHidden = true
+            searchBar.setShowsCancelButton(true, animated: true)
+        }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
+        researchImageView.isHidden = false
+        searchBar.endEditing(true)
+    }
+    
+    
+}
+

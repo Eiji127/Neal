@@ -1,4 +1,4 @@
-Pods/
+Pods
+GurunaviAPI/GurunaviAPIKey.plist
 .DS_Store
-GurunaviAPIKey.plist
 Podfile.lock

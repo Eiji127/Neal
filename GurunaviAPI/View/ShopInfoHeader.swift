@@ -7,9 +7,11 @@
 
 import UIKit
 
-protocol ShopInfoCellDelegate: class {
-    func showActionSheet()
+protocol shopInfoHeaderDelegate: class {
+    func showMapView()
+    func addPinOnMap()
 }
+
 
 class ShopInfoHeader: UICollectionReusableView {
     
@@ -20,8 +22,6 @@ class ShopInfoHeader: UICollectionReusableView {
 //            configure()
         }
     }
-
-    weak var delegate: ShopInfoCellDelegate?
     
     private let nameLabel: UILabel = {
         let label = UILabel()
@@ -51,10 +51,13 @@ class ShopInfoHeader: UICollectionReusableView {
     private lazy var optionButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .lightGray
-        button.setImage(UIImage(named: "down_arrow_24pt"), for: .normal)
+        button.setImage(UIImage(systemName: "mappin"), for: .normal)
+        button.tintColor = .red
         button.addTarget(self, action: #selector(showActionSheet), for: .touchUpInside)
         return button
     }()
+    
+    weak var delegate: shopInfoHeaderDelegate?
     
     // MARK: - Lifecycles
     
@@ -72,7 +75,7 @@ class ShopInfoHeader: UICollectionReusableView {
         stack.spacing = 4
         
         addSubview(stack)
-        stack.anchor(top: topAnchor, left: leftAnchor, paddingTop: 10, paddingLeft: 10)
+        stack.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingRight: 50)
         
         addSubview(optionButton)
         optionButton.centerY(inView: stack)
@@ -94,7 +97,8 @@ class ShopInfoHeader: UICollectionReusableView {
     }
     
     @objc func showActionSheet() {
-        delegate?.showActionSheet()
+        delegate?.showMapView()
+        delegate?.addPinOnMap()
     }
     
 }

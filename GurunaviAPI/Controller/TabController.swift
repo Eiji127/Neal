@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 class TabController: UITabBarController {
     
     // MARK: - Properties
@@ -19,6 +20,7 @@ class TabController: UITabBarController {
         imageView.alpha = 0.9
         return imageView
     }()
+
     
     // MARK: - Lifecycle
     
@@ -31,10 +33,15 @@ class TabController: UITabBarController {
     // MARK: - Helpers
     
     func configureTabBar() {
+        
+        UITabBar.appearance().barTintColor = .red
+        UITabBar.appearance().alpha = 0.9
+        
         let feed = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
-        let navFeed = templateNavigationController(image: .actions, rootViewController: feed)
+        let navFeed = templateNavigationController(image: UIImage(systemName: "house.fill")!, rootViewController: feed)
+        
         let map = MapController()
-        let navMap = templateNavigationController(image: .actions, rootViewController: map)
+        let navMap = templateNavigationController(image: UIImage(systemName: "mappin.and.ellipse")!, rootViewController: map)
         
         viewControllers = [navFeed, navMap]
     }
@@ -47,8 +54,11 @@ class TabController: UITabBarController {
     func templateNavigationController(image: UIImage, rootViewController: UIViewController) -> UINavigationController {
         let nav = UINavigationController(rootViewController: rootViewController)
         nav.tabBarItem.image = image
+        nav.navigationBar.tintColor = .white
         nav.navigationBar.barTintColor = .white
         
         return nav
     }
+    
 }
+
