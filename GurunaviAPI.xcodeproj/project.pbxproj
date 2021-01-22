@@ -16,7 +16,6 @@
 		9869F97725AF3C740013FA49 /* APIKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9869F97625AF3C740013FA49 /* APIKeyManager.swift */; };
 		98C680FE257E45BD00288FD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C680FD257E45BD00288FD4 /* AppDelegate.swift */; };
 		98C68100257E45BD00288FD4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C680FF257E45BD00288FD4 /* SceneDelegate.swift */; };
-		98C68105257E45BD00288FD4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98C68103257E45BD00288FD4 /* Main.storyboard */; };
 		98C68107257E45C100288FD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98C68106257E45C100288FD4 /* Assets.xcassets */; };
 		98C6810A257E45C100288FD4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98C68108257E45C100288FD4 /* LaunchScreen.storyboard */; };
 		98C68116257E485200288FD4 /* FeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C68115257E485200288FD4 /* FeedController.swift */; };
@@ -41,7 +40,6 @@
 		98C680FA257E45BD00288FD4 /* GurunaviAPI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GurunaviAPI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98C680FD257E45BD00288FD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98C680FF257E45BD00288FD4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		98C68104257E45BD00288FD4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		98C68106257E45C100288FD4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		98C68109257E45C100288FD4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		98C6810B257E45C100288FD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -102,7 +100,6 @@
 				98C68114257E460900288FD4 /* Controller */,
 				98C6812F2582328D00288FD4 /* API */,
 				98C6811C257E4C9200288FD4 /* Utils */,
-				98C68103257E45BD00288FD4 /* Main.storyboard */,
 				98C680FD257E45BD00288FD4 /* AppDelegate.swift */,
 				98C680FF257E45BD00288FD4 /* SceneDelegate.swift */,
 				98C68106257E45C100288FD4 /* Assets.xcassets */,
@@ -232,7 +229,6 @@
 				98C6810A257E45C100288FD4 /* LaunchScreen.storyboard in Resources */,
 				98C68107257E45C100288FD4 /* Assets.xcassets in Resources */,
 				9869F97425AF3BB60013FA49 /* GurunaviAPIKey.plist in Resources */,
-				98C68105257E45BD00288FD4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,14 +302,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		98C68103257E45BD00288FD4 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				98C68104257E45BD00288FD4 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		98C68108257E45C100288FD4 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

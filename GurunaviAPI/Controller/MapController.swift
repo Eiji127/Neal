@@ -43,9 +43,9 @@ class MapController: UIViewController {
     }
     
     func fetchCurrentLocation() {
-        print("DEBUG: moving into fetchCurrentLocation Method...")
+        print("DEBUG: Moved into fetchCurrentLocation Method...")
         LocationManager.shared.getUserLocation { [weak self] location in
-            print("DEBUG: moving into LM Closure...")
+            print("DEBUG: Moved into LM Closure...")
             DispatchQueue.main.async {
                 print("DEBUG: getUserLocation is Fired..")
                 guard let strongSelf = self else {
