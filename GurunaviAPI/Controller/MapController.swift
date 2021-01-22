@@ -37,6 +37,8 @@ class MapController: UIViewController {
         )
         mapView.setRegion(region, animated:true)
         
+        LocationManager.shared.getUserLocation()
+        
         navigationController?.title = "Map"
         navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor.white
@@ -111,6 +113,7 @@ class MapController: UIViewController {
         ),
         animated: true)
         mapView.addAnnotation(annotation)
+        mapView.setCenter(annotation.coordinate, animated: true)
     }
     
     func setCenterUserLocation() {

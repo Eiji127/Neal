@@ -107,7 +107,7 @@ final class FeedController: UICollectionViewController {
         guard let apiKey = APIKeyManager().getValue(key: "apiKey") else {
             return
         }
-        var text = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=\(apiKey)&area=AREA120" + freeword
+        var text = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=\(apiKey)" + latitude + longitude + freeword
         let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         
 //        let params:Parameters = [
@@ -302,6 +302,7 @@ extension FeedController: shopInfoHeaderDelegate {
         let rootVC = UIApplication.shared.windows.first?.rootViewController as? TabController
         let navigationController = rootVC?.children as? UINavigationController
         rootVC?.selectedIndex = 1
+        addPinOnMap()
         navigationController?.pushViewController(map, animated: true)
     }
     

@@ -30,6 +30,12 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         print("DEBUG: Done startUpdatingLocation...")
     }
     
+    public func getUserLocation() {
+        manager.requestWhenInUseAuthorization()
+        manager.delegate = self
+        manager.startUpdatingLocation()
+    }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.first else {
             return
