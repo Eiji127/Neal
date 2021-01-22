@@ -57,7 +57,7 @@ final class FeedController: UICollectionViewController {
     var freeword: String = "&freeword="
     var longitude: String = "&longitude="
     var latitude: String = "&latitude="
-    var range: String = "&range=1"
+    var range: String = "&range=3"
     
     private let searchBar: UISearchBar = {
         let search = UISearchBar()
@@ -105,7 +105,7 @@ final class FeedController: UICollectionViewController {
         guard let apiKey = APIKeyManager().getValue(key: "apiKey") else {
             return
         }
-        var text = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=\(apiKey)" + latitude + longitude + freeword
+        var text = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=\(apiKey)" + range + latitude + longitude + freeword
         let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         
         //        let params:Parameters = [
