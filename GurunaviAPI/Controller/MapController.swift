@@ -39,6 +39,20 @@ class MapController: UIViewController {
         
         LocationManager.shared.getUserLocation()
         
+        configureNavigationBar()
+        
+        configureNavigationBarRightButton()
+        
+        self.overrideUserInterfaceStyle = .light
+        
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        mapView.frame = view.bounds
+    }
+    
+    func configureNavigationBar() {
         navigationController?.title = "Map"
         navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor.white
@@ -46,15 +60,6 @@ class MapController: UIViewController {
         navigationItem.title = "近辺のお店"
         navigationController?.navigationBar.barTintColor = .red
         navigationController?.navigationBar.isHidden = false
-        
-        configureNavigationBarRightButton()
-        
-//        fetchCurrentLocation()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        mapView.frame = view.bounds
     }
     
     func configureNavigationBarRightButton() {
@@ -75,7 +80,7 @@ class MapController: UIViewController {
         mapView.setCenter(mapView.userLocation.coordinate, animated: true)
     }
     
-    func fetchCurrentLocation() {
+    func fetchUserLocation() {
         print("DEBUG: Moved into fetchCurrentLocation Method...")
         LocationManager.shared.getUserLocation { [weak self] location in
             DispatchQueue.main.async {
@@ -102,7 +107,8 @@ class MapController: UIViewController {
         mapView.addAnnotation(pin)
     }
     
-    func addAnnotation(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
+    func addShopAnnotation(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
+
         let annotation = MKPointAnnotation()
         annotation.coordinate = CLLocationCoordinate2DMake(latitude, longitude)
         mapView.setRegion(MKCoordinateRegion(center: annotation.coordinate,
@@ -120,4 +126,6 @@ class MapController: UIViewController {
         mapView.setCenter(mapView.userLocation.coordinate, animated: true)
     }
 }
+
+
 

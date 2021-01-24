@@ -21,6 +21,7 @@ final class FeedController: UICollectionViewController {
     
     private var actionSheetLauncher: ActionSheetLauncher!
     
+    
     var nameArray = [String]() {
         didSet {
             collectionView.reloadData()
@@ -94,6 +95,8 @@ final class FeedController: UICollectionViewController {
         configureUI()
         configureRightBarButton()
         collectionView.reloadData()
+        
+        self.overrideUserInterfaceStyle = .light
     }
     
     // MARK: - API
@@ -158,7 +161,6 @@ final class FeedController: UICollectionViewController {
                 print(error)
                 break
             }
-            print("DEBUG: Finished fetching data...")
             
         }
         collectionView.refreshControl?.endRefreshing()
@@ -168,6 +170,10 @@ final class FeedController: UICollectionViewController {
     // MARK: - Helper
     
     func indicateShopInformation(){
+        
+        self.longitude = "&longitude="
+        self.latitude = "&latitude="
+        
         fetchUserLocation { latitude, longitude in
             
             self.latitude += latitude
@@ -205,10 +211,6 @@ final class FeedController: UICollectionViewController {
             self.latitude += locationLatitude
             self.longitude += locationLongitude
             
-            print("DEBUG: \(self.latitude)")
-            print("DEBUG: \(self.longitude)")
-            print("DEBUG: \(self.freeword)")
-            
         }
     }
     
@@ -242,7 +244,9 @@ final class FeedController: UICollectionViewController {
     }
     
     @objc func handleRefresh() {
-        fetchData()
+        removeAllElementsInArray()
+        indicateShopInformation()
+        collectionView.reloadData()
     }
     
     func configureRightBarButton() {
@@ -250,18 +254,13 @@ final class FeedController: UICollectionViewController {
     }
     
     @objc func researchImageTapped() {
-        if navigationItem.titleView != searchBar {
             showSearchBar()
-            
-        } else {
-            
-        }
-        
     }
     
     func showSearchBar() {
         navigationItem.titleView = searchBar
         searchBar.delegate = self
+        searchBar.becomeFirstResponder()
     }
     
     
@@ -356,13 +355,10 @@ extension FeedController: shopInfoHeaderDelegate {
         let rootVC = UIApplication.shared.windows.first?.rootViewController as? TabController
         let navigationController = rootVC?.children as? UINavigationController
         rootVC?.selectedIndex = 1
-        addPinOnMap()
-        navigationController?.pushViewController(map, animated: true)
-    }
-    
-    func addPinOnMap() {
-        let map = MapController()
-        map.addAnnotation(latitude: 35.6800494, longitude: 139.7609786)
+        
+        map.addShopAnnotation(latitude: 35.6800494,  longitude: 139.7609786)
+        
+        navigationController?.present(map, animated: true, completion: nil)
     }
 }
 

@@ -25,7 +25,7 @@ class ShopInfoCell: UICollectionViewCell {
         imageView.clipsToBounds = true
         imageView.setDimensions(width: 200, height: 200)
         imageView.backgroundColor = .white
-        imageView.image = UIImage(systemName: "exclamationmark.circle.fill")
+        imageView.image = UIImage(named: "noImage")
         imageView.tintColor = .red
         return imageView
     }()
@@ -57,7 +57,7 @@ class ShopInfoCell: UICollectionViewCell {
     }
     
     func setUpImage() {
-        imageView.image = UIImage(systemName: "exclamationmark.circle.fill")
+        imageView.image = UIImage(named: "noImage")
         imageView.tintColor = .red
     }
 }
