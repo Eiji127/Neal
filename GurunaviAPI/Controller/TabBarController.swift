@@ -1,5 +1,5 @@
 //
-//  TabController.swift
+//  TabBarController.swift
 //  GurunaviAPI
 //
 //  Created by 白数叡司 on 2020/12/07.
@@ -8,7 +8,7 @@
 import UIKit
 
 
-class TabController: UITabBarController {
+class TabBarController: UITabBarController {
     
     // MARK: - Properties
     
@@ -36,6 +36,7 @@ class TabController: UITabBarController {
         
         UITabBar.appearance().barTintColor = .red
         UITabBar.appearance().alpha = 0.9
+        UITabBar.appearance().tintColor = .white
         
         let feed = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
         let navFeed = templateNavigationController(image: UIImage(systemName: "house.fill")!, rootViewController: feed)

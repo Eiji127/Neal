@@ -11,6 +11,7 @@ import SwiftyJSON
 import MapKit
 
 
+
 private let reuseIdentifier = "ShopInfoCell"
 private let reuseHeaderIdentifier = "ShopInfoHeader"
 
@@ -51,6 +52,8 @@ final class FeedController: UICollectionViewController {
             collectionView.reloadData()
         }
     }
+    
+    var coordinatesArray = [Any]()
     
     var itemCount: Int = 2
     
@@ -104,13 +107,16 @@ final class FeedController: UICollectionViewController {
     func fetchData() {
         
         collectionView.refreshControl?.beginRefreshing()
-        
+        let annotation = MKPointAnnotation()
+        var locationCoordinateLatitude: CLLocationDegrees = 0
+        var locationCoordinateLongitude: CLLocationDegrees = 0
         var imageUrlArray = [String]()
+        annotation.coordinate = CLLocationCoordinate2DMake(locationCoordinateLatitude,locationCoordinateLongitude)
         
         guard let apiKey = APIKeyManager().getValue(key: "apiKey") else {
             return
         }
-        var text = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=\(apiKey)&hit_per_page=15" + range + latitude + longitude + freeword
+        var text = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=\(apiKey)&hit_per_page=30" + range + latitude + longitude + freeword
         let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         
         //        let params:Parameters = [
@@ -122,13 +128,12 @@ final class FeedController: UICollectionViewController {
         //            "range":range,
         //            "hit_per_page":10
         //        ]
-        fetchUserLocation()
         
         print("DEBUG: Into method fetching data..")
         
         AF.request(url as! URLConvertible, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { response in
             
-            let fetchingDataMax = 0...9
+            let fetchingDataMax = 0...14
             
             print("DEBUG: requesting .GET...")
             
@@ -144,11 +149,13 @@ final class FeedController: UICollectionViewController {
                     guard let mobileUrl = json["rest"][order]["url"].string else { return }
                     guard let imageUrl1 = json["rest"][order]["image_url"]["shop_image1"].string else { return }
                     guard let imageUrl2 = json["rest"][order]["image_url"]["shop_image2"].string else { return }
+                    guard let latitude = json["rest"][order]["latitude"].string else { return
+                    }
+                    guard let longitude = json["rest"][order]["longitude"].string else { return }
                     self.nameArray.append(shopName)
                     self.categoryArray.append(shopCategory)
                     self.opentimeArray.append(shopOpentime)
                     self.mobileUrlArray.append(mobileUrl)
-                    print("DEBUG: fetching...")
                     imageUrlArray.append(imageUrl1)
                     imageUrlArray.append(imageUrl2)
 //                    if imageUrl2 != "" {
@@ -156,13 +163,16 @@ final class FeedController: UICollectionViewController {
 //                    }
                     self.shopsImageArray.append(imageUrlArray)
                     imageUrlArray.removeAll()
+
                 }
             case .failure(let error):
                 print(error)
                 break
             }
+            print("DEBUG: \(self.nameArray)")
             
         }
+
         collectionView.refreshControl?.endRefreshing()
     }
     
@@ -338,7 +348,7 @@ extension FeedController {
         if nameArray != [] {
             sectionHeader.setUpContents(name: self.nameArray[indexPath.section], category: self.categoryArray[indexPath.section], opentime: self.opentimeArray[indexPath.section])
         }
-        sectionHeader.delegate = self
+//        sectionHeader.delegate = self
         return sectionHeader
     }
     
@@ -349,18 +359,60 @@ extension FeedController {
     }
 }
 
-extension FeedController: shopInfoHeaderDelegate {
-    func showMapView() {
-        let map = MapController()
-        let rootVC = UIApplication.shared.windows.first?.rootViewController as? TabController
-        let navigationController = rootVC?.children as? UINavigationController
-        rootVC?.selectedIndex = 1
+//extension FeedController: shopInfoHeaderDelegate {
+//    func showMapView() {
+//
+//        let mapController = MapController()
+//        let navigationController = tabBarController?.viewControllers?[1]
+//        tabBarController?.selectedViewController = navigationController
+//
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+//            let mapController = MapController()
+//            mapController.addShopPin()
+//        }
         
-        map.addShopAnnotation(latitude: 35.6800494,  longitude: 139.7609786)
+//        moveIntoMapView { viewController in
+//            let mapController = MapController()
+//            mapController.addShopPin()
+//        }
         
-        navigationController?.present(map, animated: true, completion: nil)
-    }
-}
+        
+//        guard let map = presentingViewController as? MapController else { return
+//        }
+//        let map = MapController()
+//        if let rootViewController = UIApplication.shared.windows.first?.rootViewController as? TabController {
+//
+//            rootViewController.selectedIndex = 1
+//            map.latitude = 39.5432345
+//            map.longitude = 135.4356345
+//            map.addShopPin()
+//        }
+//        guard let navigationController = rootViewController.children as? UINavigationController else {
+//            return
+//            print("DEBUG: はろ２")
+//        }
+        
+        
+//        map.latitude = 39.5432345
+//        map.longitude = 135.4356345
+//        map.addShopPin()
+        
+//        print("DEBUG: \(map.latitude)")
+//        print("DEBUG: \(map.longitude)")
+
+//        present(navigationController, animated: true, completion: nil)
+        
+        
+        
+//    }
+    
+//    func moveIntoMapView (completion: @escaping((UIViewController) -> Void)) {
+//        let mapController = MapController()
+//        let navigationController = tabBarController?.viewControllers?[1]
+//        tabBarController?.selectedViewController = navigationController
+//        completion(navigationController!)
+//    }
+//}
 
 extension FeedController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
