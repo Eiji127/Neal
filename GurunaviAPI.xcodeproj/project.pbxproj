@@ -11,9 +11,18 @@
 		9820E883259458AE00215A74 /* ShopInfoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9820E882259458AE00215A74 /* ShopInfoHeader.swift */; };
 		9820E88A2594F48500215A74 /* WebController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9820E8892594F48400215A74 /* WebController.swift */; };
 		9820E89225970D0300215A74 /* ShopInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9820E89125970D0300215A74 /* ShopInfo.swift */; };
+		98247F4225BCB845000D42C8 /* reservation.json in Resources */ = {isa = PBXBuildFile; fileRef = 98247F3F25BCB845000D42C8 /* reservation.json */; };
+		98247F4325BCB845000D42C8 /* foodchoice.json in Resources */ = {isa = PBXBuildFile; fileRef = 98247F4025BCB845000D42C8 /* foodchoice.json */; };
+		98247F4425BCB845000D42C8 /* map.json in Resources */ = {isa = PBXBuildFile; fileRef = 98247F4125BCB845000D42C8 /* map.json */; };
+		98247F4725BCB969000D42C8 /* hello.json in Resources */ = {isa = PBXBuildFile; fileRef = 98247F4625BCB969000D42C8 /* hello.json */; };
+		98247F4A25BCBC6F000D42C8 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98247F4925BCBC6F000D42C8 /* SplashViewController.swift */; };
+		98247F4F25BCC059000D42C8 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98247F4E25BCC059000D42C8 /* Splash.storyboard */; };
+		98247F5325BD4230000D42C8 /* PinAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98247F5225BD4230000D42C8 /* PinAnnotationView.swift */; };
 		984B147D25B8129D001E8A51 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984B147C25B8129D001E8A51 /* LocationManager.swift */; };
 		9869F97725AF3C740013FA49 /* APIKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9869F97625AF3C740013FA49 /* APIKeyManager.swift */; };
 		986D227525BB20A100688B5F /* GurunaviAPIKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = 986D227425BB20A100688B5F /* GurunaviAPIKey.plist */; };
+		986D22AB25BCAA7B00688B5F /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986D22AA25BCAA7A00688B5F /* IntroViewController.swift */; };
+		986D22BD25BCB5F100688B5F /* travelers.json in Resources */ = {isa = PBXBuildFile; fileRef = 986D22B925BCB5F000688B5F /* travelers.json */; };
 		98C680FE257E45BD00288FD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C680FD257E45BD00288FD4 /* AppDelegate.swift */; };
 		98C68100257E45BD00288FD4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C680FF257E45BD00288FD4 /* SceneDelegate.swift */; };
 		98C68107257E45C100288FD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98C68106257E45C100288FD4 /* Assets.xcassets */; };
@@ -21,7 +30,7 @@
 		98C68116257E485200288FD4 /* FeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C68115257E485200288FD4 /* FeedController.swift */; };
 		98C6811A257E4A9D00288FD4 /* ShopInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C68119257E4A9D00288FD4 /* ShopInfoCell.swift */; };
 		98C6811E257E4CAC00288FD4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C6811D257E4CAC00288FD4 /* Extensions.swift */; };
-		98C68124257E575500288FD4 /* TabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C68123257E575500288FD4 /* TabController.swift */; };
+		98C68124257E575500288FD4 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C68123257E575500288FD4 /* TabBarController.swift */; };
 		98C68127257E58E000288FD4 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C68126257E58E000288FD4 /* MapController.swift */; };
 		98C6812A2581FE5300288FD4 /* ActionSheetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C681292581FE5200288FD4 /* ActionSheetCell.swift */; };
 		98C6812D2581FEED00288FD4 /* ActionSheetLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C6812C2581FEED00288FD4 /* ActionSheetLauncher.swift */; };
@@ -34,9 +43,18 @@
 		9820E882259458AE00215A74 /* ShopInfoHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopInfoHeader.swift; sourceTree = "<group>"; };
 		9820E8892594F48400215A74 /* WebController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebController.swift; sourceTree = "<group>"; };
 		9820E89125970D0300215A74 /* ShopInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopInfo.swift; sourceTree = "<group>"; };
+		98247F3F25BCB845000D42C8 /* reservation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = reservation.json; sourceTree = "<group>"; };
+		98247F4025BCB845000D42C8 /* foodchoice.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = foodchoice.json; sourceTree = "<group>"; };
+		98247F4125BCB845000D42C8 /* map.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = map.json; sourceTree = "<group>"; };
+		98247F4625BCB969000D42C8 /* hello.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = hello.json; sourceTree = "<group>"; };
+		98247F4925BCBC6F000D42C8 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		98247F4E25BCC059000D42C8 /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
+		98247F5225BD4230000D42C8 /* PinAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinAnnotationView.swift; sourceTree = "<group>"; };
 		984B147C25B8129D001E8A51 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		9869F97625AF3C740013FA49 /* APIKeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeyManager.swift; sourceTree = "<group>"; };
 		986D227425BB20A100688B5F /* GurunaviAPIKey.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = GurunaviAPIKey.plist; sourceTree = "<group>"; };
+		986D22AA25BCAA7A00688B5F /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
+		986D22B925BCB5F000688B5F /* travelers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = travelers.json; sourceTree = "<group>"; };
 		98C680FA257E45BD00288FD4 /* GurunaviAPI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GurunaviAPI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98C680FD257E45BD00288FD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98C680FF257E45BD00288FD4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -46,7 +64,7 @@
 		98C68115257E485200288FD4 /* FeedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedController.swift; sourceTree = "<group>"; };
 		98C68119257E4A9D00288FD4 /* ShopInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopInfoCell.swift; sourceTree = "<group>"; };
 		98C6811D257E4CAC00288FD4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		98C68123257E575500288FD4 /* TabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabController.swift; sourceTree = "<group>"; };
+		98C68123257E575500288FD4 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		98C68126257E58E000288FD4 /* MapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
 		98C681292581FE5200288FD4 /* ActionSheetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetCell.swift; sourceTree = "<group>"; };
 		98C6812C2581FEED00288FD4 /* ActionSheetLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetLauncher.swift; sourceTree = "<group>"; };
@@ -74,6 +92,30 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		986D22A925BCAA3A00688B5F /* Intro */ = {
+			isa = PBXGroup;
+			children = (
+				98C68108257E45C100288FD4 /* LaunchScreen.storyboard */,
+				98247F4E25BCC059000D42C8 /* Splash.storyboard */,
+				986D22AA25BCAA7A00688B5F /* IntroViewController.swift */,
+				98247F4925BCBC6F000D42C8 /* SplashViewController.swift */,
+				986D22B525BCB5CF00688B5F /* LottieAnimations */,
+			);
+			path = Intro;
+			sourceTree = "<group>";
+		};
+		986D22B525BCB5CF00688B5F /* LottieAnimations */ = {
+			isa = PBXGroup;
+			children = (
+				98247F4625BCB969000D42C8 /* hello.json */,
+				986D22B925BCB5F000688B5F /* travelers.json */,
+				98247F4025BCB845000D42C8 /* foodchoice.json */,
+				98247F4125BCB845000D42C8 /* map.json */,
+				98247F3F25BCB845000D42C8 /* reservation.json */,
+			);
+			path = LottieAnimations;
+			sourceTree = "<group>";
+		};
 		98C680F1257E45BD00288FD4 = {
 			isa = PBXGroup;
 			children = (
@@ -95,6 +137,7 @@
 		98C680FC257E45BD00288FD4 /* GurunaviAPI */ = {
 			isa = PBXGroup;
 			children = (
+				986D22A925BCAA3A00688B5F /* Intro */,
 				98C68112257E45D000288FD4 /* Model */,
 				98C68113257E45FA00288FD4 /* View */,
 				98C68114257E460900288FD4 /* Controller */,
@@ -103,7 +146,6 @@
 				98C680FD257E45BD00288FD4 /* AppDelegate.swift */,
 				98C680FF257E45BD00288FD4 /* SceneDelegate.swift */,
 				98C68106257E45C100288FD4 /* Assets.xcassets */,
-				98C68108257E45C100288FD4 /* LaunchScreen.storyboard */,
 				98C6810B257E45C100288FD4 /* Info.plist */,
 				986D227425BB20A100688B5F /* GurunaviAPIKey.plist */,
 			);
@@ -124,6 +166,7 @@
 				98C68119257E4A9D00288FD4 /* ShopInfoCell.swift */,
 				9820E882259458AE00215A74 /* ShopInfoHeader.swift */,
 				98C681292581FE5200288FD4 /* ActionSheetCell.swift */,
+				98247F5225BD4230000D42C8 /* PinAnnotationView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -134,7 +177,7 @@
 				98C68115257E485200288FD4 /* FeedController.swift */,
 				9820E8892594F48400215A74 /* WebController.swift */,
 				98C68126257E58E000288FD4 /* MapController.swift */,
-				98C68123257E575500288FD4 /* TabController.swift */,
+				98C68123257E575500288FD4 /* TabBarController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -226,9 +269,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98247F4325BCB845000D42C8 /* foodchoice.json in Resources */,
 				98C6810A257E45C100288FD4 /* LaunchScreen.storyboard in Resources */,
+				98247F4225BCB845000D42C8 /* reservation.json in Resources */,
+				986D22BD25BCB5F100688B5F /* travelers.json in Resources */,
 				986D227525BB20A100688B5F /* GurunaviAPIKey.plist in Resources */,
+				98247F4F25BCC059000D42C8 /* Splash.storyboard in Resources */,
 				98C68107257E45C100288FD4 /* Assets.xcassets in Resources */,
+				98247F4725BCB969000D42C8 /* hello.json in Resources */,
+				98247F4425BCB845000D42C8 /* map.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,10 +333,11 @@
 				98C68131258232B800288FD4 /* GurunaviService.swift in Sources */,
 				98C6811E257E4CAC00288FD4 /* Extensions.swift in Sources */,
 				984B147D25B8129D001E8A51 /* LocationManager.swift in Sources */,
+				98247F4A25BCBC6F000D42C8 /* SplashViewController.swift in Sources */,
 				98C68127257E58E000288FD4 /* MapController.swift in Sources */,
 				98C6812D2581FEED00288FD4 /* ActionSheetLauncher.swift in Sources */,
 				9820E883259458AE00215A74 /* ShopInfoHeader.swift in Sources */,
-				98C68124257E575500288FD4 /* TabController.swift in Sources */,
+				98C68124257E575500288FD4 /* TabBarController.swift in Sources */,
 				98C680FE257E45BD00288FD4 /* AppDelegate.swift in Sources */,
 				98C68116257E485200288FD4 /* FeedController.swift in Sources */,
 				9820E88A2594F48500215A74 /* WebController.swift in Sources */,
@@ -295,7 +345,9 @@
 				9869F97725AF3C740013FA49 /* APIKeyManager.swift in Sources */,
 				98C6811A257E4A9D00288FD4 /* ShopInfoCell.swift in Sources */,
 				9820E89225970D0300215A74 /* ShopInfo.swift in Sources */,
+				98247F5325BD4230000D42C8 /* PinAnnotationView.swift in Sources */,
 				98C6812A2581FE5300288FD4 /* ActionSheetCell.swift in Sources */,
+				986D22AB25BCAA7B00688B5F /* IntroViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,7 +9,6 @@ import UIKit
 
 protocol shopInfoHeaderDelegate: class {
     func showMapView()
-    func addPinOnMap()
 }
 
 
@@ -77,9 +76,9 @@ class ShopInfoHeader: UICollectionReusableView {
         addSubview(stack)
         stack.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingRight: 50)
         
-        addSubview(optionButton)
-        optionButton.centerY(inView: stack)
-        optionButton.anchor(right: rightAnchor, paddingRight: 10)
+//        addSubview(optionButton)
+//        optionButton.centerY(inView: stack)
+//        optionButton.anchor(right: rightAnchor, paddingRight: 20)
         
         
     }
@@ -98,7 +97,7 @@ class ShopInfoHeader: UICollectionReusableView {
     
     @objc func showActionSheet() {
         delegate?.showMapView()
-        delegate?.addPinOnMap()
+        
     }
     
 }

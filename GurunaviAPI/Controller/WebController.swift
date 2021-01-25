@@ -17,6 +17,8 @@ class WebController: UIViewController {
         super.viewDidLoad()
         configureWebView()
         configureNavigationBarRightButton()
+        
+        self.overrideUserInterfaceStyle = .light
     }
     
     func configureWebView() {

@@ -10,4 +10,5 @@ target 'GurunaviAPI' do
 	pod 'SwiftyJSON'
 	pod 'SDWebImage'
 	pod 'SwiftLint'
+	pod 'lottie-ios'
 end
