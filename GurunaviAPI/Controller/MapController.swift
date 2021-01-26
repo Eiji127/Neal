@@ -38,8 +38,8 @@ class MapController: UIViewController {
         
         let region = MKCoordinateRegion(center: mapView.userLocation.coordinate,
                                         span: MKCoordinateSpan(
-                                           latitudeDelta: 0.005,
-                                           longitudeDelta: 0.005
+                                            latitudeDelta: 0.005,
+                                            longitudeDelta: 0.005
                                         )
         )
         mapView.setRegion(region, animated:true)
@@ -54,9 +54,9 @@ class MapController: UIViewController {
         mapView.delegate = self
         
         configurePinOnMap()
-
+        
     }
-
+    
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -66,9 +66,14 @@ class MapController: UIViewController {
     // MARK: - API
     
     func fetchData() {
-        GurunaviService.shared.fetchData(latitude: latitude, longitude: longitude) { shopData in
-            self.shopData = shopData
+        do {
+            GurunaviService.shared.fetchData(latitude: latitude, longitude: longitude) { shopData in
+                self.shopData = shopData
+            }
+        } catch {
+            showAlert()
         }
+        
     }
     
     // MARK: - Helpers
@@ -114,6 +119,16 @@ class MapController: UIViewController {
         }
     }
     
+    func showAlert(){
+        let alertController = UIAlertController(title: "Error", message: "", preferredStyle: .alert)
+        let dimissAlert = UIAlertAction(title: "OK", style: .cancel){
+            action -> Void in
+            self.dismiss(animated: true, completion: nil)
+        }
+        alertController.addAction(dimissAlert)
+        present(alertController, animated: true, completion: nil)
+    }
+    
     @objc func setCenterButtonTapped() {
         mapView.setCenter(mapView.userLocation.coordinate, animated: true)
         mapView.removeAnnotations(shopData.locationCoordinatesArray)
@@ -147,7 +162,7 @@ class MapController: UIViewController {
             center: mapView.userLocation.coordinate, span: MKCoordinateSpan(
                 latitudeDelta: 0.005,
                 longitudeDelta: 0.005
-                                         )
+            )
         ),
         animated: true)
         mapView.addAnnotations(locations)
@@ -157,10 +172,10 @@ class MapController: UIViewController {
         let pin = MKPointAnnotation()
         pin.coordinate = location.coordinate
         mapView.setRegion(MKCoordinateRegion(center: location.coordinate,
-                                         span: MKCoordinateSpan(
-                                            latitudeDelta: 0.005,
-                                            longitudeDelta: 0.005
-                                         )
+                                             span: MKCoordinateSpan(
+                                                latitudeDelta: 0.005,
+                                                longitudeDelta: 0.005
+                                             )
         ),
         animated: true)
         mapView.addAnnotation(pin)

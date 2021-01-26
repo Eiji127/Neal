@@ -74,12 +74,17 @@ final class FeedController: UICollectionViewController {
     
     func fetchData() {
         collectionView.refreshControl?.beginRefreshing()
-        GurunaviService.shared.fetchData(latitude: latitude, longitude: longitude, freeword: freeword) { shopData in
-            self.shopData = shopData
+        
+        do {
+            GurunaviService.shared.fetchData(latitude: latitude, longitude: longitude, freeword: freeword) { shopData in
+                self.shopData = shopData
+            }
+            latitude = "&langitude="
+            longitude = "&longitude="
+            freeword = "&freeword="
+        } catch {
+            showAlert()
         }
-        latitude = "&langitude="
-        longitude = "&longitude="
-        freeword = "&freeword="
         collectionView.refreshControl?.endRefreshing()
     }
     
@@ -119,6 +124,16 @@ final class FeedController: UICollectionViewController {
     
     func configureRightBarButton() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: researchImageView)
+    }
+    
+    func showAlert(){
+        let alertController = UIAlertController(title: "Error", message: "", preferredStyle: .alert)
+        let dimissAlert = UIAlertAction(title: "OK", style: .cancel){
+            action -> Void in
+            self.dismiss(animated: true, completion: nil)
+        }
+        alertController.addAction(dimissAlert)
+        present(alertController, animated: true, completion: nil)
     }
     
     @objc func handleRefresh() {
