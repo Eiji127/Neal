@@ -11,8 +11,11 @@ import WebKit
 
 class WebController: UIViewController {
     
+    // MARK: - Properties
+    
     var mobileUrl: String = ""
     
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureWebView()
@@ -20,6 +23,8 @@ class WebController: UIViewController {
         
         self.overrideUserInterfaceStyle = .light
     }
+    
+    // MARK: - Helpers
     
     func configureWebView() {
         let webView = WKWebView.init(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height))

@@ -16,12 +16,6 @@ class ShopInfoHeader: UICollectionReusableView {
     
     // MARK: - Properties
     
-    fileprivate var shopInfo: [ShopInfo] = [] {
-        didSet {
-//            configure()
-        }
-    }
-    
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .darkGray
