@@ -10,14 +10,12 @@
 		5BC8A849B21B71EA7FC58995 /* Pods_GurunaviAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC07B28D13127CAC5BC837E /* Pods_GurunaviAPI.framework */; };
 		9820E883259458AE00215A74 /* ShopInfoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9820E882259458AE00215A74 /* ShopInfoHeader.swift */; };
 		9820E88A2594F48500215A74 /* WebController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9820E8892594F48400215A74 /* WebController.swift */; };
-		9820E89225970D0300215A74 /* ShopInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9820E89125970D0300215A74 /* ShopInfo.swift */; };
+		9820E89225970D0300215A74 /* ShopData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9820E89125970D0300215A74 /* ShopData.swift */; };
 		98247F4225BCB845000D42C8 /* reservation.json in Resources */ = {isa = PBXBuildFile; fileRef = 98247F3F25BCB845000D42C8 /* reservation.json */; };
 		98247F4325BCB845000D42C8 /* foodchoice.json in Resources */ = {isa = PBXBuildFile; fileRef = 98247F4025BCB845000D42C8 /* foodchoice.json */; };
 		98247F4425BCB845000D42C8 /* map.json in Resources */ = {isa = PBXBuildFile; fileRef = 98247F4125BCB845000D42C8 /* map.json */; };
 		98247F4725BCB969000D42C8 /* hello.json in Resources */ = {isa = PBXBuildFile; fileRef = 98247F4625BCB969000D42C8 /* hello.json */; };
 		98247F4A25BCBC6F000D42C8 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98247F4925BCBC6F000D42C8 /* SplashViewController.swift */; };
-		98247F4F25BCC059000D42C8 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98247F4E25BCC059000D42C8 /* Splash.storyboard */; };
-		98247F5325BD4230000D42C8 /* PinAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98247F5225BD4230000D42C8 /* PinAnnotationView.swift */; };
 		984B147D25B8129D001E8A51 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984B147C25B8129D001E8A51 /* LocationManager.swift */; };
 		9869F97725AF3C740013FA49 /* APIKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9869F97625AF3C740013FA49 /* APIKeyManager.swift */; };
 		986D227525BB20A100688B5F /* GurunaviAPIKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = 986D227425BB20A100688B5F /* GurunaviAPIKey.plist */; };
@@ -42,14 +40,12 @@
 		36029D6B7DCB0EF2BA13C198 /* Pods-GurunaviAPI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GurunaviAPI.release.xcconfig"; path = "Target Support Files/Pods-GurunaviAPI/Pods-GurunaviAPI.release.xcconfig"; sourceTree = "<group>"; };
 		9820E882259458AE00215A74 /* ShopInfoHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopInfoHeader.swift; sourceTree = "<group>"; };
 		9820E8892594F48400215A74 /* WebController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebController.swift; sourceTree = "<group>"; };
-		9820E89125970D0300215A74 /* ShopInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopInfo.swift; sourceTree = "<group>"; };
+		9820E89125970D0300215A74 /* ShopData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopData.swift; sourceTree = "<group>"; };
 		98247F3F25BCB845000D42C8 /* reservation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = reservation.json; sourceTree = "<group>"; };
 		98247F4025BCB845000D42C8 /* foodchoice.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = foodchoice.json; sourceTree = "<group>"; };
 		98247F4125BCB845000D42C8 /* map.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = map.json; sourceTree = "<group>"; };
 		98247F4625BCB969000D42C8 /* hello.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = hello.json; sourceTree = "<group>"; };
 		98247F4925BCBC6F000D42C8 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
-		98247F4E25BCC059000D42C8 /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
-		98247F5225BD4230000D42C8 /* PinAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinAnnotationView.swift; sourceTree = "<group>"; };
 		984B147C25B8129D001E8A51 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		9869F97625AF3C740013FA49 /* APIKeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeyManager.swift; sourceTree = "<group>"; };
 		986D227425BB20A100688B5F /* GurunaviAPIKey.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = GurunaviAPIKey.plist; sourceTree = "<group>"; };
@@ -96,7 +92,6 @@
 			isa = PBXGroup;
 			children = (
 				98C68108257E45C100288FD4 /* LaunchScreen.storyboard */,
-				98247F4E25BCC059000D42C8 /* Splash.storyboard */,
 				986D22AA25BCAA7A00688B5F /* IntroViewController.swift */,
 				98247F4925BCBC6F000D42C8 /* SplashViewController.swift */,
 				986D22B525BCB5CF00688B5F /* LottieAnimations */,
@@ -155,7 +150,7 @@
 		98C68112257E45D000288FD4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				9820E89125970D0300215A74 /* ShopInfo.swift */,
+				9820E89125970D0300215A74 /* ShopData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -166,7 +161,6 @@
 				98C68119257E4A9D00288FD4 /* ShopInfoCell.swift */,
 				9820E882259458AE00215A74 /* ShopInfoHeader.swift */,
 				98C681292581FE5200288FD4 /* ActionSheetCell.swift */,
-				98247F5225BD4230000D42C8 /* PinAnnotationView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -274,7 +268,6 @@
 				98247F4225BCB845000D42C8 /* reservation.json in Resources */,
 				986D22BD25BCB5F100688B5F /* travelers.json in Resources */,
 				986D227525BB20A100688B5F /* GurunaviAPIKey.plist in Resources */,
-				98247F4F25BCC059000D42C8 /* Splash.storyboard in Resources */,
 				98C68107257E45C100288FD4 /* Assets.xcassets in Resources */,
 				98247F4725BCB969000D42C8 /* hello.json in Resources */,
 				98247F4425BCB845000D42C8 /* map.json in Resources */,
@@ -344,8 +337,7 @@
 				98C68100257E45BD00288FD4 /* SceneDelegate.swift in Sources */,
 				9869F97725AF3C740013FA49 /* APIKeyManager.swift in Sources */,
 				98C6811A257E4A9D00288FD4 /* ShopInfoCell.swift in Sources */,
-				9820E89225970D0300215A74 /* ShopInfo.swift in Sources */,
-				98247F5325BD4230000D42C8 /* PinAnnotationView.swift in Sources */,
+				9820E89225970D0300215A74 /* ShopData.swift in Sources */,
 				98C6812A2581FE5300288FD4 /* ActionSheetCell.swift in Sources */,
 				986D22AB25BCAA7B00688B5F /* IntroViewController.swift in Sources */,
 			);
