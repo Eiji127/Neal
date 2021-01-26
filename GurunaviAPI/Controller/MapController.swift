@@ -22,16 +22,12 @@ class MapController: UIViewController {
         return map
     }()
     
-    var locationCoordinatesArray = [MKPointAnnotation]()
+    private var shopData = ShopData()
     
-    var nameArray = [String]()
-    var mobileUrlArray = [String]()
+    private var longitude: String = "&longitude="
+    private var latitude: String = "&latitude="
     
-    var longitude: String = "&longitude="
-    var latitude: String = "&latitude="
-    var range: String = "&range=3"
-    
-    var mobileUrl: String = ""
+    private var mobileUrl: String = ""
     
     // MARK: - Lifecycle
     
@@ -70,67 +66,8 @@ class MapController: UIViewController {
     // MARK: - API
     
     func fetchData() {
-        
-        var locationCoordinateLatitude: CLLocationDegrees = 0
-        var locationCoordinateLongitude: CLLocationDegrees = 0
-        var imageUrlArray = [String]()
-        
-        guard let apiKey = APIKeyManager().getValue(key: "apiKey") else {
-            return
-        }
-        var text = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=\(apiKey)&hit_per_page=30" + range + latitude + longitude
-        let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-        
-        //        let params:Parameters = [
-        //            "keyid":apiKey,
-        //            "format":"json",
-        //            "freeword":freeword,
-        //            "latitude":latitude,
-        //            "longitude":longitude,
-        //            "range":range,
-        //            "hit_per_page":10
-        //        ]
-        
-        print("DEBUG: Into method fetching data..")
-        
-        AF.request(url as! URLConvertible, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { response in
-            
-            let fetchingDataMax = 0...14
-            
-            print("DEBUG: requesting .GET...")
-            
-            switch response.result {
-            case .success:
-                for order in fetchingDataMax {
-                    
-                    let json: JSON = JSON(response.data as Any)
-                    
-                    guard let shopName = json["rest"][order]["name"].string else { return }
-                    guard let shopCategory = json["rest"][order]["category"].string else { return }
-                    guard let shopOpentime = json["rest"][order]["opentime"].string else { return }
-                    guard let mobileUrl = json["rest"][order]["url"].string else { return }
-                    guard let imageUrl1 = json["rest"][order]["image_url"]["shop_image1"].string else { return }
-                    guard let imageUrl2 = json["rest"][order]["image_url"]["shop_image2"].string else { return }
-                    guard let latitude = json["rest"][order]["latitude"].string else { return
-                    }
-                    guard let longitude = json["rest"][order]["longitude"].string else { return }
-   
-                    if latitude != "" {
-                        locationCoordinateLatitude = CLLocationDegrees(latitude)!
-                        locationCoordinateLongitude = CLLocationDegrees(longitude)!
-                        let annotation = MKPointAnnotation()
-                        annotation.coordinate = CLLocationCoordinate2DMake(locationCoordinateLatitude,locationCoordinateLongitude)
-                        annotation.title = shopName
-                        annotation.subtitle = mobileUrl
-                        self.locationCoordinatesArray.append(annotation)
-                    }
-                }
-            case .failure(let error):
-                print(error)
-                break
-            }
-            print("DEBUG: \(self.nameArray)")
-            
+        GurunaviService.shared.fetchData(latitude: latitude, longitude: longitude) { shopData in
+            self.shopData = shopData
         }
     }
     
@@ -170,8 +107,8 @@ class MapController: UIViewController {
             self.longitude += longitude
             
             self.fetchData()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                self.addMapPins(locations: self.locationCoordinatesArray)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                self.addMapPins(locations: self.shopData.locationCoordinatesArray)
             }
             
         }
@@ -179,7 +116,7 @@ class MapController: UIViewController {
     
     @objc func setCenterButtonTapped() {
         mapView.setCenter(mapView.userLocation.coordinate, animated: true)
-        mapView.removeAnnotations(locationCoordinatesArray)
+        mapView.removeAnnotations(shopData.locationCoordinatesArray)
         configurePinOnMap()
     }
     
@@ -195,10 +132,8 @@ class MapController: UIViewController {
     }
     
     func fetchUserLocation() {
-        print("DEBUG: Moved into fetchCurrentLocation Method...")
         LocationManager.shared.getUserLocation { [weak self] location in
             DispatchQueue.main.async {
-                print("DEBUG: getUserLocation is Fired..")
                 guard let strongSelf = self else {
                     return
                 }
@@ -221,7 +156,6 @@ class MapController: UIViewController {
     func addMapPin(with location: CLLocation) {
         let pin = MKPointAnnotation()
         pin.coordinate = location.coordinate
-        print(pin.coordinate)
         mapView.setRegion(MKCoordinateRegion(center: location.coordinate,
                                          span: MKCoordinateSpan(
                                             latitudeDelta: 0.005,
@@ -234,7 +168,6 @@ class MapController: UIViewController {
     
     func addShopAnnotation(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
         
-        print("DEBUG: Fired addShopAnnotation...")
         let annotation = MKPointAnnotation()
         annotation.coordinate = CLLocationCoordinate2DMake(latitude, longitude)
         mapView.setRegion(MKCoordinateRegion(center: annotation.coordinate,
@@ -277,7 +210,6 @@ extension MapController: MKMapViewDelegate {
             gesture.addTarget(self, action: #selector(moveToWebsite))
             
             annotationView?.addGestureRecognizer(gesture)
-            print("DEBUG: Fired mapViewDelegate...")
         } else {
             annotationView!.annotation = annotation
         }
@@ -285,7 +217,6 @@ extension MapController: MKMapViewDelegate {
     }
     
     @objc func moveToWebsite() {
-        print("DEBUG: Tapped annotationView...")
         let webController = WebController()
         webController.mobileUrl = self.mobileUrl
         navigationController?.pushViewController(webController, animated: true)

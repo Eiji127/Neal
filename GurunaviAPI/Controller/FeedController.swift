@@ -76,7 +76,6 @@ final class FeedController: UICollectionViewController {
         collectionView.refreshControl?.beginRefreshing()
         GurunaviService.shared.fetchData(latitude: latitude, longitude: longitude, freeword: freeword) { shopData in
             self.shopData = shopData
-            print("DEBUG: category= \(shopData.categoryArray)")
         }
         latitude = "&langitude="
         longitude = "&longitude="

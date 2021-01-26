@@ -3,6 +3,8 @@
 import UIKit
 import SwiftyJSON
 import Alamofire
+import CoreLocation
+import MapKit
 
 struct GurunaviService {
     static let shared = GurunaviService()
@@ -22,10 +24,6 @@ struct GurunaviService {
         }
         var text = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=\(apiKey)&hit_per_page=30" + range + latitude + longitude + freeword
         let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-        
-        print("DEBUG: \(latitude)")
-        print("DEBUG: \(longitude)")
-        print("DEBUG: \(freeword)")
         
         
         AF.request(url as! URLConvertible, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { response in
@@ -62,7 +60,60 @@ struct GurunaviService {
                 break
             }
             completion(shopData)
-            print("\(shopData.nameArray)")
+        }
+    }
+    
+    func fetchData(latitude: String, longitude: String, completion: @escaping(ShopData) -> Void) {
+        var shopData = ShopData()
+        
+        var locationCoordinateLatitude: CLLocationDegrees = 0
+        var locationCoordinateLongitude: CLLocationDegrees = 0
+        
+        guard let apiKey = APIKeyManager().getValue(key: "apiKey") else {
+            return
+        }
+        var text = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=\(apiKey)&hit_per_page=30" + range + latitude + longitude
+        let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        
+        AF.request(url as! URLConvertible, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { response in
+            
+            let fetchingDataMax = 0...14
+
+            switch response.result {
+            case .success:
+                for order in fetchingDataMax {
+                    
+                    let json: JSON = JSON(response.data as Any)
+                    
+                    guard let shopName = json["rest"][order]["name"].string else {
+                        return
+                    }
+                    guard let mobileUrl = json["rest"][order]["url"].string else {
+                        return
+                    }
+                    guard let latitude = json["rest"][order]["latitude"].string else {
+                        return
+                    }
+                    guard let longitude = json["rest"][order]["longitude"].string else { return }
+                    
+                    shopData.nameArray.append(shopName)
+                    shopData.mobileUrlArray.append(mobileUrl)
+                    
+                    if latitude != "" {
+                        locationCoordinateLatitude = CLLocationDegrees(latitude)!
+                        locationCoordinateLongitude = CLLocationDegrees(longitude)!
+                        let annotation = MKPointAnnotation()
+                        annotation.coordinate = CLLocationCoordinate2DMake(locationCoordinateLatitude,locationCoordinateLongitude)
+                        annotation.title = shopName
+                        annotation.subtitle = mobileUrl
+                        shopData.locationCoordinatesArray.append(annotation)
+                    }
+                }
+            case .failure(let error):
+                print(error)
+                break
+            }
+            completion(shopData)
         }
     }
 }

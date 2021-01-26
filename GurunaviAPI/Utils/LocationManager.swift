@@ -33,12 +33,10 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     }
     
     public func getUserLocation(completion: @escaping ((CLLocation) -> Void)) {
-        print("DEBUG: fired Method'getUserLocation'...")
         self.completion = completion
         manager.requestWhenInUseAuthorization()
         manager.delegate = self
         manager.startUpdatingLocation()
-        print("DEBUG: Done startUpdatingLocation...")
     }
     
     public func getUserLocation() {

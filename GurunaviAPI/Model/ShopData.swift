@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MapKit
 
 
 struct ShopData {
@@ -13,6 +14,7 @@ struct ShopData {
     var categoryArray = [String]()
     var opentimeArray = [String]()
     var mobileUrlArray = [String]()
+    var locationCoordinatesArray = [MKPointAnnotation]()
     var shopsImageArray = [[String]]()
 }
 
