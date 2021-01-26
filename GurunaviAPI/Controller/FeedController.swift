@@ -135,8 +135,11 @@ final class FeedController: UICollectionViewController {
         searchBar.delegate = self
         searchBar.becomeFirstResponder()
     }
-    
-    
+}
+
+// MARK: UICollectionViewCompositionalLayout
+
+extension FeedController {
     func layout() -> UICollectionViewCompositionalLayout {
         
         let sectionProvider = { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
@@ -172,15 +175,15 @@ final class FeedController: UICollectionViewController {
         return layout
     }
     
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return shopData.nameArray.count
-    }
-    
 }
 
 // MARK: - UICollectionViewDelegate/DataSource
 
 extension FeedController {
+    
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return shopData.nameArray.count
+    }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return itemCount
@@ -218,6 +221,8 @@ extension FeedController {
         navigationController?.pushViewController(webController, animated: true)
     }
 }
+
+// MARK: - UISearchBarDelegate
 
 extension FeedController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

@@ -166,26 +166,12 @@ class MapController: UIViewController {
         mapView.addAnnotation(pin)
     }
     
-    func addShopAnnotation(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
-        
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = CLLocationCoordinate2DMake(latitude, longitude)
-        mapView.setRegion(MKCoordinateRegion(center: annotation.coordinate,
-                                         span: MKCoordinateSpan(
-                                            latitudeDelta: 0.005,
-                                            longitudeDelta: 0.005
-                                         )
-        ),
-        animated: true)
-        mapView.delegate = self
-        mapView.addAnnotation(annotation)
-        mapView.setCenter(annotation.coordinate, animated: true)
-    }
-    
     func setCenterUserLocation() {
         mapView.setCenter(mapView.userLocation.coordinate, animated: true)
     }
 }
+
+// MARK: - MKMapViewDelegate
 
 extension MapController: MKMapViewDelegate {
     

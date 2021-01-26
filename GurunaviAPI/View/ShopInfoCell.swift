@@ -49,8 +49,6 @@ class ShopInfoCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Selectors
-    
     // MARK: - Helpers
     func setUpImageView(imageUrl: URL) {
         imageView.sd_setImage(with: imageUrl, completed: nil)
