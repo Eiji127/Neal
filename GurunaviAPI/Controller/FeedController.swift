@@ -11,57 +11,25 @@ import SwiftyJSON
 import MapKit
 
 
-
 private let reuseIdentifier = "ShopInfoCell"
 private let reuseHeaderIdentifier = "ShopInfoHeader"
-
 
 final class FeedController: UICollectionViewController {
     
     // MARK: - Properties
     
-    private var actionSheetLauncher: ActionSheetLauncher!
-    
-    
-    var nameArray = [String]() {
+    private var shopData = ShopData() {
         didSet {
             collectionView.reloadData()
         }
     }
     
-    var categoryArray = [String]() {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
+    private let itemCount: Int = 2
     
-    var opentimeArray = [String]() {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
-    
-    var mobileUrlArray = [String]() {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
-    
-    var shopsImageArray = [[String]]() {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
-    
-    var coordinatesArray = [Any]()
-    
-    var itemCount: Int = 2
-    
-    var locationManager: CLLocationManager? = nil
-    var freeword: String = "&freeword="
-    var longitude: String = "&longitude="
-    var latitude: String = "&latitude="
-    var range: String = "&range=3"
+    private var freeword: String = "&freeword="
+    private var longitude: String = "&longitude="
+    private var latitude: String = "&latitude="
+
     
     private let searchBar: UISearchBar = {
         let search = UISearchBar()
@@ -69,8 +37,9 @@ final class FeedController: UICollectionViewController {
         search.textField?.layer.cornerRadius = (search.textField?.bounds.height)! / 2.0
         search.textField?.layer.masksToBounds = true
         search.placeholder = "Search"
-        search.textField?.attributedPlaceholder = NSAttributedString(string: search.placeholder ?? "", attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray])
-        
+        search.textField?.attributedPlaceholder = NSAttributedString(string: search.placeholder ?? "",
+                                                                     attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray]
+        )
         return search
     }()
     
@@ -99,137 +68,33 @@ final class FeedController: UICollectionViewController {
         configureRightBarButton()
         collectionView.reloadData()
         
-        self.overrideUserInterfaceStyle = .light
     }
     
     // MARK: - API
     
     func fetchData() {
-        
         collectionView.refreshControl?.beginRefreshing()
-        let annotation = MKPointAnnotation()
-        var locationCoordinateLatitude: CLLocationDegrees = 0
-        var locationCoordinateLongitude: CLLocationDegrees = 0
-        var imageUrlArray = [String]()
-        annotation.coordinate = CLLocationCoordinate2DMake(locationCoordinateLatitude,locationCoordinateLongitude)
-        
-        guard let apiKey = APIKeyManager().getValue(key: "apiKey") else {
-            return
+        GurunaviService.shared.fetchData(latitude: latitude, longitude: longitude, freeword: freeword) { shopData in
+            self.shopData = shopData
+            print("DEBUG: category= \(shopData.categoryArray)")
         }
-        var text = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=\(apiKey)&hit_per_page=30" + range + latitude + longitude + freeword
-        let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-        
-        //        let params:Parameters = [
-        //            "keyid":apiKey,
-        //            "format":"json",
-        //            "freeword":freeword,
-        //            "latitude":latitude,
-        //            "longitude":longitude,
-        //            "range":range,
-        //            "hit_per_page":10
-        //        ]
-        
-        print("DEBUG: Into method fetching data..")
-        
-        AF.request(url as! URLConvertible, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { response in
-            
-            let fetchingDataMax = 0...14
-            
-            print("DEBUG: requesting .GET...")
-            
-            switch response.result {
-            case .success:
-                for order in fetchingDataMax {
-                    
-                    let json: JSON = JSON(response.data as Any)
-                    
-                    guard let shopName = json["rest"][order]["name"].string else { return }
-                    guard let shopCategory = json["rest"][order]["category"].string else { return }
-                    guard let shopOpentime = json["rest"][order]["opentime"].string else { return }
-                    guard let mobileUrl = json["rest"][order]["url"].string else { return }
-                    guard let imageUrl1 = json["rest"][order]["image_url"]["shop_image1"].string else { return }
-                    guard let imageUrl2 = json["rest"][order]["image_url"]["shop_image2"].string else { return }
-                    guard let latitude = json["rest"][order]["latitude"].string else { return
-                    }
-                    guard let longitude = json["rest"][order]["longitude"].string else { return }
-                    self.nameArray.append(shopName)
-                    self.categoryArray.append(shopCategory)
-                    self.opentimeArray.append(shopOpentime)
-                    self.mobileUrlArray.append(mobileUrl)
-                    imageUrlArray.append(imageUrl1)
-                    imageUrlArray.append(imageUrl2)
-//                    if imageUrl2 != "" {
-//                        imageUrlArray.append(imageUrl2)
-//                    }
-                    self.shopsImageArray.append(imageUrlArray)
-                    imageUrlArray.removeAll()
-
-                }
-            case .failure(let error):
-                print(error)
-                break
-            }
-            print("DEBUG: \(self.nameArray)")
-            
-        }
-
+        latitude = "&langitude="
+        longitude = "&longitude="
+        freeword = "&freeword="
         collectionView.refreshControl?.endRefreshing()
     }
-    
     
     // MARK: - Helper
     
     func indicateShopInformation(){
         
-        self.longitude = "&longitude="
-        self.latitude = "&latitude="
-        
-        fetchUserLocation { latitude, longitude in
+        LocationManager.shared.fetchUserLocation { latitude, longitude in
             
             self.latitude += latitude
             self.longitude += longitude
             
             self.fetchData()
-            
-            self.freeword = "&freeword="
-            
-            print("DEBUG: \(self.latitude)")
-            print("DEBUG: \(self.longitude)")
-            print("DEBUG: \(self.freeword)")
         }
-    }
-    
-    func fetchUserLocation(copletion: @escaping (_ latitude: String, _ longitude: String) -> Void) {
-        LocationManager.shared.getUserLocation { location in
-            
-            let locationLatitude = String(CLLocationDegrees(location.coordinate.latitude))
-            let locationLongitude = String(CLLocationDegrees(location.coordinate.longitude))
-            
-            copletion(locationLatitude, locationLongitude)
-            
-        }
-    }
-    
-    
-    func fetchUserLocation(){
-        
-        LocationManager.shared.getUserLocation { location in
-            
-            let locationLatitude = String(CLLocationDegrees(location.coordinate.latitude))
-            let locationLongitude = String(CLLocationDegrees(location.coordinate.longitude))
-            
-            self.latitude += locationLatitude
-            self.longitude += locationLongitude
-            
-        }
-    }
-    
-    func removeAllElementsInArray() {
-        nameArray.removeAll()
-        categoryArray.removeAll()
-        opentimeArray.removeAll()
-        mobileUrlArray.removeAll()
-        shopsImageArray.removeAll()
     }
     
     func configureUI() {
@@ -253,18 +118,17 @@ final class FeedController: UICollectionViewController {
         collectionView.refreshControl = refreshControl
     }
     
-    @objc func handleRefresh() {
-        removeAllElementsInArray()
-        indicateShopInformation()
-        collectionView.reloadData()
-    }
-    
     func configureRightBarButton() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: researchImageView)
     }
     
+    @objc func handleRefresh() {
+        indicateShopInformation()
+        collectionView.reloadData()
+    }
+    
     @objc func researchImageTapped() {
-            showSearchBar()
+        showSearchBar()
     }
     
     func showSearchBar() {
@@ -309,14 +173,8 @@ final class FeedController: UICollectionViewController {
         return layout
     }
     
-    fileprivate func utilizeActionSheetLauncher() {
-        actionSheetLauncher = ActionSheetLauncher()
-        //        actionSheetLauncher.delegate = self
-        actionSheetLauncher.show()
-    }
-    
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return nameArray.count
+        return shopData.nameArray.count
     }
     
 }
@@ -331,10 +189,10 @@ extension FeedController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ShopInfoCell
-        if shopsImageArray != [] {
-            if let shopImage = URL(string: shopsImageArray[indexPath.section][indexPath.row]) {
+        if shopData.shopsImageArray != [] {
+            if let shopImage = URL(string: shopData.shopsImageArray[indexPath.section][indexPath.row]) {
                 cell.setUpImageView(imageUrl: shopImage)
-            } else if shopsImageArray[indexPath.section][indexPath.row] == "" {
+            } else if shopData.shopsImageArray[indexPath.section][indexPath.row] == "" {
                 cell.setUpImage()
             }
         } else {
@@ -345,74 +203,22 @@ extension FeedController {
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: reuseHeaderIdentifier, for: indexPath) as! ShopInfoHeader
-        if nameArray != [] {
-            sectionHeader.setUpContents(name: self.nameArray[indexPath.section], category: self.categoryArray[indexPath.section], opentime: self.opentimeArray[indexPath.section])
+        if shopData.nameArray != [] {
+            sectionHeader.setUpContents(
+                name: shopData.nameArray[indexPath.section],
+                category: shopData.categoryArray[indexPath.section],
+                opentime: shopData.opentimeArray[indexPath.section]
+            )
         }
-//        sectionHeader.delegate = self
         return sectionHeader
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let webController = WebController()
-        webController.mobileUrl = mobileUrlArray[indexPath.section]
+        webController.mobileUrl = shopData.mobileUrlArray[indexPath.section]
         navigationController?.pushViewController(webController, animated: true)
     }
 }
-
-//extension FeedController: shopInfoHeaderDelegate {
-//    func showMapView() {
-//
-//        let mapController = MapController()
-//        let navigationController = tabBarController?.viewControllers?[1]
-//        tabBarController?.selectedViewController = navigationController
-//
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-//            let mapController = MapController()
-//            mapController.addShopPin()
-//        }
-        
-//        moveIntoMapView { viewController in
-//            let mapController = MapController()
-//            mapController.addShopPin()
-//        }
-        
-        
-//        guard let map = presentingViewController as? MapController else { return
-//        }
-//        let map = MapController()
-//        if let rootViewController = UIApplication.shared.windows.first?.rootViewController as? TabController {
-//
-//            rootViewController.selectedIndex = 1
-//            map.latitude = 39.5432345
-//            map.longitude = 135.4356345
-//            map.addShopPin()
-//        }
-//        guard let navigationController = rootViewController.children as? UINavigationController else {
-//            return
-//            print("DEBUG: はろ２")
-//        }
-        
-        
-//        map.latitude = 39.5432345
-//        map.longitude = 135.4356345
-//        map.addShopPin()
-        
-//        print("DEBUG: \(map.latitude)")
-//        print("DEBUG: \(map.longitude)")
-
-//        present(navigationController, animated: true, completion: nil)
-        
-        
-        
-//    }
-    
-//    func moveIntoMapView (completion: @escaping((UIViewController) -> Void)) {
-//        let mapController = MapController()
-//        let navigationController = tabBarController?.viewControllers?[1]
-//        tabBarController?.selectedViewController = navigationController
-//        completion(navigationController!)
-//    }
-//}
 
 extension FeedController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -426,10 +232,6 @@ extension FeedController: UISearchBarDelegate {
         latitude = "&latitude="
         
         freeword += searchText
-        print("DEBUG: \(freeword)")
-        
-        
-        removeAllElementsInArray()
         
         indicateShopInformation()
         collectionView.reloadData()
@@ -448,7 +250,6 @@ extension FeedController: UISearchBarDelegate {
         researchImageView.isHidden = false
         searchBar.endEditing(true)
     }
-    
     
 }
 

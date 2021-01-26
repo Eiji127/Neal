@@ -263,9 +263,9 @@ extension MapController: MKMapViewDelegate {
         }
         
         let pinID = "PIN"
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: pinID) as? PinAnnotationView
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: pinID) as? MKPinAnnotationView
         if annotationView == nil {
-            annotationView = PinAnnotationView()
+            annotationView = MKPinAnnotationView()
             annotationView?.annotation = annotation
             annotationView?.pinTintColor = .red
             annotationView?.animatesDrop = true
