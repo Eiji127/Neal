@@ -32,6 +32,8 @@
 - ジャンル別によるフィルター機能
 ![Simulator Screen Shot - iPhone 12 Pro - 2021-01-27 at 23 32 48](https://user-images.githubusercontent.com/64912886/106025086-c73b0300-610b-11eb-9798-841ec2d7fe16.png)
 
+- 他サービスへの共有
+
 
 
 ## Description
