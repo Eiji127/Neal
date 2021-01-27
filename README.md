@@ -19,14 +19,18 @@
 
 ## Feature
 - 飲食店のリスト化
+- 飲食店イメージの閲覧
+![Simulator Screen Shot - iPhone 12 Pro - 2021-01-27 at 23 34 43](https://user-images.githubusercontent.com/64912886/106025135-cf933e00-610b-11eb-9664-5d24b6b43b42.png)
 
 - 現在地取得
-
 - マップ表示
+![Simulator Screen Shot - iPhone 12 Pro - 2021-01-27 at 23 30 09](https://user-images.githubusercontent.com/64912886/106025046-bdb19b00-610b-11eb-870d-2bd31286347d.png)
 
 - 詳細画面
+![Simulator Screen Shot - iPhone 12 Pro - 2021-01-27 at 23 37 13](https://user-images.githubusercontent.com/64912886/106025183-d7eb7900-610b-11eb-908d-22ef59c5cd65.png)
 
-- 飲食店イメージの閲覧
+- ジャンル別によるフィルター機能
+![Simulator Screen Shot - iPhone 12 Pro - 2021-01-27 at 23 32 48](https://user-images.githubusercontent.com/64912886/106025086-c73b0300-610b-11eb-9798-841ec2d7fe16.png)
 
 
 
