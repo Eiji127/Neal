@@ -35,14 +35,13 @@ struct GurunaviService {
                 for order in fetchingDataMax {
                     
                     let json: JSON = JSON(response.data as Any)
-                    
                     guard let shopName = json["rest"][order]["name"].string else { return }
                     guard let shopCategory = json["rest"][order]["category"].string else { return }
                     guard let shopOpentime = json["rest"][order]["opentime"].string else { return }
                     guard let mobileUrl = json["rest"][order]["url"].string else { return }
                     guard let imageUrl1 = json["rest"][order]["image_url"]["shop_image1"].string else { return }
                     guard let imageUrl2 = json["rest"][order]["image_url"]["shop_image2"].string else { return }
-                
+                    
                     shopData.nameArray.append(shopName)
                     shopData.categoryArray.append(shopCategory)
                     shopData.opentimeArray.append(shopOpentime)
@@ -84,7 +83,6 @@ struct GurunaviService {
                 for order in fetchingDataMax {
                     
                     let json: JSON = JSON(response.data as Any)
-                    
                     guard let shopName = json["rest"][order]["name"].string else {
                         return
                     }

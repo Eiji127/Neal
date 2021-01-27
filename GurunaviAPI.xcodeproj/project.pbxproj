@@ -16,6 +16,7 @@
 		98247F4425BCB845000D42C8 /* map.json in Resources */ = {isa = PBXBuildFile; fileRef = 98247F4125BCB845000D42C8 /* map.json */; };
 		98247F4725BCB969000D42C8 /* hello.json in Resources */ = {isa = PBXBuildFile; fileRef = 98247F4625BCB969000D42C8 /* hello.json */; };
 		98247F4A25BCBC6F000D42C8 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98247F4925BCBC6F000D42C8 /* SplashViewController.swift */; };
+		98247F8025C1C386000D42C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98247F7F25C1C386000D42C8 /* LaunchScreen.storyboard */; };
 		984B147D25B8129D001E8A51 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984B147C25B8129D001E8A51 /* LocationManager.swift */; };
 		9869F97725AF3C740013FA49 /* APIKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9869F97625AF3C740013FA49 /* APIKeyManager.swift */; };
 		986D227525BB20A100688B5F /* GurunaviAPIKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = 986D227425BB20A100688B5F /* GurunaviAPIKey.plist */; };
@@ -24,7 +25,6 @@
 		98C680FE257E45BD00288FD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C680FD257E45BD00288FD4 /* AppDelegate.swift */; };
 		98C68100257E45BD00288FD4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C680FF257E45BD00288FD4 /* SceneDelegate.swift */; };
 		98C68107257E45C100288FD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98C68106257E45C100288FD4 /* Assets.xcassets */; };
-		98C6810A257E45C100288FD4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98C68108257E45C100288FD4 /* LaunchScreen.storyboard */; };
 		98C68116257E485200288FD4 /* FeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C68115257E485200288FD4 /* FeedController.swift */; };
 		98C6811A257E4A9D00288FD4 /* ShopInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C68119257E4A9D00288FD4 /* ShopInfoCell.swift */; };
 		98C6811E257E4CAC00288FD4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C6811D257E4CAC00288FD4 /* Extensions.swift */; };
@@ -46,6 +46,7 @@
 		98247F4125BCB845000D42C8 /* map.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = map.json; sourceTree = "<group>"; };
 		98247F4625BCB969000D42C8 /* hello.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = hello.json; sourceTree = "<group>"; };
 		98247F4925BCBC6F000D42C8 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		98247F7F25C1C386000D42C8 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		984B147C25B8129D001E8A51 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		9869F97625AF3C740013FA49 /* APIKeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeyManager.swift; sourceTree = "<group>"; };
 		986D227425BB20A100688B5F /* GurunaviAPIKey.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = GurunaviAPIKey.plist; sourceTree = "<group>"; };
@@ -55,7 +56,6 @@
 		98C680FD257E45BD00288FD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98C680FF257E45BD00288FD4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		98C68106257E45C100288FD4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		98C68109257E45C100288FD4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		98C6810B257E45C100288FD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		98C68115257E485200288FD4 /* FeedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedController.swift; sourceTree = "<group>"; };
 		98C68119257E4A9D00288FD4 /* ShopInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopInfoCell.swift; sourceTree = "<group>"; };
@@ -91,10 +91,10 @@
 		986D22A925BCAA3A00688B5F /* Intro */ = {
 			isa = PBXGroup;
 			children = (
-				98C68108257E45C100288FD4 /* LaunchScreen.storyboard */,
 				986D22AA25BCAA7A00688B5F /* IntroViewController.swift */,
 				98247F4925BCBC6F000D42C8 /* SplashViewController.swift */,
 				986D22B525BCB5CF00688B5F /* LottieAnimations */,
+				98247F7F25C1C386000D42C8 /* LaunchScreen.storyboard */,
 			);
 			path = Intro;
 			sourceTree = "<group>";
@@ -264,7 +264,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				98247F4325BCB845000D42C8 /* foodchoice.json in Resources */,
-				98C6810A257E45C100288FD4 /* LaunchScreen.storyboard in Resources */,
+				98247F8025C1C386000D42C8 /* LaunchScreen.storyboard in Resources */,
 				98247F4225BCB845000D42C8 /* reservation.json in Resources */,
 				986D22BD25BCB5F100688B5F /* travelers.json in Resources */,
 				986D227525BB20A100688B5F /* GurunaviAPIKey.plist in Resources */,
@@ -344,17 +344,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		98C68108257E45C100288FD4 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				98C68109257E45C100288FD4 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		98C6810C257E45C100288FD4 /* Debug */ = {
@@ -482,6 +471,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XG9UCHUCSL;
 				INFOPLIST_FILE = GurunaviAPI/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -489,7 +479,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.aeg.qed.GurunaviAPI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -502,6 +492,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XG9UCHUCSL;
 				INFOPLIST_FILE = GurunaviAPI/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -509,7 +500,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.aeg.qed.GurunaviAPI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
