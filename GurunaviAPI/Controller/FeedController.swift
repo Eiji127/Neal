@@ -82,8 +82,9 @@ final class FeedController: UICollectionViewController {
             latitude = "&langitude="
             longitude = "&longitude="
             freeword = "&freeword="
+            
         } catch {
-            showAlert()
+            showErrorAlert()
         }
         collectionView.refreshControl?.endRefreshing()
     }
@@ -126,8 +127,18 @@ final class FeedController: UICollectionViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: researchImageView)
     }
     
-    func showAlert(){
+    func showErrorAlert(){
         let alertController = UIAlertController(title: "Error", message: "", preferredStyle: .alert)
+        let dimissAlert = UIAlertAction(title: "OK", style: .cancel){
+            action -> Void in
+            self.dismiss(animated: true, completion: nil)
+        }
+        alertController.addAction(dimissAlert)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func showNoHitAlert(){
+        let alertController = UIAlertController(title: "該当なし", message: "検索結果が0件でした", preferredStyle: .alert)
         let dimissAlert = UIAlertAction(title: "OK", style: .cancel){
             action -> Void in
             self.dismiss(animated: true, completion: nil)
