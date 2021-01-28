@@ -51,8 +51,6 @@ class MapController: UIViewController {
         
         self.overrideUserInterfaceStyle = .light
         
-        mapView.delegate = self
-        
         configurePinOnMap()
         
     }
@@ -69,6 +67,9 @@ class MapController: UIViewController {
         do {
             GurunaviService.shared.fetchData(latitude: latitude, longitude: longitude) { shopData in
                 self.shopData = shopData
+                if self.shopData.hit_count == 0 {
+                    self.showNoHitAlert()
+                }
             }
         } catch {
             showAlert()
@@ -115,8 +116,17 @@ class MapController: UIViewController {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                 self.addMapPins(locations: self.shopData.locationCoordinatesArray)
             }
-            
         }
+    }
+    
+    func showNoHitAlert(){
+        let alertController = UIAlertController(title: "該当なし", message: "検索結果が0件でした", preferredStyle: .alert)
+        let dimissAlert = UIAlertAction(title: "OK", style: .cancel){
+            action -> Void in
+            self.dismiss(animated: true, completion: nil)
+        }
+        alertController.addAction(dimissAlert)
+        present(alertController, animated: true, completion: nil)
     }
     
     func showAlert(){
@@ -165,6 +175,7 @@ class MapController: UIViewController {
             )
         ),
         animated: true)
+        mapView.delegate = self
         mapView.addAnnotations(locations)
     }
     
@@ -205,23 +216,23 @@ extension MapController: MKMapViewDelegate {
             annotationView?.animatesDrop = true
             annotationView?.canShowCallout = true
             
-            self.mobileUrl = annotation.subtitle! ?? ""
+//            self.mobileUrl = annotation.subtitle! ?? ""
             
-            let gesture = UITapGestureRecognizer()
-            gesture.addTarget(self, action: #selector(moveToWebsite))
+//            let gesture = UITapGestureRecognizer()
+//            gesture.addTarget(self, action: #selector(moveToWebsite))
             
-            annotationView?.addGestureRecognizer(gesture)
+//            annotationView?.addGestureRecognizer(gesture)
         } else {
             annotationView!.annotation = annotation
         }
         return annotationView
     }
     
-    @objc func moveToWebsite() {
-        let webController = WebController()
-        webController.mobileUrl = self.mobileUrl
-        navigationController?.pushViewController(webController, animated: true)
-    }
+//    @objc func moveToWebsite() {
+//        let webController = WebController()
+//        webController.mobileUrl = self.mobileUrl
+//        navigationController?.pushViewController(webController, animated: true)
+//    }
     
 }
 
