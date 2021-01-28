@@ -10,6 +10,7 @@ import MapKit
 
 
 struct ShopData {
+    var hit_count = Int()
     var nameArray = [String]()
     var categoryArray = [String]()
     var opentimeArray = [String]()
