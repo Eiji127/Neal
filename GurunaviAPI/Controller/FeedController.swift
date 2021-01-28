@@ -78,11 +78,13 @@ final class FeedController: UICollectionViewController {
         do {
             GurunaviService.shared.fetchData(latitude: latitude, longitude: longitude, freeword: freeword) { shopData in
                 self.shopData = shopData
+                self.latitude = "&latitude="
+                self.longitude = "&longitude="
+                if self.shopData.hit_count == 0 {
+                    self.showNoHitAlert()
+                }
             }
-            latitude = "&langitude="
-            longitude = "&longitude="
             freeword = "&freeword="
-            
         } catch {
             showErrorAlert()
         }
@@ -97,7 +99,6 @@ final class FeedController: UICollectionViewController {
             
             self.latitude += latitude
             self.longitude += longitude
-            
             self.fetchData()
         }
     }
@@ -149,7 +150,6 @@ final class FeedController: UICollectionViewController {
     
     @objc func handleRefresh() {
         indicateShopInformation()
-        collectionView.reloadData()
     }
     
     @objc func researchImageTapped() {
@@ -208,7 +208,8 @@ extension FeedController {
 extension FeedController {
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return shopData.nameArray.count
+        let sectionsCount = shopData.hit_count
+        return sectionsCount
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

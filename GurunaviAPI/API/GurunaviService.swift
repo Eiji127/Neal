@@ -15,6 +15,7 @@ struct GurunaviService {
     var range: String = "&range=3"
     
     func fetchData(latitude: String, longitude: String, freeword: String, completion: @escaping(ShopData) -> Void) {
+        print("DEBUG: Fired fetching data...")
         var shopData = ShopData()
         
         var imageUrlArray = [String]()
@@ -25,16 +26,29 @@ struct GurunaviService {
         var text = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=\(apiKey)&hit_per_page=30" + range + latitude + longitude + freeword
         let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         
-        
         AF.request(url as! URLConvertible, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { response in
-            
-            let fetchingDataMax = 0...14
+            print("DEBUG: \(response)")
             
             switch response.result {
             case .success:
+                print("DEBUG: into .success...")
+                let json: JSON = JSON(response.data as Any)
+                guard var hit_count = json["total_hit_count"].int else {
+                    shopData.hit_count = 0
+                    completion(shopData)
+                    return
+                }
+                if hit_count >= 15 {
+                    hit_count = 15
+                }
+                shopData.hit_count = hit_count
+                let fetchingCount = hit_count - 1
+                print("DEBUG: \(hit_count)")
+                
+                let fetchingDataMax = 0...fetchingCount
+                
                 for order in fetchingDataMax {
                     
-                    let json: JSON = JSON(response.data as Any)
                     guard let shopName = json["rest"][order]["name"].string else { return }
                     guard let shopCategory = json["rest"][order]["category"].string else { return }
                     guard let shopOpentime = json["rest"][order]["opentime"].string else { return }
@@ -55,7 +69,7 @@ struct GurunaviService {
                     imageUrlArray.removeAll()
                 }
             case .failure(let error):
-                print(error)
+                print("DEBUG: \(error)")
                 break
             }
             completion(shopData)
@@ -76,13 +90,23 @@ struct GurunaviService {
         
         AF.request(url as! URLConvertible, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { response in
             
-            let fetchingDataMax = 0...14
+            let json: JSON = JSON(response.data as Any)
+            guard var hit_count = json["total_hit_count"].int else {
+                shopData.hit_count = 0
+                completion(shopData)
+                return
+            }
+            if hit_count >= 15 {
+                hit_count = 15
+            }
+            shopData.hit_count = hit_count
+            let fetchingCount = hit_count - 1
+            
+            let fetchingDataMax = 0...fetchingCount
 
             switch response.result {
             case .success:
                 for order in fetchingDataMax {
-                    
-                    let json: JSON = JSON(response.data as Any)
                     guard let shopName = json["rest"][order]["name"].string else {
                         return
                     }
@@ -103,7 +127,7 @@ struct GurunaviService {
                         let annotation = MKPointAnnotation()
                         annotation.coordinate = CLLocationCoordinate2DMake(locationCoordinateLatitude,locationCoordinateLongitude)
                         annotation.title = shopName
-                        annotation.subtitle = mobileUrl
+//                        annotation.subtitle = mobileUrl
                         shopData.locationCoordinatesArray.append(annotation)
                     }
                 }
