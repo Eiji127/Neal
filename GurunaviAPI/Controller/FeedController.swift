@@ -9,6 +9,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import MapKit
+import CoreLocation
 
 
 private let reuseIdentifier = "ShopInfoCell"
@@ -62,12 +63,27 @@ final class FeedController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        checkLocationServiceCondition()
         indicateShopInformation()
         
         configureUI()
         configureRightBarButton()
         collectionView.reloadData()
-        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        checkLocationServiceCondition()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
     }
     
     // MARK: - API
@@ -75,31 +91,55 @@ final class FeedController: UICollectionViewController {
     func fetchData() {
         collectionView.refreshControl?.beginRefreshing()
         
-        do {
-            GurunaviService.shared.fetchData(latitude: latitude, longitude: longitude, freeword: freeword) { shopData in
-                self.shopData = shopData
-                self.latitude = "&latitude="
-                self.longitude = "&longitude="
-                if self.shopData.hit_count == 0 {
-                    self.showNoHitAlert()
+        GurunaviService.shared.fetchData(latitude: latitude, longitude: longitude, freeword: freeword) { shopData in
+            self.shopData = shopData
+            self.latitude = "&latitude="
+            self.longitude = "&longitude="
+            if self.shopData.hit_count == 0 {
+                AlertManager.shared.showNoHitAlert(viewContoller: self) { alert in
+                    self.dismiss(animated: true, completion: nil)
                 }
             }
-            freeword = "&freeword="
-        } catch {
-            showErrorAlert()
         }
+        freeword = "&freeword="
         collectionView.refreshControl?.endRefreshing()
     }
     
     // MARK: - Helper
     
     func indicateShopInformation(){
-        
         LocationManager.shared.fetchUserLocation { latitude, longitude in
             
             self.latitude += latitude
             self.longitude += longitude
             self.fetchData()
+        }
+    }
+    
+    @objc func willEnterForeground() {
+        checkLocationServiceCondition()
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func checkLocationServiceCondition() {
+        if CLLocationManager.locationServicesEnabled() {
+            let status = CLLocationManager.authorizationStatus()
+            switch status {
+            case .denied:
+                AlertManager.shared.showAllowingFetchLocationAlert(viewContoller: self) { (_) in
+                    self.showOSSettingView()
+                }
+            default:
+                break
+            }
+        } else {
+            AlertManager.shared.showAllowingFetchLocationAlert(viewContoller: self)
+        }
+    }
+    
+    func showOSSettingView() {
+        if let url = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
     
@@ -126,26 +166,6 @@ final class FeedController: UICollectionViewController {
     
     func configureRightBarButton() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: researchImageView)
-    }
-    
-    func showErrorAlert(){
-        let alertController = UIAlertController(title: "Error", message: "", preferredStyle: .alert)
-        let dimissAlert = UIAlertAction(title: "OK", style: .cancel){
-            action -> Void in
-            self.dismiss(animated: true, completion: nil)
-        }
-        alertController.addAction(dimissAlert)
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    func showNoHitAlert(){
-        let alertController = UIAlertController(title: "該当なし", message: "検索結果が0件でした", preferredStyle: .alert)
-        let dimissAlert = UIAlertAction(title: "OK", style: .cancel){
-            action -> Void in
-            self.dismiss(animated: true, completion: nil)
-        }
-        alertController.addAction(dimissAlert)
-        present(alertController, animated: true, completion: nil)
     }
     
     @objc func handleRefresh() {

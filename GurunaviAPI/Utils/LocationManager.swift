@@ -5,6 +5,7 @@
 //  Created by 白数叡司 on 2021/01/20.
 //
 
+import UIKit
 import CoreLocation
 import Foundation
 
@@ -22,13 +23,12 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     var completion: ((CLLocation) -> Void)?
     
     public func fetchUserLocation(copletion: @escaping (_ latitude: String, _ longitude: String) -> Void) {
-        LocationManager.shared.getUserLocation { location in
+        getUserLocation { location in
             
             let locationLatitude = String(CLLocationDegrees(location.coordinate.latitude))
             let locationLongitude = String(CLLocationDegrees(location.coordinate.longitude))
             
             copletion(locationLatitude, locationLongitude)
-            
         }
     }
     
@@ -51,5 +51,24 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         }
         completion?(location)
         manager.stopUpdatingLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        
+        switch status {
+        case .notDetermined:
+            print("未決定の場合")
+        case .authorizedAlways:
+            print("常に許可した場合")
+        case .authorizedWhenInUse:
+            print("使用中のみ許可した場合")
+        case .denied:
+            print("許可しない場合")
+            
+        case .restricted:
+            print("位置情報を利用できない制限がある場合")
+        @unknown default:
+            fatalError("CLAuthorizationStatusの種類が増えているので、条件を見直す必要があります。")
+        }
     }
 }
