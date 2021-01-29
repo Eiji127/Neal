@@ -34,18 +34,9 @@ class MapController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(mapView)
-        
-        let region = MKCoordinateRegion(center: mapView.userLocation.coordinate,
-                                        span: MKCoordinateSpan(
-                                            latitudeDelta: 0.005,
-                                            longitudeDelta: 0.005
-                                        )
-        )
-        mapView.setRegion(region, animated:true)
-        
         LocationManager.shared.getUserLocation()
         
+        configureMapView()
         configureNavigationBar()
         configureNavigationBarRightButton()
         
@@ -53,6 +44,22 @@ class MapController: UIViewController {
         
         configurePinOnMap()
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        checkLocationServiceCondition()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
     }
     
     
@@ -64,20 +71,54 @@ class MapController: UIViewController {
     // MARK: - API
     
     func fetchData() {
-        do {
-            GurunaviService.shared.fetchData(latitude: latitude, longitude: longitude) { shopData in
-                self.shopData = shopData
-                if self.shopData.hit_count == 0 {
-                    self.showNoHitAlert()
-                }
+        GurunaviService.shared.fetchData(latitude: latitude, longitude: longitude) { shopData in
+            self.shopData = shopData
+            if self.shopData.hit_count == 0 {
+                AlertManager.shared.showNoHitAlert(viewContoller: self)
             }
-        } catch {
-            showAlert()
         }
-        
     }
     
     // MARK: - Helpers
+    
+    @objc func willEnterForeground() {
+        checkLocationServiceCondition()
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func checkLocationServiceCondition() {
+        if CLLocationManager.locationServicesEnabled() {
+            let status = CLLocationManager.authorizationStatus()
+            switch status {
+            case .denied:
+                AlertManager.shared.showAllowingFetchLocationAlert(viewContoller: self) { (_) in
+                    self.showOSSettingView()
+                }
+            default:
+                break
+            }
+        } else {
+            AlertManager.shared.showAllowingFetchLocationAlert(viewContoller: self)
+        }
+    }
+    
+    func showOSSettingView() {
+        if let url = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+    
+    func configureMapView() {
+        view.addSubview(mapView)
+        
+        let region = MKCoordinateRegion(center: mapView.userLocation.coordinate,
+                                        span: MKCoordinateSpan(
+                                            latitudeDelta: 0.005,
+                                            longitudeDelta: 0.005
+                                        )
+        )
+        mapView.setRegion(region, animated:true)
+    }
     
     func configureNavigationBar() {
         navigationController?.title = "Map"
@@ -117,26 +158,6 @@ class MapController: UIViewController {
                 self.addMapPins(locations: self.shopData.locationCoordinatesArray)
             }
         }
-    }
-    
-    func showNoHitAlert(){
-        let alertController = UIAlertController(title: "該当なし", message: "検索結果が0件でした", preferredStyle: .alert)
-        let dimissAlert = UIAlertAction(title: "OK", style: .cancel){
-            action -> Void in
-            self.dismiss(animated: true, completion: nil)
-        }
-        alertController.addAction(dimissAlert)
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    func showAlert(){
-        let alertController = UIAlertController(title: "Error", message: "", preferredStyle: .alert)
-        let dimissAlert = UIAlertAction(title: "OK", style: .cancel){
-            action -> Void in
-            self.dismiss(animated: true, completion: nil)
-        }
-        alertController.addAction(dimissAlert)
-        present(alertController, animated: true, completion: nil)
     }
     
     @objc func setCenterButtonTapped() {

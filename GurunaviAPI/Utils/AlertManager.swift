@@ -1,0 +1,34 @@
+//
+//  AlertManager.swift
+//  GurunaviAPI
+//
+//  Created by 白数叡司 on 2021/01/29.
+//
+
+import UIKit
+
+class AlertManager {
+    
+    static let shared = AlertManager()
+    
+    func showErrorAlertvc(viewContoller: UIViewController, handler: ((UIAlertAction) -> Void)? = nil){
+        let alertController = UIAlertController(title: "Error", message: "", preferredStyle: .alert)
+        let dimissAlert = UIAlertAction(title: "OK", style: .cancel, handler: handler)
+        alertController.addAction(dimissAlert)
+        viewContoller.present(alertController, animated: true, completion: nil)
+    }
+    
+    func showNoHitAlert(viewContoller: UIViewController, handler: ((UIAlertAction) -> Void)? = nil){
+        let alertController = UIAlertController(title: "検索結果：0件", message: "近辺に該当する店舗はありません", preferredStyle: .alert)
+        let dimissAlert = UIAlertAction(title: "OK", style: .cancel, handler: handler)
+        alertController.addAction(dimissAlert)
+        viewContoller.present(alertController, animated: true, completion: nil)
+    }
+    
+    func showAllowingFetchLocationAlert(viewContoller: UIViewController, handler: ((UIAlertAction) -> Void)? = nil){
+        let alertController = UIAlertController(title: "位置情報サービスを\nオンにしてください", message: "「設定」 ⇒「プライバシー」⇒「位置情報サービス」からオンにできます", preferredStyle: .alert)
+        let dimissAlert = UIAlertAction(title: "OK", style: .cancel, handler: handler)
+        alertController.addAction(dimissAlert)
+        viewContoller.present(alertController, animated: true, completion: nil)
+    }
+}
