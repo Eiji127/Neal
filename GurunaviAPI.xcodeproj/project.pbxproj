@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5BC8A849B21B71EA7FC58995 /* Pods_GurunaviAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC07B28D13127CAC5BC837E /* Pods_GurunaviAPI.framework */; };
+		981B3F7125C429110011792A /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981B3F7025C429110011792A /* AlertManager.swift */; };
 		9820E883259458AE00215A74 /* ShopInfoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9820E882259458AE00215A74 /* ShopInfoHeader.swift */; };
 		9820E88A2594F48500215A74 /* WebController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9820E8892594F48400215A74 /* WebController.swift */; };
 		9820E89225970D0300215A74 /* ShopData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9820E89125970D0300215A74 /* ShopData.swift */; };
@@ -38,6 +39,7 @@
 /* Begin PBXFileReference section */
 		2AC07B28D13127CAC5BC837E /* Pods_GurunaviAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GurunaviAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		36029D6B7DCB0EF2BA13C198 /* Pods-GurunaviAPI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GurunaviAPI.release.xcconfig"; path = "Target Support Files/Pods-GurunaviAPI/Pods-GurunaviAPI.release.xcconfig"; sourceTree = "<group>"; };
+		981B3F7025C429110011792A /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
 		9820E882259458AE00215A74 /* ShopInfoHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopInfoHeader.swift; sourceTree = "<group>"; };
 		9820E8892594F48400215A74 /* WebController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebController.swift; sourceTree = "<group>"; };
 		9820E89125970D0300215A74 /* ShopData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopData.swift; sourceTree = "<group>"; };
@@ -180,8 +182,10 @@
 			isa = PBXGroup;
 			children = (
 				98C6811D257E4CAC00288FD4 /* Extensions.swift */,
+				9869F97625AF3C740013FA49 /* APIKeyManager.swift */,
 				98C6812C2581FEED00288FD4 /* ActionSheetLauncher.swift */,
 				984B147C25B8129D001E8A51 /* LocationManager.swift */,
+				981B3F7025C429110011792A /* AlertManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -189,7 +193,6 @@
 		98C6812F2582328D00288FD4 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				9869F97625AF3C740013FA49 /* APIKeyManager.swift */,
 				98C68130258232B800288FD4 /* GurunaviService.swift */,
 			);
 			path = API;
@@ -331,6 +334,7 @@
 				98C6812D2581FEED00288FD4 /* ActionSheetLauncher.swift in Sources */,
 				9820E883259458AE00215A74 /* ShopInfoHeader.swift in Sources */,
 				98C68124257E575500288FD4 /* TabBarController.swift in Sources */,
+				981B3F7125C429110011792A /* AlertManager.swift in Sources */,
 				98C680FE257E45BD00288FD4 /* AppDelegate.swift in Sources */,
 				98C68116257E485200288FD4 /* FeedController.swift in Sources */,
 				9820E88A2594F48500215A74 /* WebController.swift in Sources */,
@@ -397,7 +401,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -452,7 +456,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -469,6 +473,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.2;
 				DEVELOPMENT_TEAM = XG9UCHUCSL;
 				INFOPLIST_FILE = GurunaviAPI/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
@@ -490,6 +495,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.2;
 				DEVELOPMENT_TEAM = XG9UCHUCSL;
 				INFOPLIST_FILE = GurunaviAPI/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.4;

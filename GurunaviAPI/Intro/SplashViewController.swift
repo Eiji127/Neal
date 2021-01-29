@@ -16,10 +16,8 @@ class SplashViewController: UIViewController {
     
     fileprivate func chooseShouldLaunchViewController() {
         if UserDefaults.standard.bool(forKey: "tutorialShown") == false {
-            // 初回起動
             launchTutorial()
         } else {
-            // ２回目以降
             launchHome()
         }
     }
@@ -27,9 +25,7 @@ class SplashViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-
-
+        
     }
 
     func launchTutorial(){
