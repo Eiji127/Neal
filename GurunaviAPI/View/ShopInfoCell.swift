@@ -13,7 +13,7 @@ class ShopInfoCell: UICollectionViewCell {
     
     private let underlineView: UIView = {
         let line = UIView()
-        line.backgroundColor = .red
+        line.backgroundColor = .systemGray5
         return line
     }()
     
@@ -25,7 +25,7 @@ class ShopInfoCell: UICollectionViewCell {
         imageView.clipsToBounds = true
         imageView.setDimensions(width: 200, height: 200)
         imageView.backgroundColor = .white
-        imageView.image = UIImage(named: "noImage")
+        imageView.image = UIImage(named: "noImage_color")
         imageView.tintColor = .red
         return imageView
     }()
@@ -41,7 +41,7 @@ class ShopInfoCell: UICollectionViewCell {
         imageView.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 20, paddingLeft: 10, paddingRight: 10)
         
         addSubview(underlineView)
-        underlineView.anchor(top: imageView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor,paddingTop: 10, paddingLeft: 5, paddingRight: 5, height: 3)
+        underlineView.anchor(top: imageView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor,paddingTop: 10, paddingLeft: 5, paddingRight: 5, height: 2)
         
     }
     
@@ -55,7 +55,7 @@ class ShopInfoCell: UICollectionViewCell {
     }
     
     func setUpImage() {
-        imageView.image = UIImage(named: "noImage")
+        imageView.image = UIImage(named: "noImage_color")
         imageView.tintColor = .red
     }
 }

@@ -108,7 +108,10 @@ class ContainerController: UIViewController {
             let appInfoController = AppInfoController()
             present(appInfoController, animated: true)
         case .Inbox:
-            print("show inbox...")
+            let favoriteController = FavoriteShopsController()
+            let navigationController = UINavigationController(rootViewController: favoriteController)
+            navigationController.modalPresentationStyle = .fullScreen
+            present(navigationController, animated: true, completion: nil)
         case .Notifications:
             print("show notifications...")
             guard let writeReviewURL = URL(string: "https://apps.apple.com/app/id1550909765?action=write-review")

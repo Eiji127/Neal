@@ -7,9 +7,9 @@
 
 import UIKit
 
-protocol shopInfoHeaderDelegate: class {
-    func showMapView()
-}
+//protocol shopInfoHeaderDelegate: class {
+//    func showMapView()
+//}
 
 
 class ShopInfoHeader: UICollectionReusableView {
@@ -41,15 +41,17 @@ class ShopInfoHeader: UICollectionReusableView {
     }()
     
     
-    private lazy var optionButton: UIButton = {
+    private lazy var registerShopButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .lightGray
         button.setImage(UIImage(systemName: "star"), for: .normal)
-        button.addTarget(self, action: #selector(showActionSheet), for: .touchUpInside)
+        button.addTarget(self, action: #selector(registerFavoriteShop), for: .touchUpInside)
         return button
     }()
     
-    weak var delegate: shopInfoHeaderDelegate?
+    var didRegisterd = false
+    
+//    weak var delegate: shopInfoHeaderDelegate?
     
     // MARK: - Lifecycles
     
@@ -69,9 +71,9 @@ class ShopInfoHeader: UICollectionReusableView {
         addSubview(stack)
         stack.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingRight: 50)
         
-        addSubview(optionButton)
-        optionButton.centerY(inView: stack)
-        optionButton.anchor(right: rightAnchor, paddingRight: 20)
+        addSubview(registerShopButton)
+        registerShopButton.centerY(inView: stack)
+        registerShopButton.anchor(right: rightAnchor, paddingRight: 20)
         
         
     }
@@ -88,9 +90,17 @@ class ShopInfoHeader: UICollectionReusableView {
         opentimeLabel.text = " / " + opentime
     }
     
-    @objc func showActionSheet() {
-        delegate?.showMapView()
+    @objc func registerFavoriteShop() {
         
+        didRegisterd = !didRegisterd
+        
+        if didRegisterd {
+            registerShopButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            registerShopButton.tintColor = .systemYellow
+        } else {
+            registerShopButton.setImage(UIImage(systemName: "star"), for: .normal)
+            registerShopButton.tintColor = .lightGray
+        }
     }
     
 }
