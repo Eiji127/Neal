@@ -8,6 +8,11 @@
 import UIKit
 
 
+protocol TabBarDelegate: class {
+    func configureSideMenuBar()
+}
+
+
 class TabBarController: UITabBarController {
     
     // MARK: - Properties
@@ -20,6 +25,8 @@ class TabBarController: UITabBarController {
         imageView.alpha = 0.9
         return imageView
     }()
+    
+    var tabDelegate: TabBarDelegate?
 
     
     // MARK: - Lifecycle
@@ -39,6 +46,7 @@ class TabBarController: UITabBarController {
         UITabBar.appearance().tintColor = .white
         
         let feed = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
+        feed.homeDelegate = self
         let navFeed = templateNavigationController(image: UIImage(systemName: "house.fill")!, rootViewController: feed)
         
         let map = MapController()
@@ -59,6 +67,14 @@ class TabBarController: UITabBarController {
         nav.navigationBar.barTintColor = .white
         
         return nav
+    }
+    
+}
+
+extension TabBarController: HomeControllerDelegate {
+    
+    func handleMenuToggle(forMenuOption menuOption: MenuOption?) {
+        tabDelegate?.configureSideMenuBar()
     }
     
 }

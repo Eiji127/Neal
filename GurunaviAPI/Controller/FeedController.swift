@@ -30,6 +30,8 @@ final class FeedController: UICollectionViewController {
     private var freeword: String = "&freeword="
     private var longitude: String = "&longitude="
     private var latitude: String = "&latitude="
+    
+    var homeDelegate: HomeControllerDelegate?
 
     
     private let searchBar: UISearchBar = {
@@ -105,6 +107,25 @@ final class FeedController: UICollectionViewController {
         collectionView.refreshControl?.endRefreshing()
     }
     
+    // MARK: - Handlers
+    
+    @objc func willEnterForeground() {
+        checkLocationServiceCondition()
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func handleRefresh() {
+        indicateShopInformation()
+    }
+    
+    @objc func researchImageTapped() {
+        showSearchBar()
+    }
+    
+    @objc func handleMenuToggle() {
+        homeDelegate?.handleMenuToggle(forMenuOption: nil)
+    }
+    
     // MARK: - Helper
     
     func indicateShopInformation(){
@@ -114,11 +135,6 @@ final class FeedController: UICollectionViewController {
             self.longitude += longitude
             self.fetchData()
         }
-    }
-    
-    @objc func willEnterForeground() {
-        checkLocationServiceCondition()
-        dismiss(animated: true, completion: nil)
     }
     
     func checkLocationServiceCondition() {
@@ -158,6 +174,7 @@ final class FeedController: UICollectionViewController {
             .foregroundColor: UIColor.white
         ]
         navigationItem.title = "お店リスト"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "sidebar.left"), style: .plain, target: self, action: #selector(handleMenuToggle))
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
@@ -166,14 +183,6 @@ final class FeedController: UICollectionViewController {
     
     func configureRightBarButton() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: researchImageView)
-    }
-    
-    @objc func handleRefresh() {
-        indicateShopInformation()
-    }
-    
-    @objc func researchImageTapped() {
-        showSearchBar()
     }
     
     func showSearchBar() {
