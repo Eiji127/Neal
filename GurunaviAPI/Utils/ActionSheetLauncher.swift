@@ -17,9 +17,10 @@ private let reuseIdentifier = "ActionSheetCell"
 class ActionSheetLauncher: NSObject {
     
     // MARK: - Properties
+
+    private let tableView = UITableView()
     private var window: UIWindow?
-//    weak var delegate: ActionSheetLauncherDelegate?
-    private var contentsViewHeight: CGFloat?
+    private var tableViewHeight: CGFloat?
     
     private lazy var blackView: UIView = {
         let view = UIView()
@@ -32,35 +33,14 @@ class ActionSheetLauncher: NSObject {
         return view
     }()
     
-    private lazy var contentsView: UIView = {
+    private lazy var footerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
-        
-        let stack = UIStackView(arrangedSubviews: [researchButton, cancelButton])
-        stack.axis = .vertical
-        stack.distribution = .fillEqually
-        stack.spacing = 20
-        
-        view.addSubview(stack)
-        stack.anchor(left: view.leftAnchor,bottom: view.bottomAnchor, right: view.rightAnchor, paddingLeft: 12, paddingBottom: 50, paddingRight: 12)
-        stack.centerY(inView: view)
-        
+        view.addSubview(cancelButton)
+        cancelButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        cancelButton.anchor(left: view.leftAnchor, right: view.rightAnchor, paddingLeft: 12, paddingRight: 12)
+        cancelButton.centerY(inView: view)
+        cancelButton.layer.cornerRadius = 50 / 2
         return view
-    }()
-    
-//    private let pickerView: UIPickerView = {
-//        let picker = UIPickerView()
-//    }()
-    
-    private lazy var researchButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Research", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
-        button.tintColor = .white
-        button.backgroundColor = .systemRed
-        button.addTarget(self, action: #selector(handleDismissal), for: .touchUpInside)
-        button.layer.cornerRadius = 30 / 2
-        return button
     }()
     
     private lazy var cancelButton: UIButton = {
@@ -69,7 +49,6 @@ class ActionSheetLauncher: NSObject {
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         button.backgroundColor = .systemGroupedBackground
         button.addTarget(self, action: #selector(handleDismissal), for: .touchUpInside)
-        button.layer.cornerRadius = 30 / 2
         return button
     }()
     
@@ -82,16 +61,16 @@ class ActionSheetLauncher: NSObject {
     @objc func handleDismissal() {
         UIView.animate(withDuration: 0.5) {
             self.blackView.alpha = 0
-            self.contentsView.frame.origin.y += 700
+            self.tableView.frame.origin.y += 300
         }
     }
     
     // MARK: - Helpers
     func showTableView(_ shouldShow: Bool) {
         guard let window = window else { return }
-        guard let height = contentsViewHeight else { return }
-        let contentsViewHeight = shouldShow ? window.frame.height - height : window.frame.height
-        contentsView.frame.origin.y = contentsViewHeight
+        guard let height = tableViewHeight else { return }
+        let y = shouldShow ? window.frame.height - height : window.frame.height
+        tableView.frame.origin.y = y
     }
     
     func show() {
@@ -101,15 +80,59 @@ class ActionSheetLauncher: NSObject {
         window.addSubview(blackView)
         blackView.frame = window.frame
         
-        window.addSubview(contentsView)
-        let height = window.frame.height * 7 / 10
-        self.contentsViewHeight = CGFloat(height)
-        contentsView.frame = CGRect(x: 0, y: window.frame.height, width: window.frame.width, height: CGFloat(height))
+        window.addSubview(tableView)
+        let height = CGFloat(3 * 60) + 100
+        self.tableViewHeight = height
+        tableView.frame = CGRect(x: 0, y: window.frame.height, width: window.frame.width, height: height)
         
         UIView.animate(withDuration: 0.5) {
             self.blackView.alpha = 1
             self.showTableView(true)
         }
     }
+    
+    func configureTableView() {
+        tableView.backgroundColor = .white
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.rowHeight = 60
+        tableView.separatorStyle = .none
+        tableView.layer.cornerRadius = 5
+        tableView.isScrollEnabled = false
+        
+        tableView.register(ActionSheetCell.self, forCellReuseIdentifier: reuseIdentifier)
+    }
 }
+
+// MARK: - UITableViewDataSource
+extension ActionSheetLauncher: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! ActionSheetCell
+        return cell
+    }
+}
+
+// MARK: - UITableViewDelegate
+extension ActionSheetLauncher: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return footerView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 60
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            self.blackView.alpha = 0
+            self.showTableView(false)
+        })
+    }
+}
+
 

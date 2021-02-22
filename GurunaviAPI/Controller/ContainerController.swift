@@ -116,6 +116,8 @@ class ContainerController: UIViewController {
             UIApplication.shared.open(writeReviewURL, options: [:], completionHandler: nil)
         case .Settings:
             print("show settings...")
+            let actionSheet = ActionSheetLauncher()
+            actionSheet.show()
 //            let settingController = SettingsController()
 //            let navigationController = UINavigationController(rootViewController: settingController)
 //            navigationController.modalPresentationStyle = .fullScreen

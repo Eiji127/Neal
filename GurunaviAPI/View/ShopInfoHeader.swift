@@ -44,8 +44,7 @@ class ShopInfoHeader: UICollectionReusableView {
     private lazy var optionButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .lightGray
-        button.setImage(UIImage(systemName: "mappin"), for: .normal)
-        button.tintColor = .red
+        button.setImage(UIImage(systemName: "star"), for: .normal)
         button.addTarget(self, action: #selector(showActionSheet), for: .touchUpInside)
         return button
     }()
@@ -70,9 +69,9 @@ class ShopInfoHeader: UICollectionReusableView {
         addSubview(stack)
         stack.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingRight: 50)
         
-//        addSubview(optionButton)
-//        optionButton.centerY(inView: stack)
-//        optionButton.anchor(right: rightAnchor, paddingRight: 20)
+        addSubview(optionButton)
+        optionButton.centerY(inView: stack)
+        optionButton.anchor(right: rightAnchor, paddingRight: 20)
         
         
     }

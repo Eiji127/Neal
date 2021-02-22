@@ -11,12 +11,19 @@ class ActionSheetCell: UITableViewCell {
     
     // MARK: - Properties
     
+    // MARK: - Properties
+//    var option: ActionSheetOpitions? {
+//        didSet {
+//            configure()
+//        }
+//    }
+    
     private let optionImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.clipsToBounds = true
-        imageView.image = #imageLiteral(resourceName: "down_arrow_24pt")
-        return imageView
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFit
+        iv.clipsToBounds = true
+        iv.image = #imageLiteral(resourceName: "neal-Logo")
+        return iv
     }()
     
     private let titleLabel: UILabel = {
@@ -43,5 +50,7 @@ class ActionSheetCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Helpers
 }
 
