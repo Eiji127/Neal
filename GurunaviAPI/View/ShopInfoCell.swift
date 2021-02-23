@@ -13,17 +13,17 @@ class ShopInfoCell: UICollectionViewCell {
     
     private let underlineView: UIView = {
         let line = UIView()
-        line.backgroundColor = .systemGray5
+        line.backgroundColor = .lightGray
+        line.alpha = 0.5
         return line
     }()
-    
-    private lazy var imageScrollView = UIScrollView()
     
     private let imageView : UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleToFill
         imageView.clipsToBounds = true
         imageView.setDimensions(width: 200, height: 200)
+        imageView.layer.cornerRadius = 200 / 6
         imageView.backgroundColor = .white
         imageView.image = UIImage(named: "noImage_color")
         imageView.tintColor = .red
@@ -35,13 +35,13 @@ class ShopInfoCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = .white
+        backgroundColor = .nealBack
         
         addSubview(imageView)
         imageView.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 20, paddingLeft: 10, paddingRight: 10)
         
         addSubview(underlineView)
-        underlineView.anchor(top: imageView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor,paddingTop: 10, paddingLeft: 5, paddingRight: 5, height: 2)
+        underlineView.anchor(top: imageView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor,paddingTop: 10, paddingLeft: 30, paddingRight: 30, height: 2)
         
     }
     

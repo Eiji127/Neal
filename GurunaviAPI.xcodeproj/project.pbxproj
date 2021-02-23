@@ -43,6 +43,7 @@
 		98C6812D2581FEED00288FD4 /* ActionSheetLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C6812C2581FEED00288FD4 /* ActionSheetLauncher.swift */; };
 		98C68131258232B800288FD4 /* GurunaviService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C68130258232B800288FD4 /* GurunaviService.swift */; };
 		98E0950325E440EA008FC7B4 /* FavoriteShopsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E0950225E440EA008FC7B4 /* FavoriteShopsController.swift */; };
+		98E0950625E51D9A008FC7B4 /* FavoriteShopsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E0950525E51D98008FC7B4 /* FavoriteShopsCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,6 +86,7 @@
 		98C6812C2581FEED00288FD4 /* ActionSheetLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetLauncher.swift; sourceTree = "<group>"; };
 		98C68130258232B800288FD4 /* GurunaviService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GurunaviService.swift; sourceTree = "<group>"; };
 		98E0950225E440EA008FC7B4 /* FavoriteShopsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteShopsController.swift; sourceTree = "<group>"; };
+		98E0950525E51D98008FC7B4 /* FavoriteShopsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteShopsCell.swift; sourceTree = "<group>"; };
 		D888EBBD6E4274D8CD50CFA1 /* Pods-GurunaviAPI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GurunaviAPI.debug.xcconfig"; path = "Target Support Files/Pods-GurunaviAPI/Pods-GurunaviAPI.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -183,6 +185,7 @@
 				9820E882259458AE00215A74 /* ShopInfoHeader.swift */,
 				98C681292581FE5200288FD4 /* ActionSheetCell.swift */,
 				981B40C425E18F380011792A /* MenuOptionCell.swift */,
+				98E0950525E51D98008FC7B4 /* FavoriteShopsCell.swift */,
 				981B40C725E226120011792A /* MenuHeader.swift */,
 				981B40CD25E3A0C80011792A /* MenuFooter.swift */,
 			);
@@ -380,6 +383,7 @@
 				981B40CE25E3A0C90011792A /* MenuFooter.swift in Sources */,
 				98C6812A2581FE5300288FD4 /* ActionSheetCell.swift in Sources */,
 				986D22AB25BCAA7B00688B5F /* IntroViewController.swift in Sources */,
+				98E0950625E51D9A008FC7B4 /* FavoriteShopsCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,7 +441,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -492,7 +496,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

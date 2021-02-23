@@ -106,17 +106,21 @@ class ContainerController: UIViewController {
         switch menuOption {
         case .Info:
             let appInfoController = AppInfoController()
-            present(appInfoController, animated: true)
+            let navigationController = UINavigationController(rootViewController: appInfoController)
+            present(navigationController, animated: true, completion: nil)
+
         case .Inbox:
-            let favoriteController = FavoriteShopsController()
+            let favoriteController = FavoriteShopsController(collectionViewLayout: UICollectionViewFlowLayout())
             let navigationController = UINavigationController(rootViewController: favoriteController)
             navigationController.modalPresentationStyle = .fullScreen
             present(navigationController, animated: true, completion: nil)
+            
         case .Notifications:
             print("show notifications...")
             guard let writeReviewURL = URL(string: "https://apps.apple.com/app/id1550909765?action=write-review")
             else { fatalError("Expected a valid URL") }
             UIApplication.shared.open(writeReviewURL, options: [:], completionHandler: nil)
+            
         case .Settings:
             print("show settings...")
             let actionSheet = ActionSheetLauncher()

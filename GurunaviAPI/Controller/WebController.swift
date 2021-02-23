@@ -31,6 +31,7 @@ class WebController: UIViewController {
         let myURL = URL(string: mobileUrl)
         let myRequest = URLRequest(url: myURL!)
         webView.load(myRequest)
+        webView.backgroundColor = .nealBack
         self.view.addSubview(webView)
     }
     

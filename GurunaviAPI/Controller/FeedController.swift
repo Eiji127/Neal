@@ -39,7 +39,7 @@ final class FeedController: UICollectionViewController {
         search.searchTextField.backgroundColor = .white
         search.textField?.layer.cornerRadius = (search.textField?.bounds.height)! / 2.0
         search.textField?.layer.masksToBounds = true
-        search.placeholder = "Search"
+        search.placeholder = "ジャンル・料理名を検索"
         search.textField?.attributedPlaceholder = NSAttributedString(string: search.placeholder ?? "",
                                                                      attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray]
         )
@@ -113,7 +113,7 @@ final class FeedController: UICollectionViewController {
         checkLocationServiceCondition()
         dismiss(animated: true, completion: nil)
     }
-    
+
     @objc func handleRefresh() {
         indicateShopInformation()
     }
@@ -165,7 +165,7 @@ final class FeedController: UICollectionViewController {
         collectionView.register(ShopInfoCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.register(ShopInfoHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: reuseHeaderIdentifier)
         
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .nealBack
         collectionView.collectionViewLayout = layout()
         
         navigationController?.title = "Shop"
@@ -173,7 +173,7 @@ final class FeedController: UICollectionViewController {
         navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor.white
         ]
-        navigationItem.title = "お店リスト"
+        navigationItem.title = "近辺の店舗"
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "sidebar.left"), style: .plain, target: self, action: #selector(handleMenuToggle))
         
         let refreshControl = UIRefreshControl()
@@ -223,7 +223,7 @@ extension FeedController {
         }
         
         let config = UICollectionViewCompositionalLayoutConfiguration()
-        config.interSectionSpacing = 10
+        config.interSectionSpacing = 0
         
         let layout = UICollectionViewCompositionalLayout(sectionProvider: sectionProvider, configuration: config)
         
@@ -295,7 +295,6 @@ extension FeedController: UISearchBarDelegate {
         
         indicateShopInformation()
         collectionView.reloadData()
-        
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {

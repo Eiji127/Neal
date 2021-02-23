@@ -50,6 +50,7 @@ class ShopInfoHeader: UICollectionReusableView {
     }()
     
     var didRegisterd = false
+    var favoriteModel = FavoriteModel()
     
 //    weak var delegate: shopInfoHeaderDelegate?
     
@@ -57,6 +58,8 @@ class ShopInfoHeader: UICollectionReusableView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        backgroundColor = .nealBack
         
         let infoStack = UIStackView(arrangedSubviews: [categoryLabel, opentimeLabel])
         infoStack.axis = .horizontal
@@ -69,12 +72,14 @@ class ShopInfoHeader: UICollectionReusableView {
         stack.spacing = 4
         
         addSubview(stack)
-        stack.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingRight: 50)
+        stack.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 30, paddingRight: 50)
         
         addSubview(registerShopButton)
         registerShopButton.centerY(inView: stack)
         registerShopButton.anchor(right: rightAnchor, paddingRight: 20)
         
+//        registerShopButton.tintColor = favoriteModel.favoriteButtonTintColor
+//        registerShopButton.setImage(favoriteModel.favoriteButtonImage, for: .normal)
         
     }
     
@@ -91,9 +96,8 @@ class ShopInfoHeader: UICollectionReusableView {
     }
     
     @objc func registerFavoriteShop() {
-        
-        didRegisterd = !didRegisterd
-        
+
+        didRegisterd.toggle()
         if didRegisterd {
             registerShopButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
             registerShopButton.tintColor = .systemYellow
