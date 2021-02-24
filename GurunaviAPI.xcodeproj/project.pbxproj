@@ -44,6 +44,7 @@
 		98C68131258232B800288FD4 /* GurunaviService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C68130258232B800288FD4 /* GurunaviService.swift */; };
 		98E0950325E440EA008FC7B4 /* FavoriteShopsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E0950225E440EA008FC7B4 /* FavoriteShopsController.swift */; };
 		98E0950625E51D9A008FC7B4 /* FavoriteShopsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E0950525E51D98008FC7B4 /* FavoriteShopsCell.swift */; };
+		98E0951425E539B0008FC7B4 /* FavoriteShopData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E0951325E539AF008FC7B4 /* FavoriteShopData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,6 +88,7 @@
 		98C68130258232B800288FD4 /* GurunaviService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GurunaviService.swift; sourceTree = "<group>"; };
 		98E0950225E440EA008FC7B4 /* FavoriteShopsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteShopsController.swift; sourceTree = "<group>"; };
 		98E0950525E51D98008FC7B4 /* FavoriteShopsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteShopsCell.swift; sourceTree = "<group>"; };
+		98E0951325E539AF008FC7B4 /* FavoriteShopData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteShopData.swift; sourceTree = "<group>"; };
 		D888EBBD6E4274D8CD50CFA1 /* Pods-GurunaviAPI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GurunaviAPI.debug.xcconfig"; path = "Target Support Files/Pods-GurunaviAPI/Pods-GurunaviAPI.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -174,6 +176,7 @@
 			children = (
 				9820E89125970D0300215A74 /* ShopData.swift */,
 				981B40C125E18E8E0011792A /* MenuOption.swift */,
+				98E0951325E539AF008FC7B4 /* FavoriteShopData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -360,6 +363,7 @@
 				98C68131258232B800288FD4 /* GurunaviService.swift in Sources */,
 				98C6811E257E4CAC00288FD4 /* Extensions.swift in Sources */,
 				984B147D25B8129D001E8A51 /* LocationManager.swift in Sources */,
+				98E0951425E539B0008FC7B4 /* FavoriteShopData.swift in Sources */,
 				98247F4A25BCBC6F000D42C8 /* SplashViewController.swift in Sources */,
 				98C68127257E58E000288FD4 /* MapController.swift in Sources */,
 				98C6812D2581FEED00288FD4 /* ActionSheetLauncher.swift in Sources */,

@@ -16,7 +16,7 @@ class FavoriteShopsCell: UICollectionViewCell {
         return line
     }()
     
-    private let nameLabel: UILabel = {
+    let nameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .darkGray
         label.font = UIFont.boldSystemFont(ofSize: 18)
@@ -24,7 +24,7 @@ class FavoriteShopsCell: UICollectionViewCell {
         return label
     }()
     
-    private let categoryLabel: UILabel = {
+    let categoryLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray
         label.font = UIFont.boldSystemFont(ofSize: 12)
@@ -32,7 +32,15 @@ class FavoriteShopsCell: UICollectionViewCell {
         return label
     }()
     
-    private let imageView : UIImageView = {
+    let opentimeLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .gray
+        label.font = UIFont.boldSystemFont(ofSize: 12)
+        label.text = "Opentime: 10:00 ~ 21:00"
+        return label
+    }()
+    
+    let imageView : UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleToFill
         imageView.clipsToBounds = true
@@ -51,7 +59,7 @@ class FavoriteShopsCell: UICollectionViewCell {
         
         backgroundColor = .nealBack
         
-        let infoStack = UIStackView(arrangedSubviews: [nameLabel, categoryLabel])
+        let infoStack = UIStackView(arrangedSubviews: [nameLabel, categoryLabel, opentimeLabel])
         infoStack.axis = .vertical
         infoStack.distribution = .fill
         infoStack.spacing = 4

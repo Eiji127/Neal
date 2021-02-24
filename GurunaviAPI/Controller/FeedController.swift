@@ -10,6 +10,7 @@ import Alamofire
 import SwiftyJSON
 import MapKit
 import CoreLocation
+import RealmSwift
 
 
 private let reuseIdentifier = "ShopInfoCell"
@@ -24,6 +25,8 @@ final class FeedController: UICollectionViewController {
             collectionView.reloadData()
         }
     }
+    
+    let realm = try! Realm()
     
     private let itemCount: Int = 2
     
@@ -59,6 +62,11 @@ final class FeedController: UICollectionViewController {
         
         return research
     }()
+    
+    var favoriteShopData = FavoriteShopData()
+    
+    public var completionHandler: (() -> Void)?
+    public var deletionHandler: (() -> Void)?
     
     // MARK: - Lifecycle
     
@@ -268,6 +276,10 @@ extension FeedController {
                 opentime: shopData.opentimeArray[indexPath.section]
             )
         }
+        favoriteShopData.name = shopData.nameArray[indexPath.section]
+        favoriteShopData.category = shopData.categoryArray[indexPath.section]
+        favoriteShopData.opentime = shopData.opentimeArray[indexPath.section]
+        sectionHeader.delegate = self
         return sectionHeader
     }
     
@@ -310,5 +322,19 @@ extension FeedController: UISearchBarDelegate {
         searchBar.endEditing(true)
     }
     
+}
+
+extension FeedController: shopInfoHeaderDelegate {
+    func saveFavoriteShop() {
+        realm.beginWrite()
+        realm.add(favoriteShopData)
+        try! realm.commitWrite()
+    }
+    
+    func deleteFavoriteShop() {
+        realm.beginWrite()
+        realm.delete(favoriteShopData)
+        try! realm.commitWrite()
+    }
 }
 

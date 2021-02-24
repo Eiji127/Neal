@@ -7,9 +7,10 @@
 
 import UIKit
 
-//protocol shopInfoHeaderDelegate: class {
-//    func showMapView()
-//}
+protocol shopInfoHeaderDelegate: class {
+    func saveFavoriteShop()
+    func deleteFavoriteShop()
+}
 
 
 class ShopInfoHeader: UICollectionReusableView {
@@ -52,7 +53,7 @@ class ShopInfoHeader: UICollectionReusableView {
     var didRegisterd = false
     var favoriteModel = FavoriteModel()
     
-//    weak var delegate: shopInfoHeaderDelegate?
+    weak var delegate: shopInfoHeaderDelegate?
     
     // MARK: - Lifecycles
     
@@ -96,14 +97,16 @@ class ShopInfoHeader: UICollectionReusableView {
     }
     
     @objc func registerFavoriteShop() {
-
+        
         didRegisterd.toggle()
         if didRegisterd {
             registerShopButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
             registerShopButton.tintColor = .systemYellow
+            delegate?.saveFavoriteShop()
         } else {
             registerShopButton.setImage(UIImage(systemName: "star"), for: .normal)
             registerShopButton.tintColor = .lightGray
+            delegate?.deleteFavoriteShop()
         }
     }
     

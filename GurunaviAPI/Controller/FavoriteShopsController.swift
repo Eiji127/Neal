@@ -14,6 +14,8 @@ class FavoriteShopsController: UICollectionViewController {
     
     // MARK: - Properties
     
+    private let realm = try! Realm()
+    private var data = [FavoriteShopData]()
     
     // MARK: - Init
     
@@ -36,6 +38,8 @@ class FavoriteShopsController: UICollectionViewController {
         ]
         navigationItem.title = "お気に入り"
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark.circle"), style: .plain, target: self, action: #selector(dismissController))
+        
+        data = realm.objects(FavoriteShopData.self).map({ $0 })
     }
     
     // MARK: - Handlers
@@ -51,11 +55,14 @@ class FavoriteShopsController: UICollectionViewController {
 extension FavoriteShopsController {
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return data.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: favoriteShopCellIdentifier, for: indexPath) as! FavoriteShopsCell
+        cell.nameLabel.text = data[indexPath.row].name
+        cell.categoryLabel.text = data[indexPath.row].category
+        cell.opentimeLabel.text = data[indexPath.row].opentime
         return cell
     }
     
