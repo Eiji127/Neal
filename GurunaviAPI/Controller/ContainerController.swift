@@ -93,9 +93,12 @@ class ContainerController: UIViewController {
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
                 self.centerController.view.frame.origin.x = 0
                 self.dimmingView.frame.origin.x = self.centerController.view.frame.width
+                
             }) { (_) in
+                
                 guard let menuOption = menuOption else { return }
                 self.didSelectMenuOption(menuOption: menuOption)
+                
             }
         }
         
@@ -103,6 +106,7 @@ class ContainerController: UIViewController {
     }
     
     func didSelectMenuOption(menuOption: MenuOption) {
+        
         switch menuOption {
         case .Info:
             let appInfoController = AppInfoController()
@@ -122,9 +126,11 @@ class ContainerController: UIViewController {
             UIApplication.shared.open(writeReviewURL, options: [:], completionHandler: nil)
             
         case .Settings:
-            print("show settings...")
-            let actionSheet = ActionSheetLauncher()
-            actionSheet.show()
+            let settingController = SettingController()
+            let navigationController = UINavigationController(rootViewController: settingController)
+            navigationController.modalPresentationStyle = .fullScreen
+            present(navigationController, animated: true, completion: nil)
+            
 //            let settingController = SettingsController()
 //            let navigationController = UINavigationController(rootViewController: settingController)
 //            navigationController.modalPresentationStyle = .fullScreen

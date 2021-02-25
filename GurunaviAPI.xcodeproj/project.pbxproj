@@ -45,6 +45,8 @@
 		98E0950325E440EA008FC7B4 /* FavoriteShopsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E0950225E440EA008FC7B4 /* FavoriteShopsController.swift */; };
 		98E0950625E51D9A008FC7B4 /* FavoriteShopsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E0950525E51D98008FC7B4 /* FavoriteShopsCell.swift */; };
 		98E0951425E539B0008FC7B4 /* FavoriteShopData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E0951325E539AF008FC7B4 /* FavoriteShopData.swift */; };
+		98E0951B25E79F28008FC7B4 /* SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E0951A25E79F28008FC7B4 /* SettingController.swift */; };
+		98E0952025E7AA58008FC7B4 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E0951F25E7AA57008FC7B4 /* SettingCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,6 +91,8 @@
 		98E0950225E440EA008FC7B4 /* FavoriteShopsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteShopsController.swift; sourceTree = "<group>"; };
 		98E0950525E51D98008FC7B4 /* FavoriteShopsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteShopsCell.swift; sourceTree = "<group>"; };
 		98E0951325E539AF008FC7B4 /* FavoriteShopData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteShopData.swift; sourceTree = "<group>"; };
+		98E0951A25E79F28008FC7B4 /* SettingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingController.swift; sourceTree = "<group>"; };
+		98E0951F25E7AA57008FC7B4 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		D888EBBD6E4274D8CD50CFA1 /* Pods-GurunaviAPI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GurunaviAPI.debug.xcconfig"; path = "Target Support Files/Pods-GurunaviAPI/Pods-GurunaviAPI.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -187,6 +191,7 @@
 				98C68119257E4A9D00288FD4 /* ShopInfoCell.swift */,
 				9820E882259458AE00215A74 /* ShopInfoHeader.swift */,
 				98C681292581FE5200288FD4 /* ActionSheetCell.swift */,
+				98E0951F25E7AA57008FC7B4 /* SettingCell.swift */,
 				981B40C425E18F380011792A /* MenuOptionCell.swift */,
 				98E0950525E51D98008FC7B4 /* FavoriteShopsCell.swift */,
 				981B40C725E226120011792A /* MenuHeader.swift */,
@@ -199,13 +204,12 @@
 			isa = PBXGroup;
 			children = (
 				98C68115257E485200288FD4 /* FeedController.swift */,
+				98E0951D25E7A474008FC7B4 /* SideMenuOptions */,
 				9820E8892594F48400215A74 /* WebController.swift */,
 				98C68126257E58E000288FD4 /* MapController.swift */,
 				98C68123257E575500288FD4 /* TabBarController.swift */,
 				981B40B825E18DA10011792A /* ContainerController.swift */,
 				981B40BB25E18E110011792A /* MenuController.swift */,
-				981B40CA25E39B870011792A /* AppInfoController.swift */,
-				98E0950225E440EA008FC7B4 /* FavoriteShopsController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -229,6 +233,16 @@
 				98C68130258232B800288FD4 /* GurunaviService.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		98E0951D25E7A474008FC7B4 /* SideMenuOptions */ = {
+			isa = PBXGroup;
+			children = (
+				98E0951A25E79F28008FC7B4 /* SettingController.swift */,
+				981B40CA25E39B870011792A /* AppInfoController.swift */,
+				98E0950225E440EA008FC7B4 /* FavoriteShopsController.swift */,
+			);
+			path = SideMenuOptions;
 			sourceTree = "<group>";
 		};
 		C2B5A9146104B53ACAFD85EF /* Pods */ = {
@@ -359,6 +373,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98E0951B25E79F28008FC7B4 /* SettingController.swift in Sources */,
 				981B40BC25E18E120011792A /* MenuController.swift in Sources */,
 				98C68131258232B800288FD4 /* GurunaviService.swift in Sources */,
 				98C6811E257E4CAC00288FD4 /* Extensions.swift in Sources */,
@@ -382,6 +397,7 @@
 				98C68100257E45BD00288FD4 /* SceneDelegate.swift in Sources */,
 				9869F97725AF3C740013FA49 /* APIKeyManager.swift in Sources */,
 				98C6811A257E4A9D00288FD4 /* ShopInfoCell.swift in Sources */,
+				98E0952025E7AA58008FC7B4 /* SettingCell.swift in Sources */,
 				9820E89225970D0300215A74 /* ShopData.swift in Sources */,
 				981B40C525E18F380011792A /* MenuOptionCell.swift in Sources */,
 				981B40CE25E3A0C90011792A /* MenuFooter.swift in Sources */,
