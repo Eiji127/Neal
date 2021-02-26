@@ -15,7 +15,7 @@ class FavoriteShopsController: UICollectionViewController {
     // MARK: - Properties
     
     private let realm = try! Realm()
-    private var data = [FavoriteShopData]()
+    var data = [FavoriteShopData]()
     
     // MARK: - Init
     
@@ -37,7 +37,7 @@ class FavoriteShopsController: UICollectionViewController {
             .foregroundColor: UIColor.white
         ]
         navigationItem.title = "お気に入り"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark.circle"), style: .plain, target: self, action: #selector(dismissController))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark.circle"), style: .plain, target: self, action: #selector(dismissController))
         
         data = realm.objects(FavoriteShopData.self).map({ $0 })
     }
@@ -49,6 +49,10 @@ class FavoriteShopsController: UICollectionViewController {
     }
     
     // MARK: - Helpers
+    func refresh() {
+        data = realm.objects(FavoriteShopData.self).map({ $0 })
+        collectionView.reloadData()
+    }
     
 }
 

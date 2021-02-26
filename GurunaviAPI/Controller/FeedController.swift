@@ -26,8 +26,6 @@ final class FeedController: UICollectionViewController {
         }
     }
     
-    let realm = try! Realm()
-    
     private let itemCount: Int = 2
     
     private var freeword: String = "&freeword="
@@ -65,8 +63,9 @@ final class FeedController: UICollectionViewController {
     
     var favoriteShopData = FavoriteShopData()
     
-    public var completionHandler: (() -> Void)?
-    public var deletionHandler: (() -> Void)?
+    
+    
+    
     
     // MARK: - Lifecycle
     
@@ -326,15 +325,41 @@ extension FeedController: UISearchBarDelegate {
 
 extension FeedController: shopInfoHeaderDelegate {
     func saveFavoriteShop() {
-        realm.beginWrite()
-        realm.add(favoriteShopData)
-        try! realm.commitWrite()
+        
+        let realm = try! Realm()
+//        realm.beginWriteTransaction()
+//        realm.add(newCat)
+//        realm.commitWriteTransaction()
+//        try! realm.write {
+//            realm.add(favoriteShopData)
+//        }
+        
+//        let favoriteContorller = FavoriteShopsController(collectionViewLayout: UICollectionViewFlowLayout())
+//        favoriteContorller.refresh()
+        
+        
+//        realm.beginWrite()
+//        realm.add(favoriteShopData)
+//        try! realm.commitWrite()
     }
     
     func deleteFavoriteShop() {
-        realm.beginWrite()
-        realm.delete(favoriteShopData)
-        try! realm.commitWrite()
+        
+        let realm = try! Realm()
+        
+        if let favoriteData = realm.objects(FavoriteShopData.self).first {
+            try! realm.write {
+                realm.delete(favoriteData)
+            }
+        }
+        
+//        let favoriteContorller = FavoriteShopsController(collectionViewLayout: UICollectionViewFlowLayout())
+//        favoriteContorller.refresh()
+        
+//        realm.beginWrite()
+//        realm.delete(favoriteShopData)
+//        try! realm.commitWrite()
+        
     }
 }
 
