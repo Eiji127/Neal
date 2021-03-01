@@ -24,7 +24,7 @@ class FavoriteShopsController: UICollectionViewController {
     
     var data = [FavoriteShopData]()
     
-    var notificationToken: NotificationToken? = nil
+//    var notificationToken: NotificationToken? = nil
     
     // MARK: - Init
     
@@ -50,26 +50,26 @@ class FavoriteShopsController: UICollectionViewController {
         
         data = realm.objects(FavoriteShopData.self).map({ $0 })
         
-        notificationToken = results.observe { [weak self] (changes: RealmCollectionChange) in
-            guard let collectionView = self?.collectionView else { return }
-            switch changes {
-            case .initial:
-                print("DEBUG: initial...")
-                collectionView.reloadData()
-                break
-            case .update(_, let deletions, let insertions, let modifications):
-                print("DEBUG: update...")
-                collectionView.performBatchUpdates({
-                    collectionView.insertItems(at: insertions.map { NSIndexPath(row: $0, section: 0) as IndexPath })
-                    collectionView.deleteItems(at: deletions.map { NSIndexPath(row: $0, section: 0) as IndexPath })
-                    collectionView.reloadItems(at: modifications.map { NSIndexPath(row: $0, section: 0) as IndexPath })
-                }, completion: { _ in })
-                break
-            case .error(let error):
-                fatalError("DEBUG: \(error)")
-                break
-            }
-        }
+//        notificationToken = results.observe { [weak self] (changes: RealmCollectionChange) in
+//            guard let collectionView = self?.collectionView else { return }
+//            switch changes {
+//            case .initial:
+//                print("DEBUG: initial...")
+//                collectionView.reloadData()
+//                break
+//            case .update(_, let deletions, let insertions, let modifications):
+//                print("DEBUG: update...")
+//                collectionView.performBatchUpdates({
+//                    collectionView.insertItems(at: insertions.map { NSIndexPath(row: $0, section: 0) as IndexPath })
+//                    collectionView.deleteItems(at: deletions.map { NSIndexPath(row: $0, section: 0) as IndexPath })
+//                    collectionView.reloadItems(at: modifications.map { NSIndexPath(row: $0, section: 0) as IndexPath })
+//                }, completion: { _ in })
+//                break
+//            case .error(let error):
+//                fatalError("DEBUG: \(error)")
+//                break
+//            }
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -114,7 +114,7 @@ extension FavoriteShopsController {
         cell.categoryLabel.text = data[indexPath.row].category
         cell.opentimeLabel.text = data[indexPath.row].opentime
         
-        let favoriteShopData = objectAtIndexPath(indexPath: indexPath as NSIndexPath)
+//        let favoriteShopData = objectAtIndexPath(indexPath: indexPath as NSIndexPath)
         return cell
     }
     

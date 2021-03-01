@@ -61,9 +61,12 @@ final class FeedController: UICollectionViewController {
         return research
     }()
     
-    var favoriteShopData = FavoriteShopData()
-    
     lazy var realm = try! Realm()
+    
+    var name = String()
+    var category = String()
+    var opentime = String()
+    var url = String()
     
     // MARK: - Lifecycle
     
@@ -294,15 +297,11 @@ extension FeedController {
                 opentime: shopData.opentimeArray[indexPath.section]
             )
             
-            try! realm.write {
-                favoriteShopData.name = shopData.nameArray[indexPath.section]
-                favoriteShopData.category = shopData.categoryArray[indexPath.section]
-                favoriteShopData.opentime = shopData.opentimeArray[indexPath.section]
-                favoriteShopData.imageUrl = shopData.mobileUrlArray[indexPath.section]
-                
-                realm.cancelWrite()
-//                realm.beginWrite()
-            }
+            self.name = shopData.nameArray[indexPath.section]
+            self.category = shopData.categoryArray[indexPath.section]
+            self.opentime = shopData.opentimeArray[indexPath.section]
+            self.url = shopData.mobileUrlArray[indexPath.section]
+            
         }
         sectionHeader.delegate = self
         return sectionHeader
@@ -353,30 +352,25 @@ extension FeedController: UISearchBarDelegate {
 extension FeedController: shopInfoHeaderDelegate {
     func saveFavoriteShop() {
         try! realm.write {
+            let favoriteShopData = FavoriteShopData()
+            favoriteShopData.name = self.name
+            favoriteShopData.category = self.category
+            favoriteShopData.opentime = self.opentime
+            favoriteShopData.imageUrl = self.url
             realm.add(favoriteShopData)
         }
-        
-//        let favoriteContorller = FavoriteShopsController(collectionViewLayout: UICollectionViewFlowLayout())
-//        favoriteContorller.refresh()
-        
-        
-//        realm.beginWrite()
-//        realm.add(favoriteShopData)
-//        try! realm.commitWrite()
     }
     
     func deleteFavoriteShop() {
-        let realm = try! Realm()
+        let favoriteShops = realm.objects(FavoriteShopData.self)
+        print(favoriteShops)
         try! realm.write {
-            realm.delete(favoriteShopData)
+            for data in favoriteShops {
+                if data.name == self.name {
+                    realm.delete(data)
+                }
+            }
         }
-//        let favoriteContorller = FavoriteShopsController(collectionViewLayout: UICollectionViewFlowLayout())
-//        favoriteContorller.refresh()
-        
-//        realm.beginWrite()
-//        realm.delete(favoriteShopData)
-//        try! realm.commitWrite()
-        
     }
 }
 
