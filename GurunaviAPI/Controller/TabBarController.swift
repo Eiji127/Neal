@@ -34,7 +34,7 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTabBar()
-        configureLogoImage()
+//        configureLogoImage()
     }
     
     // MARK: - Helpers

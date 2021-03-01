@@ -14,8 +14,17 @@ class FavoriteShopsController: UICollectionViewController {
     
     // MARK: - Properties
     
-    private let realm = try! Realm()
+    lazy var realm = try! Realm()
+
+    lazy var results: Results<FavoriteShopData> = {
+        
+        self.realm.objects(FavoriteShopData.self)
+        
+    }()
+    
     var data = [FavoriteShopData]()
+    
+    var notificationToken: NotificationToken? = nil
     
     // MARK: - Init
     
@@ -40,6 +49,39 @@ class FavoriteShopsController: UICollectionViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark.circle"), style: .plain, target: self, action: #selector(dismissController))
         
         data = realm.objects(FavoriteShopData.self).map({ $0 })
+        
+        notificationToken = results.observe { [weak self] (changes: RealmCollectionChange) in
+            guard let collectionView = self?.collectionView else { return }
+            switch changes {
+            case .initial:
+                print("DEBUG: initial...")
+                collectionView.reloadData()
+                break
+            case .update(_, let deletions, let insertions, let modifications):
+                print("DEBUG: update...")
+                collectionView.performBatchUpdates({
+                    collectionView.insertItems(at: insertions.map { NSIndexPath(row: $0, section: 0) as IndexPath })
+                    collectionView.deleteItems(at: deletions.map { NSIndexPath(row: $0, section: 0) as IndexPath })
+                    collectionView.reloadItems(at: modifications.map { NSIndexPath(row: $0, section: 0) as IndexPath })
+                }, completion: { _ in })
+                break
+            case .error(let error):
+                fatalError("DEBUG: \(error)")
+                break
+            }
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = false
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .systemRed
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
     }
     
     // MARK: - Handlers
@@ -49,6 +91,10 @@ class FavoriteShopsController: UICollectionViewController {
     }
     
     // MARK: - Helpers
+    func objectAtIndexPath(indexPath: NSIndexPath) -> FavoriteShopData {
+        return results[indexPath.row]
+    }
+    
     func refresh() {
         data = realm.objects(FavoriteShopData.self).map({ $0 })
         collectionView.reloadData()
@@ -67,13 +113,15 @@ extension FavoriteShopsController {
         cell.nameLabel.text = data[indexPath.row].name
         cell.categoryLabel.text = data[indexPath.row].category
         cell.opentimeLabel.text = data[indexPath.row].opentime
+        
+        let favoriteShopData = objectAtIndexPath(indexPath: indexPath as NSIndexPath)
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let webController = WebController()
-        webController.mobileUrl = "https://www.google.com/?hl=ja"
+        webController.mobileUrl = data[indexPath.row].imageUrl
         navigationController?.pushViewController(webController, animated: true)
         
     }

@@ -63,9 +63,7 @@ final class FeedController: UICollectionViewController {
     
     var favoriteShopData = FavoriteShopData()
     
-    
-    
-    
+    lazy var realm = try! Realm()
     
     // MARK: - Lifecycle
     
@@ -77,6 +75,7 @@ final class FeedController: UICollectionViewController {
         
         configureUI()
         configureRightBarButton()
+        
         collectionView.reloadData()
     }
     
@@ -88,6 +87,7 @@ final class FeedController: UICollectionViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -127,6 +127,7 @@ final class FeedController: UICollectionViewController {
     
     @objc func researchImageTapped() {
         showSearchBar()
+        searchBar.isHidden = false
     }
     
     @objc func handleMenuToggle() {
@@ -176,10 +177,28 @@ final class FeedController: UICollectionViewController {
         collectionView.collectionViewLayout = layout()
         
         navigationController?.title = "Shop"
-        navigationController?.navigationBar.barTintColor = .red
+        navigationController?.navigationBar.barTintColor = .systemRed
         navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor.white
         ]
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .systemRed
+        let attrs: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.white,
+            .font: UIFont.monospacedSystemFont(ofSize: 36, weight: .black)
+        ]
+        
+        appearance.largeTitleTextAttributes = attrs
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
+        navigationItem.compactAppearance = appearance
+        
+        
+        
         navigationItem.title = "近辺の店舗"
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "sidebar.left"), style: .plain, target: self, action: #selector(handleMenuToggle))
         
@@ -245,7 +264,7 @@ extension FeedController {
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         let sectionsCount = shopData.hit_count
-        return sectionsCount
+        return sectionsCount ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -274,10 +293,17 @@ extension FeedController {
                 category: shopData.categoryArray[indexPath.section],
                 opentime: shopData.opentimeArray[indexPath.section]
             )
+            
+            try! realm.write {
+                favoriteShopData.name = shopData.nameArray[indexPath.section]
+                favoriteShopData.category = shopData.categoryArray[indexPath.section]
+                favoriteShopData.opentime = shopData.opentimeArray[indexPath.section]
+                favoriteShopData.imageUrl = shopData.mobileUrlArray[indexPath.section]
+                
+                realm.cancelWrite()
+//                realm.beginWrite()
+            }
         }
-        favoriteShopData.name = shopData.nameArray[indexPath.section]
-        favoriteShopData.category = shopData.categoryArray[indexPath.section]
-        favoriteShopData.opentime = shopData.opentimeArray[indexPath.section]
         sectionHeader.delegate = self
         return sectionHeader
     }
@@ -319,20 +345,16 @@ extension FeedController: UISearchBarDelegate {
         searchBar.showsCancelButton = false
         researchImageView.isHidden = false
         searchBar.endEditing(true)
+        searchBar.isHidden = true
     }
     
 }
 
 extension FeedController: shopInfoHeaderDelegate {
     func saveFavoriteShop() {
-        
-        let realm = try! Realm()
-//        realm.beginWriteTransaction()
-//        realm.add(newCat)
-//        realm.commitWriteTransaction()
-//        try! realm.write {
-//            realm.add(favoriteShopData)
-//        }
+        try! realm.write {
+            realm.add(favoriteShopData)
+        }
         
 //        let favoriteContorller = FavoriteShopsController(collectionViewLayout: UICollectionViewFlowLayout())
 //        favoriteContorller.refresh()
@@ -344,15 +366,10 @@ extension FeedController: shopInfoHeaderDelegate {
     }
     
     func deleteFavoriteShop() {
-        
         let realm = try! Realm()
-        
-        if let favoriteData = realm.objects(FavoriteShopData.self).first {
-            try! realm.write {
-                realm.delete(favoriteData)
-            }
+        try! realm.write {
+            realm.delete(favoriteShopData)
         }
-        
 //        let favoriteContorller = FavoriteShopsController(collectionViewLayout: UICollectionViewFlowLayout())
 //        favoriteContorller.refresh()
         

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 protocol shopInfoHeaderDelegate: class {
     func saveFavoriteShop()
@@ -17,7 +18,7 @@ class ShopInfoHeader: UICollectionReusableView {
     
     // MARK: - Properties
     
-    private let nameLabel: UILabel = {
+    let nameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .darkGray
         label.font = UIFont.boldSystemFont(ofSize: 18)
@@ -25,7 +26,7 @@ class ShopInfoHeader: UICollectionReusableView {
         return label
     }()
     
-    private let categoryLabel: UILabel = {
+    let categoryLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray
         label.font = UIFont.boldSystemFont(ofSize: 12)
@@ -33,7 +34,7 @@ class ShopInfoHeader: UICollectionReusableView {
         return label
     }()
     
-    private let opentimeLabel: UILabel = {
+    let opentimeLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray
         label.font = UIFont.boldSystemFont(ofSize: 12)
@@ -95,6 +96,8 @@ class ShopInfoHeader: UICollectionReusableView {
         categoryLabel.text = category
         opentimeLabel.text = " / " + opentime
     }
+    
+    
     
     @objc func registerFavoriteShop() {
         
