@@ -34,7 +34,7 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTabBar()
-        configureLogoImage()
+//        configureLogoImage()
     }
     
     // MARK: - Helpers
@@ -47,6 +47,7 @@ class TabBarController: UITabBarController {
         
         let feed = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
         feed.homeDelegate = self
+        
         let navFeed = templateNavigationController(image: UIImage(systemName: "house.fill")!, rootViewController: feed)
         
         let map = MapController()

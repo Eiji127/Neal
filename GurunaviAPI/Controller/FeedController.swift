@@ -10,6 +10,7 @@ import Alamofire
 import SwiftyJSON
 import MapKit
 import CoreLocation
+import RealmSwift
 
 
 private let reuseIdentifier = "ShopInfoCell"
@@ -39,7 +40,7 @@ final class FeedController: UICollectionViewController {
         search.searchTextField.backgroundColor = .white
         search.textField?.layer.cornerRadius = (search.textField?.bounds.height)! / 2.0
         search.textField?.layer.masksToBounds = true
-        search.placeholder = "Search"
+        search.placeholder = "ジャンル・料理名を検索"
         search.textField?.attributedPlaceholder = NSAttributedString(string: search.placeholder ?? "",
                                                                      attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray]
         )
@@ -60,6 +61,22 @@ final class FeedController: UICollectionViewController {
         return research
     }()
     
+    private let noShopLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.tintColor = .lightGray
+        label.numberOfLines = 0
+        label.text = "近くには飲食店がないようです...\n移動して再検索してみましょう！！"
+        return label
+    }()
+    
+    lazy var realm = try! Realm()
+    
+    var name = String()
+    var category = String()
+    var opentime = String()
+    var url = String()
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -70,6 +87,13 @@ final class FeedController: UICollectionViewController {
         
         configureUI()
         configureRightBarButton()
+        
+        if shopData.hit_count == 0 {
+            collectionView.addSubview(noShopLabel)
+            noShopLabel.centerX(inView: collectionView)
+            noShopLabel.centerY(inView: collectionView)
+        }
+        
         collectionView.reloadData()
     }
     
@@ -81,6 +105,7 @@ final class FeedController: UICollectionViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -113,13 +138,14 @@ final class FeedController: UICollectionViewController {
         checkLocationServiceCondition()
         dismiss(animated: true, completion: nil)
     }
-    
+
     @objc func handleRefresh() {
         indicateShopInformation()
     }
     
     @objc func researchImageTapped() {
         showSearchBar()
+        searchBar.isHidden = false
     }
     
     @objc func handleMenuToggle() {
@@ -165,15 +191,33 @@ final class FeedController: UICollectionViewController {
         collectionView.register(ShopInfoCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.register(ShopInfoHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: reuseHeaderIdentifier)
         
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .nealBack
         collectionView.collectionViewLayout = layout()
         
         navigationController?.title = "Shop"
-        navigationController?.navigationBar.barTintColor = .red
+        navigationController?.navigationBar.barTintColor = .systemRed
         navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor.white
         ]
-        navigationItem.title = "お店リスト"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .systemRed
+        let attrs: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.white,
+            .font: UIFont.monospacedSystemFont(ofSize: 28, weight: .black)
+        ]
+        
+        appearance.largeTitleTextAttributes = attrs
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
+        navigationItem.compactAppearance = appearance
+        
+        
+        
+        navigationItem.title = "近辺の店舗"
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "sidebar.left"), style: .plain, target: self, action: #selector(handleMenuToggle))
         
         let refreshControl = UIRefreshControl()
@@ -223,7 +267,7 @@ extension FeedController {
         }
         
         let config = UICollectionViewCompositionalLayoutConfiguration()
-        config.interSectionSpacing = 10
+        config.interSectionSpacing = 0
         
         let layout = UICollectionViewCompositionalLayout(sectionProvider: sectionProvider, configuration: config)
         
@@ -261,13 +305,27 @@ extension FeedController {
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: reuseHeaderIdentifier, for: indexPath) as! ShopInfoHeader
+        sectionHeader.indexPath = indexPath
         if shopData.nameArray != [] {
             sectionHeader.setUpContents(
                 name: shopData.nameArray[indexPath.section],
                 category: shopData.categoryArray[indexPath.section],
                 opentime: shopData.opentimeArray[indexPath.section]
             )
+            
+            let favoriteShops = realm.objects(FavoriteShopData.self)
+            for data in favoriteShops {
+                if data.name ==  shopData.nameArray[indexPath.section] {
+                    print("DEBUG: check favo")
+                    sectionHeader.didRegisterd = true
+                    sectionHeader.registerShopButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+                    sectionHeader.registerShopButton.tintColor = .systemYellow
+                }
+            }
+            
         }
+        
+        sectionHeader.delegate = self
         return sectionHeader
     }
     
@@ -295,7 +353,6 @@ extension FeedController: UISearchBarDelegate {
         
         indicateShopInformation()
         collectionView.reloadData()
-        
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -309,7 +366,33 @@ extension FeedController: UISearchBarDelegate {
         searchBar.showsCancelButton = false
         researchImageView.isHidden = false
         searchBar.endEditing(true)
+        searchBar.isHidden = true
     }
     
+}
+
+extension FeedController: shopInfoHeaderDelegate {
+    func saveFavoriteShop(indexPath section: Int) {
+        try! realm.write {
+            let favoriteShopData = FavoriteShopData()
+            favoriteShopData.name = shopData.nameArray[section]
+            favoriteShopData.category = shopData.categoryArray[section]
+            favoriteShopData.opentime = shopData.opentimeArray[section]
+            favoriteShopData.mobileUrl = shopData.mobileUrlArray[section]
+            favoriteShopData.imageUrl = shopData.shopsImageArray[section][0]
+            realm.add(favoriteShopData)
+        }
+    }
+    
+    func deleteFavoriteShop() {
+        let favoriteShops = realm.objects(FavoriteShopData.self)
+        try! realm.write {
+            for data in favoriteShops {
+                if data.name == self.name {
+                    realm.delete(data)
+                }
+            }
+        }
+    }
 }
 
