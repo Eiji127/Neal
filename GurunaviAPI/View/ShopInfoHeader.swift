@@ -9,7 +9,7 @@ import UIKit
 import RealmSwift
 
 protocol shopInfoHeaderDelegate: class {
-    func saveFavoriteShop()
+    func saveFavoriteShop(indexPath section: Int)
     func deleteFavoriteShop()
 }
 
@@ -43,7 +43,7 @@ class ShopInfoHeader: UICollectionReusableView {
     }()
     
     
-    private lazy var registerShopButton: UIButton = {
+    lazy var registerShopButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .lightGray
         button.setImage(UIImage(systemName: "star"), for: .normal)
@@ -54,9 +54,11 @@ class ShopInfoHeader: UICollectionReusableView {
     var didRegisterd = false
     var favoriteModel = FavoriteModel()
     
+    var indexPath = IndexPath()
+    
     weak var delegate: shopInfoHeaderDelegate?
     
-    // MARK: - Lifecycles
+    // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -80,6 +82,8 @@ class ShopInfoHeader: UICollectionReusableView {
         registerShopButton.centerY(inView: stack)
         registerShopButton.anchor(right: rightAnchor, paddingRight: 20)
         
+        registerShopButton.tintColor = didRegisterd ? UIColor.systemYellow : UIColor.lightGray
+        
 //        registerShopButton.tintColor = favoriteModel.favoriteButtonTintColor
 //        registerShopButton.setImage(favoriteModel.favoriteButtonImage, for: .normal)
         
@@ -97,15 +101,13 @@ class ShopInfoHeader: UICollectionReusableView {
         opentimeLabel.text = " / " + opentime
     }
     
-    
-    
     @objc func registerFavoriteShop() {
         
         didRegisterd.toggle()
         if didRegisterd {
             registerShopButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
             registerShopButton.tintColor = .systemYellow
-            delegate?.saveFavoriteShop()
+            delegate?.saveFavoriteShop(indexPath: indexPath.section)
         } else {
             registerShopButton.setImage(UIImage(systemName: "star"), for: .normal)
             registerShopButton.tintColor = .lightGray

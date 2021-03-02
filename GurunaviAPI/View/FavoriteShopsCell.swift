@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class FavoriteShopsCell: UICollectionViewCell {
     // MARK: - Properties

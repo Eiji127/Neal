@@ -16,11 +16,11 @@ class FavoriteShopsController: UICollectionViewController {
     
     lazy var realm = try! Realm()
 
-    lazy var results: Results<FavoriteShopData> = {
-        
-        self.realm.objects(FavoriteShopData.self)
-        
-    }()
+//    lazy var results: Results<FavoriteShopData> = {
+//
+//        self.realm.objects(FavoriteShopData.self)
+//
+//    }()
     
     var data = [FavoriteShopData]()
     
@@ -70,6 +70,11 @@ class FavoriteShopsController: UICollectionViewController {
 //                break
 //            }
 //        }
+        
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(cellLongTapped))
+        longPressRecognizer.allowableMovement = 10
+        longPressRecognizer.minimumPressDuration = 0.5
+        self.collectionView.addGestureRecognizer(longPressRecognizer)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -85,22 +90,47 @@ class FavoriteShopsController: UICollectionViewController {
     }
     
     // MARK: - Handlers
+    @objc func cellLongTapped(sender: UILongPressGestureRecognizer) {
+        let point: CGPoint = sender.location(in: self.collectionView)
+        let indexPath = self.collectionView.indexPathForItem(at: point)
+        
+        if let indexPath = indexPath {
+            switch sender.state {
+            case .began:
+                let generator = UINotificationFeedbackGenerator()
+                generator.notificationOccurred(.warning)
+                AlertManager.shared.showFavoriteShopRegistration(viewContoller: self) { _ in
+                    try! self.realm.write {
+                        let favoriteShops = self.realm.objects(FavoriteShopData.self)
+                        self.realm.delete(favoriteShops[indexPath.row])
+                    }
+                    self.loadView()
+                    self.viewDidLoad()
+                }
+            case .ended: break
+            default:
+                break
+            }
+        }
+    }
     
     @objc func dismissController() {
         dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Helpers
-    func objectAtIndexPath(indexPath: NSIndexPath) -> FavoriteShopData {
-        return results[indexPath.row]
-    }
+//    func objectAtIndexPath(indexPath: NSIndexPath) -> FavoriteShopData {
+//        return results[indexPath.row]
+//    }
     
-    func refresh() {
-        data = realm.objects(FavoriteShopData.self).map({ $0 })
-        collectionView.reloadData()
-    }
+//    func refresh() {
+//        data = realm.objects(FavoriteShopData.self).map({ $0 })
+//        collectionView.reloadData()
+//    }
     
 }
+
+// MARK: - UICollectionView Delegate/DataSorce
 
 extension FavoriteShopsController {
 
@@ -113,19 +143,24 @@ extension FavoriteShopsController {
         cell.nameLabel.text = data[indexPath.row].name
         cell.categoryLabel.text = data[indexPath.row].category
         cell.opentimeLabel.text = data[indexPath.row].opentime
-        
-//        let favoriteShopData = objectAtIndexPath(indexPath: indexPath as NSIndexPath)
+        if let shopImage = URL(string: data[indexPath.row].imageUrl) {
+            cell.setUpImageView(imageUrl: shopImage)
+        } else {
+            cell.setUpImage()
+        }
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let webController = WebController()
-        webController.mobileUrl = data[indexPath.row].imageUrl
+        webController.mobileUrl = data[indexPath.row].mobileUrl
         navigationController?.pushViewController(webController, animated: true)
         
     }
 }
+
+// MARK: - UICollectionViewDelegateFlowLayout
 
 extension FavoriteShopsController: UICollectionViewDelegateFlowLayout {
     

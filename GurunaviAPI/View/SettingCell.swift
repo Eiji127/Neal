@@ -20,16 +20,10 @@ class SettingCell: UITableViewCell {
         return iv
     }()
     
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18)
-        label.text = "Version"
-        return label
-    }()
-    
     private let versionLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18)
+        label.font = UIFont.systemFont(ofSize: 15)
+        label.tintColor = .lightGray
         label.text = "test option"
         return label
     }()
@@ -40,16 +34,12 @@ class SettingCell: UITableViewCell {
         
         backgroundColor = .nealBack
         
-        addSubview(titleLabel)
-        titleLabel.centerY(inView: self)
-        titleLabel.anchor(left: leftAnchor, paddingLeft: 60)
-        
         addSubview(versionLabel)
-        versionLabel.centerY(inView: self)
-        versionLabel.anchor(right: rightAnchor, paddingRight: 100)
+        versionLabel.centerX(inView: self)
+        versionLabel.anchor(bottom: bottomAnchor, paddingBottom: 20)
         
         let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
-        versionLabel.text = version
+        versionLabel.text = "Version " + version
         
     }
     

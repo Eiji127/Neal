@@ -61,6 +61,15 @@ final class FeedController: UICollectionViewController {
         return research
     }()
     
+    private let noShopLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.tintColor = .lightGray
+        label.numberOfLines = 0
+        label.text = "近くには飲食店がないようです...\n移動して再検索してみましょう！！"
+        return label
+    }()
+    
     lazy var realm = try! Realm()
     
     var name = String()
@@ -78,6 +87,12 @@ final class FeedController: UICollectionViewController {
         
         configureUI()
         configureRightBarButton()
+        
+        if shopData.hit_count == 0 {
+            collectionView.addSubview(noShopLabel)
+            noShopLabel.centerX(inView: collectionView)
+            noShopLabel.centerY(inView: collectionView)
+        }
         
         collectionView.reloadData()
     }
@@ -191,7 +206,7 @@ final class FeedController: UICollectionViewController {
         appearance.backgroundColor = .systemRed
         let attrs: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.white,
-            .font: UIFont.monospacedSystemFont(ofSize: 36, weight: .black)
+            .font: UIFont.monospacedSystemFont(ofSize: 28, weight: .black)
         ]
         
         appearance.largeTitleTextAttributes = attrs
@@ -267,7 +282,7 @@ extension FeedController {
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         let sectionsCount = shopData.hit_count
-        return sectionsCount ?? 0
+        return sectionsCount
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -290,6 +305,7 @@ extension FeedController {
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: reuseHeaderIdentifier, for: indexPath) as! ShopInfoHeader
+        sectionHeader.indexPath = indexPath
         if shopData.nameArray != [] {
             sectionHeader.setUpContents(
                 name: shopData.nameArray[indexPath.section],
@@ -297,12 +313,18 @@ extension FeedController {
                 opentime: shopData.opentimeArray[indexPath.section]
             )
             
-            self.name = shopData.nameArray[indexPath.section]
-            self.category = shopData.categoryArray[indexPath.section]
-            self.opentime = shopData.opentimeArray[indexPath.section]
-            self.url = shopData.mobileUrlArray[indexPath.section]
+            let favoriteShops = realm.objects(FavoriteShopData.self)
+            for data in favoriteShops {
+                if data.name ==  shopData.nameArray[indexPath.section] {
+                    print("DEBUG: check favo")
+                    sectionHeader.didRegisterd = true
+                    sectionHeader.registerShopButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+                    sectionHeader.registerShopButton.tintColor = .systemYellow
+                }
+            }
             
         }
+        
         sectionHeader.delegate = self
         return sectionHeader
     }
@@ -350,20 +372,20 @@ extension FeedController: UISearchBarDelegate {
 }
 
 extension FeedController: shopInfoHeaderDelegate {
-    func saveFavoriteShop() {
+    func saveFavoriteShop(indexPath section: Int) {
         try! realm.write {
             let favoriteShopData = FavoriteShopData()
-            favoriteShopData.name = self.name
-            favoriteShopData.category = self.category
-            favoriteShopData.opentime = self.opentime
-            favoriteShopData.imageUrl = self.url
+            favoriteShopData.name = shopData.nameArray[section]
+            favoriteShopData.category = shopData.categoryArray[section]
+            favoriteShopData.opentime = shopData.opentimeArray[section]
+            favoriteShopData.mobileUrl = shopData.mobileUrlArray[section]
+            favoriteShopData.imageUrl = shopData.shopsImageArray[section][0]
             realm.add(favoriteShopData)
         }
     }
     
     func deleteFavoriteShop() {
         let favoriteShops = realm.objects(FavoriteShopData.self)
-        print(favoriteShops)
         try! realm.write {
             for data in favoriteShops {
                 if data.name == self.name {

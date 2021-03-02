@@ -12,4 +12,5 @@ class FavoriteShopData: Object {
     @objc dynamic var category: String = ""
     @objc dynamic var opentime: String = ""
     @objc dynamic var imageUrl: String = ""
+    @objc dynamic var mobileUrl: String = ""
 }

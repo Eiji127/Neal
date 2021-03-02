@@ -39,7 +39,6 @@ class SettingController: UITableViewController {
         tableView.register(SettingCell.self, forCellReuseIdentifier: reuseIdentifier)
         tableView.separatorStyle = .none
         
-        
     }
     
     // MARK: - Selectors
@@ -68,8 +67,14 @@ extension SettingController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! SettingCell
+        cell.selectionStyle = .none
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return view.frame.height - 200
+    }
 }
+
 
 
