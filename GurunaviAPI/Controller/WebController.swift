@@ -24,6 +24,19 @@ class WebController: UIViewController {
         self.overrideUserInterfaceStyle = .light
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.navigationBar.prefersLargeTitles = false
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .systemRed
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
+    }
+    
     // MARK: - Helpers
     
     func configureWebView() {
@@ -31,10 +44,12 @@ class WebController: UIViewController {
         let myURL = URL(string: mobileUrl)
         let myRequest = URLRequest(url: myURL!)
         webView.load(myRequest)
+        webView.backgroundColor = .nealBack
         self.view.addSubview(webView)
     }
     
     func configureNavigationBarRightButton() {
+        
         let shareButton = UIImageView()
         shareButton.image = UIImage(systemName: "square.and.arrow.up")
         shareButton.tintColor = .white

@@ -27,8 +27,17 @@ class AlertManager {
     
     func showAllowingFetchLocationAlert(viewContoller: UIViewController, handler: ((UIAlertAction) -> Void)? = nil){
         let alertController = UIAlertController(title: "位置情報サービスを\nオンにしてください", message: "「設定」 ⇒「プライバシー」⇒「位置情報サービス」からオンにできます", preferredStyle: .alert)
-        let dimissAlert = UIAlertAction(title: "OK", style: .cancel, handler: handler)
+        let dimissAlert = UIAlertAction(title: "OK", style: .default, handler: handler)
         alertController.addAction(dimissAlert)
+        viewContoller.present(alertController, animated: true, completion: nil)
+    }
+    
+    func showFavoriteShopRegistration(viewContoller: UIViewController, handler: ((UIAlertAction) -> Void)? = nil) {
+        let alertController = UIAlertController(title: "この店舗をお気に入りから\n削除しますか？", message: nil, preferredStyle: .alert)
+        let dimissAlert = UIAlertAction(title: "OK", style: .cancel, handler: handler)
+        let  deleteAlert = UIAlertAction(title: "キャンセル", style: .default)
+        alertController.addAction(dimissAlert)
+        alertController.addAction(deleteAlert)
         viewContoller.present(alertController, animated: true, completion: nil)
     }
 }

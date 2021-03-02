@@ -19,5 +19,18 @@ struct ShopData {
     var shopsImageArray = [[String]]()
 }
 
+struct FavoriteModel {
+    var didFavorite = true
+    
+    var favoriteButtonImage: UIImage {
+        let imageName = didFavorite ? "star.fill" : "star"
+        return UIImage(systemName: imageName)!
+    }
+    
+    var favoriteButtonTintColor: UIColor {
+        return didFavorite ? .nealBack : .lightGray
+    }
+}
+
 
 

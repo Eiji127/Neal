@@ -6,13 +6,24 @@
 //
 
 import UIKit
+import RealmSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        print( "DEBUG: \(Realm.Configuration.defaultConfiguration.fileURL)")
+        
+        do {
+            let realm = try Realm()
+        } catch {
+            print(error)
+        }
+        
         return true
     }
+    
 
     // MARK: UISceneSession Lifecycle
 

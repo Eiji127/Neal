@@ -11,4 +11,5 @@ target 'GurunaviAPI' do
 	pod 'SDWebImage'
 	pod 'SwiftLint'
 	pod 'lottie-ios'
+	pod 'RealmSwift'
 end
