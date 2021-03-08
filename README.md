@@ -8,16 +8,19 @@
 ![xcodeBadge](https://img.shields.io/badge/-Xcode-grey.svg?logo=xcode&style=plastic)
 ![twitterBadge](https://img.shields.io/badge/twitter-@cychow__app-9cf?style=plastic)
 
-## Overview
+### App Store
+https://apps.apple.com/us/app/neal/id1550909765
+
+## 👀 Overview
 - 現在地付近にある飲食店を教えてくれるiOS向けアプリ  
 - 開発言語はSwift、WebAPIにgurunaviAPIを使用  
 - マップ表示もでき、飲食店の詳細を知ることが可能
 
-## Requirement
+## 🔨 Requirement
 ・ Xcode 12.1  
 ・ Swift 5.3.1
 
-## Feature
+## 🖋 Feature
 - 飲食店のリスト化
 - 飲食店イメージの閲覧
 <img width="491" alt="スクリーンショット 2021-03-08 17 43 34" src="https://user-images.githubusercontent.com/64912886/110296377-a1234f80-8035-11eb-859f-b97fe289c992.png">
@@ -35,17 +38,20 @@
 
 - 他サービスへの共有
 
+- お気に入り機能
+<img width="491" alt="スクリーンショット 2021-03-08 17 47 58" src="https://user-images.githubusercontent.com/64912886/110297614-0af02900-8037-11eb-8915-5bddc61ea7c4.png">
 
 
-## Description
+
+## 📜 Description
  No Storyboard  
  MVC Architechture
  
-## Demo Video & Explanation
-Youtbe : https://youtu.be/hlcNSj5eAew
+## 📎 Demo Video & Explanation
+Youtbe : https://youtu.be/hlcNSj5eAew  
 Qiita : https://qiita.com/Cychow/items/7d5812a70092ea3faa53
 
-## Author
+## 👨 Author
 <img src="https://user-images.githubusercontent.com/64912886/101135777-a09ea580-364f-11eb-8e3e-4a7d25158a21.png" width="200"> 
 
 #### Eiji Shirakazu
