@@ -41,8 +41,10 @@
  No Storyboard  
  MVC Architechture
  
-## Demo Video
-https://youtu.be/hlcNSj5eAew
+## Demo Video & Explanation
+Youtbe : https://youtu.be/hlcNSj5eAew
+Qiita : https://qiita.com/Cychow/items/7d5812a70092ea3faa53
+
 ## Author
 <img src="https://user-images.githubusercontent.com/64912886/101135777-a09ea580-364f-11eb-8e3e-4a7d25158a21.png" width="200"> 
 
