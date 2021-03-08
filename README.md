@@ -8,41 +8,50 @@
 ![xcodeBadge](https://img.shields.io/badge/-Xcode-grey.svg?logo=xcode&style=plastic)
 ![twitterBadge](https://img.shields.io/badge/twitter-@cychow__app-9cf?style=plastic)
 
-## Overview
+### App Store
+https://apps.apple.com/us/app/neal/id1550909765
+
+## 👀 Overview
 - 現在地付近にある飲食店を教えてくれるiOS向けアプリ  
 - 開発言語はSwift、WebAPIにgurunaviAPIを使用  
 - マップ表示もでき、飲食店の詳細を知ることが可能
 
-## Requirement
+## 🔨 Requirement
 ・ Xcode 12.1  
 ・ Swift 5.3.1
 
-## Feature
+## 🖋 Feature
 - 飲食店のリスト化
 - 飲食店イメージの閲覧
-![Simulator Screen Shot - iPhone 12 Pro - 2021-01-27 at 23 34 43](https://user-images.githubusercontent.com/64912886/106025135-cf933e00-610b-11eb-9664-5d24b6b43b42.png)
+<img width="491" alt="スクリーンショット 2021-03-08 17 43 34" src="https://user-images.githubusercontent.com/64912886/110296377-a1234f80-8035-11eb-859f-b97fe289c992.png">
+<img width="491" alt="スクリーンショット 2021-03-08 17 43 34" src="https://user-images.githubusercontent.com/64912886/110296561-d039c100-8035-11eb-8ad5-81ba0349ef28.png">
 
 - 現在地取得
 - マップ表示
-![Simulator Screen Shot - iPhone 12 Pro - 2021-01-27 at 23 30 09](https://user-images.githubusercontent.com/64912886/106025046-bdb19b00-610b-11eb-870d-2bd31286347d.png)
+<img width="491" alt="スクリーンショット 2021-03-08 17 43 34" src="https://user-images.githubusercontent.com/64912886/106025046-bdb19b00-610b-11eb-870d-2bd31286347d.png">
 
 - 詳細画面
-![Simulator Screen Shot - iPhone 12 Pro - 2021-01-27 at 23 37 13](https://user-images.githubusercontent.com/64912886/106025183-d7eb7900-610b-11eb-908d-22ef59c5cd65.png)
+<img width="491" alt="スクリーンショット 2021-03-08 17 43 34" src="https://user-images.githubusercontent.com/64912886/106025183-d7eb7900-610b-11eb-908d-22ef59c5cd65.png">
 
 - ジャンル別によるフィルター機能
-![Simulator Screen Shot - iPhone 12 Pro - 2021-01-27 at 23 32 48](https://user-images.githubusercontent.com/64912886/106025086-c73b0300-610b-11eb-9798-841ec2d7fe16.png)
+<img width="491" alt="スクリーンショット 2021-03-08 17 47 58" src="https://user-images.githubusercontent.com/64912886/110297080-6f5eb880-8036-11eb-9d5b-02421a53c3a4.png">
 
 - 他サービスへの共有
 
+- お気に入り機能
+<img width="491" alt="スクリーンショット 2021-03-08 17 47 58" src="https://user-images.githubusercontent.com/64912886/110297614-0af02900-8037-11eb-8915-5bddc61ea7c4.png">
 
 
-## Description
+
+## 📜 Description
  No Storyboard  
  MVC Architechture
  
-## Demo Video
-https://www.youtube.com/watch?v=NYtvBcyHV80&feature=youtu.be
-## Author
+## 📎 Demo Video & Explanation
+Youtbe : https://youtu.be/hlcNSj5eAew  
+Qiita : https://qiita.com/Cychow/items/7d5812a70092ea3faa53
+
+## 👨 Author
 <img src="https://user-images.githubusercontent.com/64912886/101135777-a09ea580-364f-11eb-8e3e-4a7d25158a21.png" width="200"> 
 
 #### Eiji Shirakazu
