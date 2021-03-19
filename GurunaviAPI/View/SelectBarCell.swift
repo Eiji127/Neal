@@ -51,6 +51,26 @@ class SelectBarCell: UICollectionViewCell {
         return imageView
     }()
     
+    lazy var registerShopButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.tintColor = .lightGray
+        button.setImage(UIImage(systemName: "star"), for: .normal)
+        button.addTarget(self, action: #selector(registerFavoriteShop), for: .touchUpInside)
+        button.setDimensions(width: 40, height: 40)
+        return button
+    }()
+    
+    lazy var detailInfoButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.tintColor = .systemRed
+        button.setImage(UIImage(systemName: "info.circle"), for: .normal)
+        button.addTarget(self, action: #selector(presentDetailWebView), for: .touchUpInside)
+        button.setDimensions(width: 40, height: 40)
+        return button
+    }()
+    
+    var didRegisterd = false
+    
     // MARK: - Init
     
     override init(frame: CGRect) {
@@ -63,13 +83,21 @@ class SelectBarCell: UICollectionViewCell {
         infoStack.distribution = .fill
         infoStack.spacing = 4
         
-        let stack = UIStackView(arrangedSubviews: [imageView, infoStack])
+        let buttonStack = UIStackView(arrangedSubviews: [registerShopButton, detailInfoButton])
+        buttonStack.axis = .vertical
+        buttonStack.distribution = .fillEqually
+        
+        let stack = UIStackView(arrangedSubviews: [imageView, infoStack, buttonStack])
         stack.axis = .horizontal
         stack.distribution = .fillProportionally
         stack.spacing = 10
         
         addSubview(stack)
-        stack.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingRight: 10)
+        stack.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10)
+        
+//        addSubview(registerShopButton)
+//        registerShopButton.centerY(inView: stack)
+//        registerShopButton.anchor(top: topAnchor, right: rightAnchor, paddingTop: 5, paddingRight: 20)
         
     }
     
@@ -78,5 +106,22 @@ class SelectBarCell: UICollectionViewCell {
     }
     
     // MARK: - Helpers
+    
+    @objc func presentDetailWebView() {
+        print("DEBUG: present WebView...")
+    }
+    
+    @objc func registerFavoriteShop() {
+        didRegisterd.toggle()
+        if didRegisterd {
+            registerShopButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            registerShopButton.tintColor = .systemYellow
+//            delegate?.saveFavoriteShop(indexPath: indexPath.section)
+        } else {
+            registerShopButton.setImage(UIImage(systemName: "star"), for: .normal)
+            registerShopButton.tintColor = .lightGray
+//            delegate?.deleteFavoriteShop(indexPath: indexPath.section)
+        }
+    }
 }
 
