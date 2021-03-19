@@ -26,7 +26,11 @@ class MapController: UIViewController {
     
     private var selectBar: UICollectionView!
     
-    private var shopData = ShopData()
+    private var shopData = ShopData() {
+        didSet {
+            selectBar.reloadData()
+        }
+    }
     
     private var longitude: String = "&longitude="
     private var latitude: String = "&latitude="
@@ -61,6 +65,15 @@ class MapController: UIViewController {
         super.viewWillAppear(animated)
         
         NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        
+        navigationController?.navigationBar.prefersLargeTitles = false
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .systemRed
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -291,13 +304,29 @@ extension MapController: MKMapViewDelegate {
 
 extension MapController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
+        let itemCount = shopData.hit_count
+        return itemCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = selectBar.dequeueReusableCell(withReuseIdentifier: selectBarReuseIndentifier, for: indexPath) as! SelectBarCell
+        cell.setUpContents(name: shopData.nameArray[indexPath.row],
+                           category: shopData.categoryArray[indexPath.row],
+                           opentime: shopData.opentimeArray[indexPath.row])
+        if let shopImage = URL(string: shopData.shopsImageArray[indexPath.row][0]) {
+            cell.setUpImageView(imageUrl: shopImage)
+        } else {
+            cell.setUpImage()
+        }
+        cell.delegate = self
+        cell.indexPath = indexPath
         cell.layer.cornerRadius = 150 / 6
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("DEBUG: TAP SELECT BAR CELL...")
+        
     }
 }
 
@@ -320,6 +349,22 @@ extension MapController: UICollectionViewDelegateFlowLayout {
         
         let width: CGFloat = 10
         return CGSize(width: width, height: selectBar.layer.frame.height)
+    }
+}
+
+extension MapController: SelectBarCellDelegate {
+    func presentDetailWebView(indexPath row: Int) {
+        let webController = WebController()
+        webController.mobileUrl = shopData.mobileUrlArray[row]
+        navigationController?.pushViewController(webController, animated: true)
+    }
+    
+    func saveFavoriteShop(indexPath row: Int) {
+        print("DEBUG: SAVE SHOP INFORMAITION")
+    }
+    
+    func deleteFavoriteShop(indexPath row: Int) {
+        print("DEBUG: DELETE SHOP INFORMAITION")
     }
 }
 

@@ -77,6 +77,8 @@ struct GurunaviService {
     func fetchData(latitude: String, longitude: String, completion: @escaping(ShopData) -> Void) {
         var shopData = ShopData()
         
+        var imageUrlArray = [String]()
+        
         var locationCoordinateLatitude: CLLocationDegrees = 0
         var locationCoordinateLongitude: CLLocationDegrees = 0
         
@@ -108,16 +110,23 @@ struct GurunaviService {
                     guard let shopName = json["rest"][order]["name"].string else {
                         return
                     }
-                    guard let mobileUrl = json["rest"][order]["url"].string else {
-                        return
-                    }
+                    guard let shopCategory = json["rest"][order]["category"].string else { return }
+                    guard let shopOpentime = json["rest"][order]["opentime"].string else { return }
+                    guard let mobileUrl = json["rest"][order]["url"].string else { return }
+                    guard let imageUrl = json["rest"][order]["image_url"]["shop_image1"].string else { return }
                     guard let latitude = json["rest"][order]["latitude"].string else {
                         return
                     }
                     guard let longitude = json["rest"][order]["longitude"].string else { return }
                     
                     shopData.nameArray.append(shopName)
+                    shopData.categoryArray.append(shopCategory)
+                    shopData.opentimeArray.append(shopOpentime)
                     shopData.mobileUrlArray.append(mobileUrl)
+                    
+                    imageUrlArray.append(imageUrl)
+                    shopData.shopsImageArray.append(imageUrlArray)
+                    imageUrlArray.removeAll()
                     
                     if latitude != "" {
                         locationCoordinateLatitude = CLLocationDegrees(latitude)!

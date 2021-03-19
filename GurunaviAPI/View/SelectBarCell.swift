@@ -6,14 +6,19 @@
 //
 import UIKit
 
+
+protocol SelectBarCellDelegate: class {
+    func presentDetailWebView(indexPath row: Int)
+    func saveFavoriteShop(indexPath row: Int)
+    func deleteFavoriteShop(indexPath row: Int)
+}
+
 class SelectBarCell: UICollectionViewCell {
     // MARK: - Properties
     
-    private let underlineView: UIView = {
-        let line = UIView()
-        line.backgroundColor = .systemYellow
-        return line
-    }()
+    weak var delegate: SelectBarCellDelegate?
+    
+    var indexPath = IndexPath()
     
     let nameLabel: UILabel = {
         let label = UILabel()
@@ -43,7 +48,7 @@ class SelectBarCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleToFill
         imageView.clipsToBounds = true
-        imageView.setDimensions(width: 100, height: 100)
+        imageView.setDimensions(width: 120, height: 100)
         imageView.layer.cornerRadius = 50 / 6
         imageView.backgroundColor = .white
         imageView.image = UIImage(named: "noImage_color")
@@ -95,10 +100,6 @@ class SelectBarCell: UICollectionViewCell {
         addSubview(stack)
         stack.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10)
         
-//        addSubview(registerShopButton)
-//        registerShopButton.centerY(inView: stack)
-//        registerShopButton.anchor(top: topAnchor, right: rightAnchor, paddingTop: 5, paddingRight: 20)
-        
     }
     
     required init?(coder: NSCoder) {
@@ -108,7 +109,7 @@ class SelectBarCell: UICollectionViewCell {
     // MARK: - Helpers
     
     @objc func presentDetailWebView() {
-        print("DEBUG: present WebView...")
+        delegate?.presentDetailWebView(indexPath: indexPath.row)
     }
     
     @objc func registerFavoriteShop() {
@@ -116,12 +117,27 @@ class SelectBarCell: UICollectionViewCell {
         if didRegisterd {
             registerShopButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
             registerShopButton.tintColor = .systemYellow
-//            delegate?.saveFavoriteShop(indexPath: indexPath.section)
+            delegate?.saveFavoriteShop(indexPath: indexPath.row)
         } else {
             registerShopButton.setImage(UIImage(systemName: "star"), for: .normal)
             registerShopButton.tintColor = .lightGray
-//            delegate?.deleteFavoriteShop(indexPath: indexPath.section)
+            delegate?.deleteFavoriteShop(indexPath: indexPath.row)
         }
+    }
+    
+    func setUpContents(name: String, category: String, opentime: String){
+        nameLabel.text = name
+        categoryLabel.text = category
+        opentimeLabel.text = opentime
+    }
+    
+    func setUpImageView(imageUrl: URL) {
+        imageView.sd_setImage(with: imageUrl, completed: nil)
+    }
+    
+    func setUpImage() {
+        imageView.image = UIImage(named: "noImage_color")
+        imageView.tintColor = .red
     }
 }
 
