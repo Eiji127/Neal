@@ -27,8 +27,6 @@ struct GurunaviService {
         let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         
         AF.request(url as! URLConvertible, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { response in
-            print("DEBUG: \(response)")
-            
             switch response.result {
             case .success:
                 print("DEBUG: into .success...")

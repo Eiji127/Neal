@@ -58,7 +58,7 @@ class ActionSheetLauncher: NSObject {
         
     }()
     
-    // MARK: - Lifecycles
+    // MARK: - Init
     override init() {
         super.init()
         

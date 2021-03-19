@@ -31,6 +31,18 @@ class MenuOptionCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        configureCellUI()
+        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Helpers
+    
+    func configureCellUI() {
+        
         backgroundColor = .systemRed
         
         addSubview(iconImageView)
@@ -44,9 +56,7 @@ class MenuOptionCell: UICollectionViewCell {
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         descriptionLabel.leftAnchor.constraint(equalTo: iconImageView.rightAnchor, constant: 12).isActive = true
+        
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }

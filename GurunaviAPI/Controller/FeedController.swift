@@ -384,11 +384,11 @@ extension FeedController: shopInfoHeaderDelegate {
         }
     }
     
-    func deleteFavoriteShop() {
+    func deleteFavoriteShop(indexPath section: Int) {
         let favoriteShops = realm.objects(FavoriteShopData.self)
         try! realm.write {
             for data in favoriteShops {
-                if data.name == self.name {
+                if data.name ==  shopData.nameArray[section] {
                     realm.delete(data)
                 }
             }

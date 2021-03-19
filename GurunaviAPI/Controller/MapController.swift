@@ -11,6 +11,8 @@ import MapKit
 import CoreLocation
 
 
+private let selectBarReuseIndentifier = "SelectBarCell"
+
 class MapController: UIViewController {
     
     // MARK: - Properties
@@ -21,6 +23,8 @@ class MapController: UIViewController {
         map.userTrackingMode = .followWithHeading
         return map
     }()
+    
+    private var selectBar: UICollectionView!
     
     private var shopData = ShopData()
     
@@ -43,6 +47,8 @@ class MapController: UIViewController {
         self.overrideUserInterfaceStyle = .light
         
         configurePinOnMap()
+        
+        configureSelectBar()
         
     }
     
@@ -107,6 +113,30 @@ class MapController: UIViewController {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
+    
+    func configureSelectBar() {
+        
+        let backView = UIView()
+        backView.backgroundColor = .clear
+        mapView.addSubview(backView)
+        backView.anchor(left: mapView.leftAnchor, bottom: mapView.bottomAnchor, right: mapView.rightAnchor, height: 300)
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        
+        selectBar = UICollectionView(frame: CGRect(), collectionViewLayout: layout)
+        selectBar.delegate = self
+        selectBar.dataSource = self
+
+        selectBar.register(SelectBarCell.self, forCellWithReuseIdentifier: selectBarReuseIndentifier)
+
+        selectBar.backgroundColor = .clear
+        
+        backView.addSubview(selectBar)
+        selectBar.translatesAutoresizingMaskIntoConstraints = false
+        selectBar.anchor(top: backView.topAnchor, left: backView.leftAnchor, bottom: backView.bottomAnchor, right: backView.rightAnchor, paddingTop: 10, paddingBottom: 80)
+    }
+
     
     func configureMapView() {
         view.addSubview(mapView)
@@ -255,6 +285,42 @@ extension MapController: MKMapViewDelegate {
 //        navigationController?.pushViewController(webController, animated: true)
 //    }
     
+}
+
+// MARK: - UICollectionViewDelegate/DataSource
+
+extension MapController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 15
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = selectBar.dequeueReusableCell(withReuseIdentifier: selectBarReuseIndentifier, for: indexPath) as! SelectBarCell
+        cell.layer.cornerRadius = 150 / 6
+        return cell
+    }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension MapController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width: CGFloat = UIScreen.main.bounds.width - 30
+        let height = CGFloat(150)
+        return CGSize(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        
+        let width: CGFloat = 10
+        return CGSize(width: width, height: selectBar.layer.frame.height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        
+        let width: CGFloat = 10
+        return CGSize(width: width, height: selectBar.layer.frame.height)
+    }
 }
 
 

@@ -1,14 +1,12 @@
 //
-//  FavoriteShopsCell.swift
+//  SelectBarCell.swift
 //  GurunaviAPI
 //
-//  Created by 白数叡司 on 2021/02/23.
+//  Created by 白数叡司 on 2021/03/19.
 //
-
 import UIKit
-import SDWebImage
 
-class FavoriteShopsCell: UICollectionViewCell {
+class SelectBarCell: UICollectionViewCell {
     // MARK: - Properties
     
     private let underlineView: UIView = {
@@ -53,7 +51,7 @@ class FavoriteShopsCell: UICollectionViewCell {
         return imageView
     }()
     
-    // MARK: - Lifecycle
+    // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -73,7 +71,6 @@ class FavoriteShopsCell: UICollectionViewCell {
         addSubview(stack)
         stack.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingRight: 10)
         
-        
     }
     
     required init?(coder: NSCoder) {
@@ -81,13 +78,5 @@ class FavoriteShopsCell: UICollectionViewCell {
     }
     
     // MARK: - Helpers
-    
-    func setUpImageView(imageUrl: URL) {
-        imageView.sd_setImage(with: imageUrl, completed: nil)
-    }
-    
-    func setUpImage() {
-        imageView.image = UIImage(named: "noImage_color")
-        imageView.tintColor = .red
-    }
 }
+

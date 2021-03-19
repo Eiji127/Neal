@@ -10,7 +10,7 @@ import RealmSwift
 
 protocol shopInfoHeaderDelegate: class {
     func saveFavoriteShop(indexPath section: Int)
-    func deleteFavoriteShop()
+    func deleteFavoriteShop(indexPath section: Int)
 }
 
 
@@ -111,7 +111,7 @@ class ShopInfoHeader: UICollectionReusableView {
         } else {
             registerShopButton.setImage(UIImage(systemName: "star"), for: .normal)
             registerShopButton.tintColor = .lightGray
-            delegate?.deleteFavoriteShop()
+            delegate?.deleteFavoriteShop(indexPath: indexPath.section)
         }
     }
     
