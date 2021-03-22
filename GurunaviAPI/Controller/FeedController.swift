@@ -106,6 +106,7 @@ final class FeedController: UICollectionViewController {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         navigationController?.navigationBar.prefersLargeTitles = true
+        collectionView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -316,7 +317,6 @@ extension FeedController {
             let favoriteShops = realm.objects(FavoriteShopData.self)
             for data in favoriteShops {
                 if data.name ==  shopData.nameArray[indexPath.section] {
-                    print("DEBUG: check favo")
                     sectionHeader.didRegisterd = true
                     sectionHeader.registerShopButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
                     sectionHeader.registerShopButton.tintColor = .systemYellow
