@@ -11,7 +11,6 @@ class ActionSheetCell: UITableViewCell {
     
     // MARK: - Properties
     
-    // MARK: - Properties
 //    var option: ActionSheetOpitions? {
 //        didSet {
 //            configure()
@@ -33,7 +32,7 @@ class ActionSheetCell: UITableViewCell {
         return label
     }()
     
-    // MARK: - Lifecycle
+    // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         

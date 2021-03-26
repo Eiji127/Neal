@@ -24,22 +24,15 @@ class SettingCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15)
         label.tintColor = .lightGray
-        label.text = "test option"
         return label
     }()
     
-    // MARK: - Lifecycle
+    // MARK: - Init
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        backgroundColor = .nealBack
-        
-        addSubview(versionLabel)
-        versionLabel.centerX(inView: self)
-        versionLabel.anchor(bottom: bottomAnchor, paddingBottom: 20)
-        
-        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
-        versionLabel.text = "Version " + version
+        cofigureCellUI()
         
     }
     
@@ -48,6 +41,23 @@ class SettingCell: UITableViewCell {
     }
     
     // MARK: - Helpers
+    
+    func cofigureCellUI() {
+        
+        backgroundColor = .nealBack
+        
+        addSubview(versionLabel)
+        versionLabel.centerX(inView: self)
+        versionLabel.anchor(bottom: bottomAnchor, paddingBottom: 20)
+        fetchAppVersionData()
+        
+    }
+    
+    func fetchAppVersionData() {
+        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+        versionLabel.text = "Version " + version
+    }
+    
 }
 
 
