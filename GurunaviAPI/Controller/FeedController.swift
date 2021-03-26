@@ -373,6 +373,8 @@ extension FeedController: UISearchBarDelegate {
 
 extension FeedController: shopInfoHeaderDelegate {
     func saveFavoriteShop(indexPath section: Int) {
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
         try! realm.write {
             let favoriteShopData = FavoriteShopData()
             favoriteShopData.name = shopData.nameArray[section]

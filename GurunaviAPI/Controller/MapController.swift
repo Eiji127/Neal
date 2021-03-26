@@ -265,6 +265,7 @@ class MapController: UIViewController {
     private func setCenterUserLocation() {
         mapView.setCenter(mapView.userLocation.coordinate, animated: true)
     }
+    
 }
 
 // MARK: - MKMapViewDelegate
@@ -308,18 +309,11 @@ extension MapController: MKMapViewDelegate {
         return annotationView
     }
     
-//    @objc func moveToWebsite() {
-//        let webController = WebController()
-//        webController.mobileUrl = self.mobileUrl
-//        navigationController?.pushViewController(webController, animated: true)
-//    }
-    
 }
 
 // MARK: - UICollectionViewDelegate/DataSource
 
 extension MapController: UICollectionViewDelegate, UICollectionViewDataSource {
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let itemCount = shopData.hit_count
         return itemCount
@@ -327,6 +321,7 @@ extension MapController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = selectBar.dequeueReusableCell(withReuseIdentifier: selectBarReuseIndentifier, for: indexPath) as! SelectBarCell
+        
         cell.setUpContents(name: shopData.nameArray[indexPath.row],
                            category: shopData.categoryArray[indexPath.row],
                            opentime: shopData.opentimeArray[indexPath.row])
@@ -335,6 +330,10 @@ extension MapController: UICollectionViewDelegate, UICollectionViewDataSource {
         } else {
             cell.setUpImage()
         }
+        
+        cell.delegate = self
+        cell.indexPath = indexPath
+        
         let favoriteShops = realm.objects(FavoriteShopData.self)
         for data in favoriteShops {
             if data.name ==  shopData.nameArray[indexPath.row] {
@@ -343,8 +342,6 @@ extension MapController: UICollectionViewDelegate, UICollectionViewDataSource {
                 cell.registerShopButton.tintColor = .systemYellow
             }
         }
-        cell.delegate = self
-        cell.indexPath = indexPath
         cell.layer.cornerRadius = 150 / 6
         cell.layer.shadowColor = UIColor.black.cgColor
         cell.layer.shadowOffset = CGSize(width: 0, height: 0)
@@ -399,6 +396,8 @@ extension MapController: SelectBarCellDelegate {
     }
     
     func saveFavoriteShop(indexPath row: Int) {
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
         try! realm.write {
             let favoriteShopData = FavoriteShopData()
             favoriteShopData.name = shopData.nameArray[row]

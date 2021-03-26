@@ -100,7 +100,13 @@ class SelectBarCell: UICollectionViewCell {
         addSubview(stack)
         stack.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10)
         
-        registerShopButton.tintColor = didRegisterd ? UIColor.systemYellow : UIColor.lightGray
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        registerShopButton.setImage(UIImage(systemName: "star"), for: .normal)
+        registerShopButton.tintColor = .lightGray
         
     }
     
