@@ -48,9 +48,10 @@ https://apps.apple.com/us/app/neal/id1550909765
  MVC Architechture
  
 ## 📎 Demo Video & Explanation
-Youtbe : 
+Youtbe :
 1. https://youtu.be/hlcNSj5eAew ← Version2.0.0
 2. https://youtu.be/vhqVQv6LGUU ← Version2.1.0(マップのUIを変更)
+
 Qiita : https://qiita.com/Cychow/items/7d5812a70092ea3faa53
 
 ## 👨 Author
