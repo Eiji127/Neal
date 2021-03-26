@@ -12,6 +12,10 @@ protocol TabBarDelegate: class {
     func configureSideMenuBar()
 }
 
+protocol TabBarDelegateForFeedController {
+    func moveTopView()
+}
+
 
 class TabBarController: UITabBarController {
     
@@ -28,6 +32,7 @@ class TabBarController: UITabBarController {
     
     var tabDelegate: TabBarDelegate?
 
+    var tabDelegateForFeed: TabBarDelegateForFeedController?
     
     // MARK: - Lifecycle
     
@@ -72,10 +77,31 @@ class TabBarController: UITabBarController {
     
 }
 
+// MARK: - UITabBarDelegate
+
+extension TabBarController {
+    
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        
+        let tabBarIndex = selectedIndex
+        
+        if tabBarIndex == 0 {
+            print("DEBUG: tabBarIndex is 0...")
+            tabDelegateForFeed?.moveTopView()
+        }
+        
+    }
+    
+}
+
+// MARK: - HomeControllerDelegate
+
 extension TabBarController: HomeControllerDelegate {
     
     func handleMenuToggle(forMenuOption menuOption: MenuOption?) {
+        
         tabDelegate?.configureSideMenuBar()
+        
     }
     
 }

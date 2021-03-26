@@ -71,8 +71,7 @@ class FavoriteShopsCell: UICollectionViewCell {
         stack.spacing = 10
         
         addSubview(stack)
-        stack.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingRight: 10)
-        
+        stack.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10)
         
     }
     
@@ -81,6 +80,7 @@ class FavoriteShopsCell: UICollectionViewCell {
     }
     
     // MARK: - Helpers
+    
     func setUpImageView(imageUrl: URL) {
         imageView.sd_setImage(with: imageUrl, completed: nil)
     }
