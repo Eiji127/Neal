@@ -14,7 +14,7 @@ import CoreLocation
 
 private let selectBarReuseIndentifier = "SelectBarCell"
 
-class MapController: UIViewController {
+final class MapController: UIViewController {
     
     // MARK: - Properties
     
@@ -103,12 +103,21 @@ class MapController: UIViewController {
         }
     }
     
-    // MARK: - Helpers
+    // MARK: - Selectors
     
     @objc func willEnterForeground() {
         checkLocationServiceCondition()
         dismiss(animated: true, completion: nil)
     }
+    
+    @objc func setCenterButtonTapped() {
+        mapView.setCenter(mapView.userLocation.coordinate, animated: true)
+        mapView.removeAnnotations(shopData.locationCoordinatesArray)
+        configurePinOnMap()
+    }
+    
+    
+    // MARK: - Helpers
     
     private func checkLocationServiceCondition() {
         if CLLocationManager.locationServicesEnabled() {
@@ -206,12 +215,6 @@ class MapController: UIViewController {
                 self.addMapPins(locations: self.shopData.locationCoordinatesArray)
             }
         }
-    }
-    
-    @objc func setCenterButtonTapped() {
-        mapView.setCenter(mapView.userLocation.coordinate, animated: true)
-        mapView.removeAnnotations(shopData.locationCoordinatesArray)
-        configurePinOnMap()
     }
     
     private func fetchUserLocation(copletion: @escaping (_ latitude: String, _ longitude: String) -> Void) {

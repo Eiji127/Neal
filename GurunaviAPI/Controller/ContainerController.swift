@@ -8,7 +8,7 @@
 import UIKit
 import StoreKit
 
-class ContainerController: UIViewController {
+final class ContainerController: UIViewController {
     
     // MARK: - Properties
     
@@ -48,7 +48,7 @@ class ContainerController: UIViewController {
         return isExpanded
     }
     
-    // MARK: - Handlers
+    // MARK: - Selectors
     
     @objc func closeMenuBar() {
         isExpanded = !isExpanded
@@ -59,7 +59,9 @@ class ContainerController: UIViewController {
         animateStatusBar()
     }
     
-    func configureHomeController() {
+    // MARK: - Helpers
+    
+    private func configureHomeController() {
         let tabBarController = TabBarController()
         tabBarController.tabDelegate = self
         centerController = tabBarController
@@ -69,7 +71,7 @@ class ContainerController: UIViewController {
         centerController.didMove(toParent: self)
     }
     
-    func configureMenuController() {
+    private func configureMenuController() {
         if menuController == nil {
             menuController = MenuController()
             menuController.delegate = self
@@ -79,7 +81,7 @@ class ContainerController: UIViewController {
         }
     }
     
-    func animatedPanel(shouldExpand: Bool, menuOption: MenuOption?) {
+    private func animatedPanel(shouldExpand: Bool, menuOption: MenuOption?) {
         
         if shouldExpand {
             
@@ -105,7 +107,7 @@ class ContainerController: UIViewController {
         animateStatusBar()
     }
     
-    func didSelectMenuOption(menuOption: MenuOption) {
+    private func didSelectMenuOption(menuOption: MenuOption) {
         
         switch menuOption {
         case .Info:
@@ -138,13 +140,13 @@ class ContainerController: UIViewController {
         }
     }
     
-    func animateStatusBar() {
+    private func animateStatusBar() {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
             self.setNeedsStatusBarAppearanceUpdate()
         }, completion: nil)
     }
     
-    func checkIsExpanded(menuOption: MenuOption) {
+    private func checkIsExpanded(menuOption: MenuOption) {
         if !isExpanded {
             view.addSubview(dimmingView)
             dimmingView.frame = view.bounds

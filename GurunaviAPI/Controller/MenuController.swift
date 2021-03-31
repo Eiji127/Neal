@@ -12,7 +12,8 @@ private let colletionViewReuseIndentifier = "MenuOptionCell"
 private let headerReuseIndentifer = "MenuHeader"
 private let footerReuseIndentifer = "MenuFooter"
 
-class MenuController: UIViewController {
+final class MenuController: UIViewController {
+    
     // MARK: - Properties
     
     var collectionView: UICollectionView!
@@ -21,12 +22,12 @@ class MenuController: UIViewController {
     // MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureTableView()
+        configureCollectionView()
     }
     
-    // MARK: - Handlers
+    // MARK: - Helpers
     
-    func configureTableView() {
+    private func configureCollectionView() {
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical

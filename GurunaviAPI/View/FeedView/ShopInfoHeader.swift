@@ -8,11 +8,6 @@
 import UIKit
 import RealmSwift
 
-protocol shopInfoHeaderDelegate: class {
-    func saveFavoriteShop(indexPath section: Int)
-    func deleteFavoriteShop(indexPath section: Int)
-}
-
 
 class ShopInfoHeader: UICollectionReusableView {
     

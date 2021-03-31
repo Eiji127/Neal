@@ -133,7 +133,7 @@ final class FeedController: UICollectionViewController {
         collectionView.refreshControl?.endRefreshing()
     }
     
-    // MARK: - Handlers
+    // MARK: - Selectors
     
     @objc func willEnterForeground() {
         checkLocationServiceCondition()
@@ -153,9 +153,9 @@ final class FeedController: UICollectionViewController {
         homeDelegate?.handleMenuToggle(forMenuOption: nil)
     }
     
-    // MARK: - Helper
+    // MARK: - Handlers
     
-    func indicateShopInformation(){
+    private func indicateShopInformation(){
         LocationManager.shared.fetchUserLocation { latitude, longitude in
             
             self.latitude += latitude
@@ -164,7 +164,7 @@ final class FeedController: UICollectionViewController {
         }
     }
     
-    func checkLocationServiceCondition() {
+    private func checkLocationServiceCondition() {
         if CLLocationManager.locationServicesEnabled() {
             let status = CLLocationManager.authorizationStatus()
             switch status {
@@ -180,26 +180,38 @@ final class FeedController: UICollectionViewController {
         }
     }
     
-    func showOSSettingView() {
+    private func showOSSettingView() {
         if let url = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
     
-    func configureUI() {
-        view.backgroundColor = .red
-        
-        collectionView.register(ShopInfoCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        collectionView.register(ShopInfoHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: reuseHeaderIdentifier)
+    // MARK: - Helpers
+    
+    private func configureUI() {
         
         collectionView.backgroundColor = .nealBack
         collectionView.collectionViewLayout = layout()
         
+        configureNavigationBar()
+        registerComponentOfCollectionView()
+        addRefreshControl()
+    }
+    
+    private func addRefreshControl() {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        collectionView.refreshControl = refreshControl
+    }
+    
+    private func configureNavigationBar() {
         navigationController?.title = "Shop"
         navigationController?.navigationBar.barTintColor = .systemRed
         navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor.white
         ]
+        navigationItem.title = "近辺の店舗"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "sidebar.left"), style: .plain, target: self, action: #selector(handleMenuToggle))
         navigationController?.navigationBar.prefersLargeTitles = true
         
         let appearance = UINavigationBarAppearance()
@@ -215,22 +227,18 @@ final class FeedController: UICollectionViewController {
         navigationItem.standardAppearance = appearance
         navigationItem.scrollEdgeAppearance = appearance
         navigationItem.compactAppearance = appearance
-        
-        
-        
-        navigationItem.title = "近辺の店舗"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "sidebar.left"), style: .plain, target: self, action: #selector(handleMenuToggle))
-        
-        let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
-        collectionView.refreshControl = refreshControl
     }
     
-    func configureRightBarButton() {
+    private func registerComponentOfCollectionView() {
+        collectionView.register(ShopInfoCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.register(ShopInfoHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: reuseHeaderIdentifier)
+    }
+    
+    private func configureRightBarButton() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: researchImageView)
     }
     
-    func showSearchBar() {
+    private func showSearchBar() {
         navigationItem.titleView = searchBar
         searchBar.delegate = self
         searchBar.becomeFirstResponder()

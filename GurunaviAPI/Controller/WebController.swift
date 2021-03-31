@@ -9,7 +9,7 @@ import UIKit
 import WebKit
 
 
-class WebController: UIViewController {
+final class WebController: UIViewController {
     
     // MARK: - Properties
     
@@ -37,6 +37,16 @@ class WebController: UIViewController {
         navigationItem.scrollEdgeAppearance = appearance
     }
     
+    // MARK: - Selectors
+    
+    @objc func shareImageTapped() {
+        let shareUrl = mobileUrl
+        let shareItems = [shareUrl]
+        let activityVC = UIActivityViewController(activityItems: shareItems, applicationActivities: nil)
+        self.present(activityVC, animated: true, completion: nil)
+    }
+    
+    
     // MARK: - Helpers
     
     func configureWebView() {
@@ -63,10 +73,4 @@ class WebController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: shareButton)
     }
     
-    @objc func shareImageTapped() {
-        let shareUrl = mobileUrl
-        let shareItems = [shareUrl]
-        let activityVC = UIActivityViewController(activityItems: shareItems, applicationActivities: nil)
-        self.present(activityVC, animated: true, completion: nil)
-    }
 }
