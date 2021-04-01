@@ -6,13 +6,6 @@
 //
 import UIKit
 
-
-protocol SelectBarCellDelegate: class {
-    func presentDetailWebView(indexPath row: Int)
-    func saveFavoriteShop(indexPath row: Int)
-    func deleteFavoriteShop(indexPath row: Int)
-}
-
 class SelectBarCell: UICollectionViewCell {
     // MARK: - Properties
     

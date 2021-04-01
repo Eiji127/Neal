@@ -14,7 +14,7 @@ private let reuseIdentifier = "SettingCell"
 //    func didSelect(option: ActionSheetOpitions)
 //}
 
-class SettingController: UITableViewController {
+final class SettingController: UITableViewController {
     
     // MARK: - Properties
     

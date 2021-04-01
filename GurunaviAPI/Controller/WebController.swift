@@ -9,13 +9,14 @@ import UIKit
 import WebKit
 
 
-class WebController: UIViewController {
+final class WebController: UIViewController {
     
     // MARK: - Properties
     
     var mobileUrl: String = ""
     
     // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureWebView()
@@ -36,6 +37,16 @@ class WebController: UIViewController {
         navigationItem.standardAppearance = appearance
         navigationItem.scrollEdgeAppearance = appearance
     }
+    
+    // MARK: - Selectors
+    
+    @objc func shareImageTapped() {
+        let shareUrl = mobileUrl
+        let shareItems = [shareUrl]
+        let activityVC = UIActivityViewController(activityItems: shareItems, applicationActivities: nil)
+        self.present(activityVC, animated: true, completion: nil)
+    }
+    
     
     // MARK: - Helpers
     
@@ -63,10 +74,4 @@ class WebController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: shareButton)
     }
     
-    @objc func shareImageTapped() {
-        let shareUrl = mobileUrl
-        let shareItems = [shareUrl]
-        let activityVC = UIActivityViewController(activityItems: shareItems, applicationActivities: nil)
-        self.present(activityVC, animated: true, completion: nil)
-    }
 }

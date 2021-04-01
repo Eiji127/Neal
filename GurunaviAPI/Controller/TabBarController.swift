@@ -8,16 +8,7 @@
 import UIKit
 
 
-protocol TabBarDelegate: class {
-    func configureSideMenuBar()
-}
-
-protocol TabBarDelegateForFeedController {
-    func moveTopView()
-}
-
-
-class TabBarController: UITabBarController {
+final class TabBarController: UITabBarController {
     
     // MARK: - Properties
     
@@ -44,7 +35,7 @@ class TabBarController: UITabBarController {
     
     // MARK: - Helpers
     
-    func configureTabBar() {
+    private func configureTabBar() {
         
         UITabBar.appearance().barTintColor = .red
         UITabBar.appearance().alpha = 0.9
@@ -61,12 +52,12 @@ class TabBarController: UITabBarController {
         viewControllers = [navFeed, navMap]
     }
     
-    func configureLogoImage() {
+    private func configureLogoImage() {
         view.addSubview(gurunaviImage)
         gurunaviImage.anchor(bottom: tabBar.topAnchor, right: view.rightAnchor)
     }
 
-    func templateNavigationController(image: UIImage, rootViewController: UIViewController) -> UINavigationController {
+    private func templateNavigationController(image: UIImage, rootViewController: UIViewController) -> UINavigationController {
         let nav = UINavigationController(rootViewController: rootViewController)
         nav.tabBarItem.image = image
         nav.navigationBar.tintColor = .white

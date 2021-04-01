@@ -114,3 +114,14 @@ extension UIImage {
         return UIGraphicsGetImageFromCurrentImageContext()
     }
 }
+
+// MARK: - URL
+extension URL {
+    func queryItemsAdded(_ queryItems: [URLQueryItem]) -> URL? {
+        guard var components = URLComponents(url: self, resolvingAgainstBaseURL: nil != self.baseURL) else {
+            return nil
+        }
+        components.queryItems = queryItems + (components.queryItems ?? [])
+        return components.url
+    }
+}

@@ -42,7 +42,7 @@
 		98C68127257E58E000288FD4 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C68126257E58E000288FD4 /* MapController.swift */; };
 		98C6812A2581FE5300288FD4 /* ActionSheetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C681292581FE5200288FD4 /* ActionSheetCell.swift */; };
 		98C6812D2581FEED00288FD4 /* ActionSheetLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C6812C2581FEED00288FD4 /* ActionSheetLauncher.swift */; };
-		98C68131258232B800288FD4 /* GurunaviService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C68130258232B800288FD4 /* GurunaviService.swift */; };
+		98C68131258232B800288FD4 /* GurunaviAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C68130258232B800288FD4 /* GurunaviAPIRequest.swift */; };
 		98E0950325E440EA008FC7B4 /* FavoriteShopsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E0950225E440EA008FC7B4 /* FavoriteShopsController.swift */; };
 		98E0950625E51D9A008FC7B4 /* FavoriteShopsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E0950525E51D98008FC7B4 /* FavoriteShopsCell.swift */; };
 		98E0951425E539B0008FC7B4 /* FavoriteShopData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E0951325E539AF008FC7B4 /* FavoriteShopData.swift */; };
@@ -89,7 +89,7 @@
 		98C68126257E58E000288FD4 /* MapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
 		98C681292581FE5200288FD4 /* ActionSheetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetCell.swift; sourceTree = "<group>"; };
 		98C6812C2581FEED00288FD4 /* ActionSheetLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetLauncher.swift; sourceTree = "<group>"; };
-		98C68130258232B800288FD4 /* GurunaviService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GurunaviService.swift; sourceTree = "<group>"; };
+		98C68130258232B800288FD4 /* GurunaviAPIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GurunaviAPIRequest.swift; sourceTree = "<group>"; };
 		98E0950225E440EA008FC7B4 /* FavoriteShopsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteShopsController.swift; sourceTree = "<group>"; };
 		98E0950525E51D98008FC7B4 /* FavoriteShopsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteShopsCell.swift; sourceTree = "<group>"; };
 		98E0951325E539AF008FC7B4 /* FavoriteShopData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteShopData.swift; sourceTree = "<group>"; };
@@ -116,6 +116,75 @@
 				2AC07B28D13127CAC5BC837E /* Pods_GurunaviAPI.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		985DB546261457360031D20D /* FeedView */ = {
+			isa = PBXGroup;
+			children = (
+				98C68119257E4A9D00288FD4 /* ShopInfoCell.swift */,
+				9820E882259458AE00215A74 /* ShopInfoHeader.swift */,
+			);
+			path = FeedView;
+			sourceTree = "<group>";
+		};
+		985DB5472614579C0031D20D /* MenuBarView */ = {
+			isa = PBXGroup;
+			children = (
+				981B40C425E18F380011792A /* MenuOptionCell.swift */,
+				981B40C725E226120011792A /* MenuHeader.swift */,
+				981B40CD25E3A0C80011792A /* MenuFooter.swift */,
+			);
+			path = MenuBarView;
+			sourceTree = "<group>";
+		};
+		985DB548261457CA0031D20D /* MapView */ = {
+			isa = PBXGroup;
+			children = (
+				985DB53F2604A00A0031D20D /* SelectBarCell.swift */,
+			);
+			path = MapView;
+			sourceTree = "<group>";
+		};
+		985DB549261458C00031D20D /* SettingView */ = {
+			isa = PBXGroup;
+			children = (
+				98E0951F25E7AA57008FC7B4 /* SettingCell.swift */,
+			);
+			path = SettingView;
+			sourceTree = "<group>";
+		};
+		985DB54A261458DC0031D20D /* FavoriteView */ = {
+			isa = PBXGroup;
+			children = (
+				98E0950525E51D98008FC7B4 /* FavoriteShopsCell.swift */,
+			);
+			path = FavoriteView;
+			sourceTree = "<group>";
+		};
+		985DB54C261461680031D20D /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				981B40BE25E18E6E0011792A /* Protocols.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		985DB54D261461870031D20D /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				9869F97625AF3C740013FA49 /* APIKeyManager.swift */,
+				984B147C25B8129D001E8A51 /* LocationManager.swift */,
+				981B3F7025C429110011792A /* AlertManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		985DB54F261462B90031D20D /* ActionSheetView */ = {
+			isa = PBXGroup;
+			children = (
+				98C681292581FE5200288FD4 /* ActionSheetCell.swift */,
+			);
+			path = ActionSheetView;
 			sourceTree = "<group>";
 		};
 		986D22A925BCAA3A00688B5F /* Intro */ = {
@@ -167,6 +236,8 @@
 				98C68113257E45FA00288FD4 /* View */,
 				98C68114257E460900288FD4 /* Controller */,
 				98C6812F2582328D00288FD4 /* API */,
+				985DB54D261461870031D20D /* Managers */,
+				985DB54C261461680031D20D /* Protocols */,
 				98C6811C257E4C9200288FD4 /* Utils */,
 				98C680FD257E45BD00288FD4 /* AppDelegate.swift */,
 				98C680FF257E45BD00288FD4 /* SceneDelegate.swift */,
@@ -190,15 +261,12 @@
 		98C68113257E45FA00288FD4 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				98C68119257E4A9D00288FD4 /* ShopInfoCell.swift */,
-				9820E882259458AE00215A74 /* ShopInfoHeader.swift */,
-				98C681292581FE5200288FD4 /* ActionSheetCell.swift */,
-				98E0951F25E7AA57008FC7B4 /* SettingCell.swift */,
-				985DB53F2604A00A0031D20D /* SelectBarCell.swift */,
-				981B40C425E18F380011792A /* MenuOptionCell.swift */,
-				98E0950525E51D98008FC7B4 /* FavoriteShopsCell.swift */,
-				981B40C725E226120011792A /* MenuHeader.swift */,
-				981B40CD25E3A0C80011792A /* MenuFooter.swift */,
+				985DB54A261458DC0031D20D /* FavoriteView */,
+				985DB549261458C00031D20D /* SettingView */,
+				985DB546261457360031D20D /* FeedView */,
+				985DB5472614579C0031D20D /* MenuBarView */,
+				985DB54F261462B90031D20D /* ActionSheetView */,
+				985DB548261457CA0031D20D /* MapView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -221,11 +289,7 @@
 			isa = PBXGroup;
 			children = (
 				98C6811D257E4CAC00288FD4 /* Extensions.swift */,
-				981B40BE25E18E6E0011792A /* Protocols.swift */,
-				9869F97625AF3C740013FA49 /* APIKeyManager.swift */,
 				98C6812C2581FEED00288FD4 /* ActionSheetLauncher.swift */,
-				984B147C25B8129D001E8A51 /* LocationManager.swift */,
-				981B3F7025C429110011792A /* AlertManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -233,7 +297,7 @@
 		98C6812F2582328D00288FD4 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				98C68130258232B800288FD4 /* GurunaviService.swift */,
+				98C68130258232B800288FD4 /* GurunaviAPIRequest.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -378,7 +442,7 @@
 			files = (
 				98E0951B25E79F28008FC7B4 /* SettingController.swift in Sources */,
 				981B40BC25E18E120011792A /* MenuController.swift in Sources */,
-				98C68131258232B800288FD4 /* GurunaviService.swift in Sources */,
+				98C68131258232B800288FD4 /* GurunaviAPIRequest.swift in Sources */,
 				985DB5402604A00A0031D20D /* SelectBarCell.swift in Sources */,
 				98C6811E257E4CAC00288FD4 /* Extensions.swift in Sources */,
 				984B147D25B8129D001E8A51 /* LocationManager.swift in Sources */,
