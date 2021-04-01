@@ -5,8 +5,6 @@
 //  Created by 白数叡司 on 2020/12/07.
 //
 import UIKit
-import SwiftyJSON
-import Alamofire
 import MapKit
 import RealmSwift
 import CoreLocation
@@ -29,16 +27,17 @@ final class MapController: UIViewController {
     
     private var shopData = ShopData() {
         didSet {
-            selectBar.reloadData()
+            DispatchQueue.main.async {
+                self.selectBar.reloadData()
+            }
         }
     }
     
-    private var longitude: String = "&longitude="
-    private var latitude: String = "&latitude="
+    private var longitude: String = ""
+    private var latitude: String = ""
+    private var mobileUrl: String = ""
     
     lazy var realm = try! Realm()
-    
-    private var mobileUrl: String = ""
     
     // MARK: - Lifecycle
     
@@ -95,15 +94,19 @@ final class MapController: UIViewController {
     // MARK: - API
     
     func fetchData() {
-        GurunaviService.shared.fetchData(latitude: latitude, longitude: longitude) { result in
+        GurunaviAPIRequest.shared.request(latitude: latitude, longitude: longitude, freeword: "") { result in
             switch result {
             case .success(let shopData):
-                self.shopData = shopData
+                self.shopData = shopData!
                 if self.shopData.hit_count == 0 {
                     AlertManager.shared.showNoHitAlert(viewContoller: self)
                 }
             case .failure(let error):
-                print("DEBUG: cannot fetching some information: \(error)")
+                DispatchQueue.main.async {
+                    AlertManager.shared.showErrorAlert(viewContoller: self) { alert in
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                }
             }
         }
     }
@@ -207,13 +210,13 @@ final class MapController: UIViewController {
     }
     
     private func configurePinOnMap() {
-        self.longitude = "&longitude="
-        self.latitude = "&latitude="
+        self.longitude = ""
+        self.latitude = ""
         
         fetchUserLocation { latitude, longitude in
             
-            self.latitude += latitude
-            self.longitude += longitude
+            self.latitude = latitude
+            self.longitude = longitude
             
             self.fetchData()
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {

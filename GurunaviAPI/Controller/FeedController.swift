@@ -6,8 +6,6 @@
 //
 
 import UIKit
-import Alamofire
-import SwiftyJSON
 import MapKit
 import CoreLocation
 import RealmSwift
@@ -22,15 +20,17 @@ final class FeedController: UICollectionViewController {
     
     private var shopData = ShopData() {
         didSet {
-            collectionView.reloadData()
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
         }
     }
     
     private let itemCount: Int = 2
     
-    private var quere: String = "&freeword="
-    private var longitude: String = "&longitude="
-    private var latitude: String = "&latitude="
+    private var quere: String = ""
+    private var longitude: String = ""
+    private var latitude: String = ""
     
     var homeDelegate: HomeControllerDelegate?
 
@@ -119,17 +119,25 @@ final class FeedController: UICollectionViewController {
     func fetchData() {
         collectionView.refreshControl?.beginRefreshing()
         
-        GurunaviService.shared.fetchData(latitude: latitude, longitude: longitude, quere: quere) { shopData in
-            self.shopData = shopData
-            self.latitude = "&latitude="
-            self.longitude = "&longitude="
-            if self.shopData.hit_count == 0 {
-                AlertManager.shared.showNoHitAlert(viewContoller: self) { alert in
-                    self.dismiss(animated: true, completion: nil)
+        GurunaviAPIRequest.shared.request(latitude: latitude, longitude: longitude, freeword: quere) { result in
+            switch result {
+            case .success(let shopData):
+                self.shopData = shopData!
+                self.latitude = ""
+                self.longitude = ""
+                if self.shopData.hit_count == 0 {
+                    AlertManager.shared.showNoHitAlert(viewContoller: self) { alert in
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    AlertManager.shared.showErrorAlert(viewContoller: self) { alert in
+                        self.dismiss(animated: true, completion: nil)
+                    }
                 }
             }
         }
-        quere = "&freeword="
         collectionView.refreshControl?.endRefreshing()
     }
     
@@ -158,8 +166,8 @@ final class FeedController: UICollectionViewController {
     private func indicateShopInformation(){
         LocationManager.shared.fetchUserLocation { latitude, longitude in
             
-            self.latitude += latitude
-            self.longitude += longitude
+            self.latitude = latitude
+            self.longitude = longitude
             self.fetchData()
         }
     }
@@ -340,6 +348,7 @@ extension FeedController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let webController = WebController()
         webController.mobileUrl = shopData.shopMobileUrls[indexPath.section]
+        print(shopData.shopMobileUrls[indexPath.section])
         navigationController?.pushViewController(webController, animated: true)
     }
 }
@@ -354,10 +363,10 @@ extension FeedController: UISearchBarDelegate {
             return
         }
         
-        longitude = "&longitude="
-        latitude = "&latitude="
+        longitude = ""
+        latitude = ""
         
-        quere += searchText
+        quere = searchText
         
         indicateShopInformation()
         collectionView.reloadData()

@@ -11,8 +11,8 @@ class AlertManager {
     
     static let shared = AlertManager()
     
-    func showErrorAlertvc(viewContoller: UIViewController, handler: ((UIAlertAction) -> Void)? = nil){
-        let alertController = UIAlertController(title: "Error", message: "", preferredStyle: .alert)
+    func showErrorAlert(viewContoller: UIViewController, handler: ((UIAlertAction) -> Void)? = nil){
+        let alertController = UIAlertController(title: "エラーが発生しました.\n再度更新して下さい.", message: nil, preferredStyle: .alert)
         let dimissAlert = UIAlertAction(title: "OK", style: .cancel, handler: handler)
         alertController.addAction(dimissAlert)
         viewContoller.present(alertController, animated: true, completion: nil)
