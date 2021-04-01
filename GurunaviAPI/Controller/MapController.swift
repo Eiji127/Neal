@@ -95,10 +95,15 @@ final class MapController: UIViewController {
     // MARK: - API
     
     func fetchData() {
-        GurunaviService.shared.fetchData(latitude: latitude, longitude: longitude) { shopData in
-            self.shopData = shopData
-            if self.shopData.hit_count == 0 {
-                AlertManager.shared.showNoHitAlert(viewContoller: self)
+        GurunaviService.shared.fetchData(latitude: latitude, longitude: longitude) { result in
+            switch result {
+            case .success(let shopData):
+                self.shopData = shopData
+                if self.shopData.hit_count == 0 {
+                    AlertManager.shared.showNoHitAlert(viewContoller: self)
+                }
+            case .failure(let error):
+                print("DEBUG: cannot fetching some information: \(error)")
             }
         }
     }
@@ -112,7 +117,7 @@ final class MapController: UIViewController {
     
     @objc func setCenterButtonTapped() {
         mapView.setCenter(mapView.userLocation.coordinate, animated: true)
-        mapView.removeAnnotations(shopData.locationCoordinatesArray)
+        mapView.removeAnnotations(shopData.shopLocationCoordinates)
         configurePinOnMap()
     }
     
@@ -211,8 +216,8 @@ final class MapController: UIViewController {
             self.longitude += longitude
             
             self.fetchData()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-                self.addMapPins(locations: self.shopData.locationCoordinatesArray)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                self.addMapPins(locations: self.shopData.shopLocationCoordinates)
             }
         }
     }
@@ -325,10 +330,10 @@ extension MapController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = selectBar.dequeueReusableCell(withReuseIdentifier: selectBarReuseIndentifier, for: indexPath) as! SelectBarCell
         
-        cell.setUpContents(name: shopData.nameArray[indexPath.row],
-                           category: shopData.categoryArray[indexPath.row],
-                           opentime: shopData.opentimeArray[indexPath.row])
-        if let shopImage = URL(string: shopData.shopsImageArray[indexPath.row][0]) {
+        cell.setUpContents(name: shopData.shopNames[indexPath.row],
+                           category: shopData.shopCategories[indexPath.row],
+                           opentime: shopData.shopOpentimes[indexPath.row])
+        if let shopImage = URL(string: shopData.shopsImages[indexPath.row][0]) {
             cell.setUpImageView(imageUrl: shopImage)
         } else {
             cell.setUpImage()
@@ -339,7 +344,7 @@ extension MapController: UICollectionViewDelegate, UICollectionViewDataSource {
         
         let favoriteShops = realm.objects(FavoriteShopData.self)
         for data in favoriteShops {
-            if data.name ==  shopData.nameArray[indexPath.row] {
+            if data.name ==  shopData.shopNames[indexPath.row] {
                 cell.didRegisterd = true
                 cell.registerShopButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
                 cell.registerShopButton.tintColor = .systemYellow
@@ -358,11 +363,11 @@ extension MapController: UICollectionViewDelegate, UICollectionViewDataSource {
         
         mapView.delegate = self
         
-        let annotation = shopData.locationCoordinatesArray[indexPath.row]
-        annotation.title = shopData.nameArray[indexPath.row]
+        let annotation = shopData.shopLocationCoordinates[indexPath.row]
+        annotation.title = shopData.shopNames[indexPath.row]
         
         mapView.addAnnotation(annotation)
-        mapView.setCenter(shopData.locationCoordinatesArray[indexPath.row].coordinate, animated: true)
+        mapView.setCenter(shopData.shopLocationCoordinates[indexPath.row].coordinate, animated: true)
         mapView.selectAnnotation(annotation, animated: true)
         
     }
@@ -394,7 +399,7 @@ extension MapController: UICollectionViewDelegateFlowLayout {
 extension MapController: SelectBarCellDelegate {
     func presentDetailWebView(indexPath row: Int) {
         let webController = WebController()
-        webController.mobileUrl = shopData.mobileUrlArray[row]
+        webController.mobileUrl = shopData.shopMobileUrls[row]
         navigationController?.pushViewController(webController, animated: true)
     }
     
@@ -403,11 +408,11 @@ extension MapController: SelectBarCellDelegate {
         generator.notificationOccurred(.success)
         try! realm.write {
             let favoriteShopData = FavoriteShopData()
-            favoriteShopData.name = shopData.nameArray[row]
-            favoriteShopData.category = shopData.categoryArray[row]
-            favoriteShopData.opentime = shopData.opentimeArray[row]
-            favoriteShopData.mobileUrl = shopData.mobileUrlArray[row]
-            favoriteShopData.imageUrl = shopData.shopsImageArray[row][0]
+            favoriteShopData.name = shopData.shopNames[row]
+            favoriteShopData.category = shopData.shopCategories[row]
+            favoriteShopData.opentime = shopData.shopOpentimes[row]
+            favoriteShopData.mobileUrl = shopData.shopMobileUrls[row]
+            favoriteShopData.imageUrl = shopData.shopsImages[row][0]
             realm.add(favoriteShopData)
         }
     }
@@ -416,7 +421,7 @@ extension MapController: SelectBarCellDelegate {
         let favoriteShops = realm.objects(FavoriteShopData.self)
         try! realm.write {
             for data in favoriteShops {
-                if data.name ==  shopData.nameArray[row] {
+                if data.name ==  shopData.shopNames[row] {
                     realm.delete(data)
                 }
             }

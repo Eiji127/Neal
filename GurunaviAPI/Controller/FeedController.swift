@@ -28,7 +28,7 @@ final class FeedController: UICollectionViewController {
     
     private let itemCount: Int = 2
     
-    private var freeword: String = "&freeword="
+    private var quere: String = "&freeword="
     private var longitude: String = "&longitude="
     private var latitude: String = "&latitude="
     
@@ -119,7 +119,7 @@ final class FeedController: UICollectionViewController {
     func fetchData() {
         collectionView.refreshControl?.beginRefreshing()
         
-        GurunaviService.shared.fetchData(latitude: latitude, longitude: longitude, freeword: freeword) { shopData in
+        GurunaviService.shared.fetchData(latitude: latitude, longitude: longitude, quere: quere) { shopData in
             self.shopData = shopData
             self.latitude = "&latitude="
             self.longitude = "&longitude="
@@ -129,7 +129,7 @@ final class FeedController: UICollectionViewController {
                 }
             }
         }
-        freeword = "&freeword="
+        quere = "&freeword="
         collectionView.refreshControl?.endRefreshing()
     }
     
@@ -300,10 +300,10 @@ extension FeedController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ShopInfoCell
-        if shopData.shopsImageArray != [] {
-            if let shopImage = URL(string: shopData.shopsImageArray[indexPath.section][indexPath.row]) {
+        if shopData.shopsImages != [] {
+            if let shopImage = URL(string: shopData.shopsImages[indexPath.section][indexPath.row]) {
                 cell.setUpImageView(imageUrl: shopImage)
-            } else if shopData.shopsImageArray[indexPath.section][indexPath.row] == "" {
+            } else if shopData.shopsImages[indexPath.section][indexPath.row] == "" {
                 cell.setUpImage()
             }
         } else {
@@ -315,16 +315,16 @@ extension FeedController {
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: reuseHeaderIdentifier, for: indexPath) as! ShopInfoHeader
         sectionHeader.indexPath = indexPath
-        if shopData.nameArray != [] {
+        if shopData.shopNames != [] {
             sectionHeader.setUpContents(
-                name: shopData.nameArray[indexPath.section],
-                category: shopData.categoryArray[indexPath.section],
-                opentime: shopData.opentimeArray[indexPath.section]
+                name: shopData.shopNames[indexPath.section],
+                category: shopData.shopCategories[indexPath.section],
+                opentime: shopData.shopOpentimes[indexPath.section]
             )
             
             let favoriteShops = realm.objects(FavoriteShopData.self)
             for data in favoriteShops {
-                if data.name ==  shopData.nameArray[indexPath.section] {
+                if data.name ==  shopData.shopNames[indexPath.section] {
                     sectionHeader.didRegisterd = true
                     sectionHeader.registerShopButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
                     sectionHeader.registerShopButton.tintColor = .systemYellow
@@ -339,7 +339,7 @@ extension FeedController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let webController = WebController()
-        webController.mobileUrl = shopData.mobileUrlArray[indexPath.section]
+        webController.mobileUrl = shopData.shopMobileUrls[indexPath.section]
         navigationController?.pushViewController(webController, animated: true)
     }
 }
@@ -357,7 +357,7 @@ extension FeedController: UISearchBarDelegate {
         longitude = "&longitude="
         latitude = "&latitude="
         
-        freeword += searchText
+        quere += searchText
         
         indicateShopInformation()
         collectionView.reloadData()
@@ -385,11 +385,11 @@ extension FeedController: shopInfoHeaderDelegate {
         generator.notificationOccurred(.success)
         try! realm.write {
             let favoriteShopData = FavoriteShopData()
-            favoriteShopData.name = shopData.nameArray[section]
-            favoriteShopData.category = shopData.categoryArray[section]
-            favoriteShopData.opentime = shopData.opentimeArray[section]
-            favoriteShopData.mobileUrl = shopData.mobileUrlArray[section]
-            favoriteShopData.imageUrl = shopData.shopsImageArray[section][0]
+            favoriteShopData.name = shopData.shopNames[section]
+            favoriteShopData.category = shopData.shopCategories[section]
+            favoriteShopData.opentime = shopData.shopOpentimes[section]
+            favoriteShopData.mobileUrl = shopData.shopMobileUrls[section]
+            favoriteShopData.imageUrl = shopData.shopsImages[section][0]
             realm.add(favoriteShopData)
         }
     }
@@ -398,7 +398,7 @@ extension FeedController: shopInfoHeaderDelegate {
         let favoriteShops = realm.objects(FavoriteShopData.self)
         try! realm.write {
             for data in favoriteShops {
-                if data.name ==  shopData.nameArray[section] {
+                if data.name ==  shopData.shopNames[section] {
                     realm.delete(data)
                 }
             }

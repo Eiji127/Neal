@@ -11,12 +11,12 @@ import MapKit
 
 struct ShopData {
     var hit_count = Int()
-    var nameArray = [String]()
-    var categoryArray = [String]()
-    var opentimeArray = [String]()
-    var mobileUrlArray = [String]()
-    var locationCoordinatesArray = [MKPointAnnotation]()
-    var shopsImageArray = [[String]]()
+    var shopNames = [String]()
+    var shopCategories = [String]()
+    var shopOpentimes = [String]()
+    var shopMobileUrls = [String]()
+    var shopLocationCoordinates = [MKPointAnnotation]()
+    var shopsImages = [[String]]()
 }
 
 struct FavoriteModel {
