@@ -16,6 +16,7 @@ final class WebController: UIViewController {
     var mobileUrl: String = ""
     
     // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureWebView()
